@@ -6,7 +6,7 @@ import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.input.*;
 import javafx.scene.media.AudioClip;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -43,14 +43,16 @@ public class TestApp extends Application {
 		Scene scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
         scene.setOnKeyPressed(event -> handleKeyPressed(event));
         scene.setOnKeyReleased(event -> handleKeyReleased(event));
+        scene.setOnMousePressed(event -> handleMousePressed(event));
+        scene.setOnMouseReleased(event -> handleMouseReleased(event));
         
 		// Set up the stage
-        MotionBlur motionBlur = new MotionBlur();
-        motionBlur.setRadius(5);
-        motionBlur.setAngle(-15.0);
+//        MotionBlur motionBlur = new MotionBlur();
+//        motionBlur.setRadius(5);
+//        motionBlur.setAngle(-15.0);
         txtTimesPressed.setFill(Color.web("0x3d226d"));
         txtTimesPressed.setFont(Font.font("Comic Sans MS", FontWeight.NORMAL, FONT_SIZE)); //FontWeight.BOLD
-        txtTimesPressed.setEffect(motionBlur);
+//        txtTimesPressed.setEffect(motionBlur);
         
 		myStage.setTitle("Test");
 		myStage.setScene(scene);
@@ -64,12 +66,13 @@ public class TestApp extends Application {
 	class GameTimer extends AnimationTimer {
         @Override
         public void handle(long now) {
-        	if (pressed) {
-        		timesPressed++;
-        		txtTimesPressed.setText("Times Space or Enter Pressed: " + timesPressed);
-        		txtTimesPressed.setX(Math.random() * 100);
-        		txtTimesPressed.setY(Math.random() * 100);
-        	}
+//        	if (pressed) {
+//        		timesPressed++;
+////        		txtTimesPressed.setX(Math.random() * 100 + SCREEN_WIDTH/2-txtTimesPressed.maxWidth(FONT_SIZE));
+////        		txtTimesPressed.setY(Math.random() * 100 + SCREEN_HEIGHT/2-txtTimesPressed.maxHeight(FONT_SIZE));
+//        	}
+        	txtTimesPressed.setText("Times Space or Enter Pressed: " + timesPressed);
+    		
         }
     }
 	
@@ -81,27 +84,37 @@ public class TestApp extends Application {
  
         if (code == KeyCode.SPACE || code == KeyCode.ENTER) {
             pressed = true;
+            timesPressed++;
         }
     }
     
-//    private void handleMousePressed(MouseEvent event) {
-//    	MouseButton code = event.getButton();
-//    	
-//    	if (code == MouseEvent.MOUSE_PRESSED) {
-//    		pressed = true;
-//    	}
-//    }
-
     /*
      * Makes the paddle stop moving when the user release the directional key
      */
     private void handleKeyReleased(KeyEvent event) {
         KeyCode code = event.getCode();
 
-        if (code == KeyCode.SPACE || code == KeyCode.ENTER || 
-                code == KeyCode.SPACE || code == KeyCode.ENTER) {
+        if (code == KeyCode.SPACE || code == KeyCode.ENTER) {
             pressed = false;
         }
+    }
+    
+    private void handleMousePressed(MouseEvent event) {
+    	MouseButton code = event.getButton();
+    	
+    	if (code == MouseButton.PRIMARY) {
+    		pressed = true;
+    		//timesPressed++;
+    		System.out.println("LMB DOWN " + event.getX() + ", " + event.getY());
+    	}
+    }
+    
+    private void handleMouseReleased(MouseEvent event) {
+    	MouseButton code = event.getButton();
+    	
+    	if (code == MouseButton.PRIMARY) {
+    		pressed = false;
+    	}
     }
 
 }
