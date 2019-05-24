@@ -16,6 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.effect.*;
 import javafx.scene.paint.*;
 import java.lang.Math;
+import javafx.scene.control.*;
 
 
 public class TestApp extends Application {
@@ -34,8 +35,9 @@ public class TestApp extends Application {
     	txtTimesPressed.setFont(Font.font(FONT_SIZE));
     	txtTimesPressed.setX(txtTimesPressed.maxWidth(FONT_SIZE));
     	txtTimesPressed.setY(SCREEN_HEIGHT/2-txtTimesPressed.maxHeight(FONT_SIZE));
+    	Button button1 = new Button("click me");
     	
-		Group root = new Group(txtTimesPressed);
+		Group root = new Group(txtTimesPressed, button1);
 
 		timer = new GameTimer();
 		timer.start();
@@ -45,7 +47,8 @@ public class TestApp extends Application {
         scene.setOnKeyReleased(event -> handleKeyReleased(event));
         scene.setOnMousePressed(event -> handleMousePressed(event));
         scene.setOnMouseReleased(event -> handleMouseReleased(event));
-        
+//        scene.addEventHandler(button1.getOnAction());
+        //System.out.println)
 		// Set up the stage
 //        MotionBlur motionBlur = new MotionBlur();
 //        motionBlur.setRadius(5);
