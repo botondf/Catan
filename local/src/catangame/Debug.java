@@ -1,8 +1,12 @@
 package catangame;
 
+import java.util.*; 
+
+import catangame.Tile.TileType;
+
 //import catangame.Item.Type;
 
-public class PlayerDebug {
+public class Debug {
 
 	public static void main(String[] args) {
 //		Player p1 = new Player(1);
@@ -38,14 +42,12 @@ public class PlayerDebug {
 //	    System.out.println(p1.itemsList.get(0).type + ", " + p1.itemsList.get(0).amount);
 //	    System.out.println(p2.itemsList.get(1).type + ", " + p2.itemsList.get(1).amount);
 		
-		Building a = new Building();
-		Building b = new Building();
-		a.debugCreateRandom();
-		b.debugCreateRandom();
-		Building[] buildings = {a, b};
-		a.print();
-		b.print();
- 
+		while (true) {
+			Building.debugCreateRandom().print();
+		}
+		
+		
+
 	}
 
 }

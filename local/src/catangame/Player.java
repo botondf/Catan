@@ -6,21 +6,21 @@ public class Player {
 	int id;
 	int vp;
 	//List[] possesions; // all of player's possessions in an array (might be redundant)
-	List<Item> itemsList;
-	List<Card> cardList;
-	List<Building> buildingsList;
+	List<Item> items;
+	List<Card> cards;
+	List<Building> buildings;
 	
 	Player(int id) {
 		this.id = id;
 		this.vp = 0;
-		this.itemsList = new ArrayList<Item>();
-		this.cardList = new ArrayList<Card>();
-		this.buildingsList = new ArrayList<Building>();
+		this.items = new ArrayList<Item>();
+		this.cards = new ArrayList<Card>();
+		this.buildings = new ArrayList<Building>();
 	}
 	
 	public void addItems(Item item) {
 //		items[0] = item;
-		itemsList.add(item);
+		items.add(item);
 	}
 	
 	public void incrementItems(Item item, int increment) {

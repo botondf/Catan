@@ -6,7 +6,7 @@ public class Building {
 	BuildingType type;
 	int value;
 	Player owner;
-	int[] pos; // list of min 2 Tile.id 's
+	int[] tilePos; // list of min 2 Tile.id 's
 
 	enum BuildingType {
 		ROAD("Road", 0), VILLAGE("Village", 1), TOWN("Town", 2);
@@ -14,7 +14,7 @@ public class Building {
 		private final int value;
 		public final String label;
 
-		BuildingType(String newLabel, final int newValue) {
+		BuildingType(final String newLabel, final int newValue) {
 			label = newLabel;
 			this.value = newValue;
 		}
@@ -29,33 +29,28 @@ public class Building {
 		this.type = type;
 		this.value = value;
 		this.owner = owner;
-		this.pos = new int[2];
+		this.tilePos = new int[2];
 	}
 	
 	Building() {
 		
 	}
 	
-	public void debugCreateRandom() {
-		type = BuildingType.values()[randomNumber(0, 2)];
+	public static Building debugCreateRandom() {
+		BuildingType type = BuildingType.values()[Board.randomNumber(0, 2)];
+		int value = Board.randomNumber(1, 12);
 		if (type == BuildingType.ROAD) {
 			value = 0;
-		} else {
-			value = randomNumber(1, 12);
 		}
+		Player owner = new Player(1);
+		int[] pos = new int[] {1, 3, 5};
 		
-		owner = new Player(1);
-		pos = new int[] {1, 3, 5};
+		return new Building(type, value, owner, pos);
 	}
 	
 	public void print() {
-		System.out.println("Type: " + type + ", Value: " + value + ", Owner: " + owner + " , Position: " + pos);
-	}
-	
-	public int randomNumber(int a, int b) {
-	    int highNum = Math.max(a, b);
-	    int lowNum = Math.min(a, b);
-	    int range = highNum - lowNum + 1;
-	    return (int) (Math.random() * range) + lowNum;
+		int x = tilePos[0];
+		int y = tilePos[1];
+		System.out.println("BuildingType: " + type + ", Value: " + value + ", Owner: " + owner.id + " , Position: (" + x + ", " + y + ")");
 	}
 }
