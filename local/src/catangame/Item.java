@@ -3,14 +3,14 @@ package catangame;
 import java.util.*; 
 
 public class Item {
-	Type type;
+	ItemType type;
 	int amount;
 	
-	enum Type {
-		ONE, TWO, THREE
+	enum ItemType {
+		BRICK, SHEEP, WOOD, ORE, GRAIN
 	}
 	
-	Item (Type type, int amount) {
+	Item (ItemType type, int amount) {
 		this.type = type;
 		this.amount = amount;
 	}

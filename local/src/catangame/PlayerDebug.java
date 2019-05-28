@@ -1,19 +1,19 @@
 package catangame;
 
-import catangame.Item.Type;
+//import catangame.Item.Type;
 
 public class PlayerDebug {
 
 	public static void main(String[] args) {
-		Player p1 = new Player(1);
-		Player p2 = new Player(2);
-		
-		p1.addItems(new Item(Type.ONE, 0));
-		p1.addItems(new Item(Type.TWO, 1));
-		p1.addItems(new Item(Type.THREE, 2));
-		p2.addItems(new Item(Type.ONE, 0));
-		p2.addItems(new Item(Type.TWO, 1));
-		p2.addItems(new Item(Type.THREE, 2));
+//		Player p1 = new Player(1);
+//		Player p2 = new Player(2);
+//		
+//		p1.addItems(new Item(Type.ONE, 0));
+//		p1.addItems(new Item(Type.TWO, 1));
+//		p1.addItems(new Item(Type.THREE, 2));
+//		p2.addItems(new Item(Type.ONE, 0));
+//		p2.addItems(new Item(Type.TWO, 1));
+//		p2.addItems(new Item(Type.THREE, 2));
 
 //		for (int p = 1; p < 5; p++) {
 //			Player player = new Player(p);
@@ -30,13 +30,20 @@ public class PlayerDebug {
 //			System.out.println("");
 //		}
 
-		p1.incrementItems(p1.itemsList.get(0), 50);	// add 50 wood
-		System.out.println(p1.itemsList.get(0).type + ", " + p1.itemsList.get(0).amount);
-		System.out.println(p2.itemsList.get(1).type + ", " + p2.itemsList.get(1).amount);
-
-	    p1.incrementItems(p1.itemsList.get(0), 10);	// add 10 wood
-	    System.out.println(p1.itemsList.get(0).type + ", " + p1.itemsList.get(0).amount);
-	    System.out.println(p2.itemsList.get(1).type + ", " + p2.itemsList.get(1).amount);
+//		p1.incrementItems(p1.itemsList.get(0), 50);	// add 50 wood
+//		System.out.println(p1.itemsList.get(0).type + ", " + p1.itemsList.get(0).amount);
+//		System.out.println(p2.itemsList.get(1).type + ", " + p2.itemsList.get(1).amount);
+//
+//	    p1.incrementItems(p1.itemsList.get(0), 10);	// add 10 wood
+//	    System.out.println(p1.itemsList.get(0).type + ", " + p1.itemsList.get(0).amount);
+//	    System.out.println(p2.itemsList.get(1).type + ", " + p2.itemsList.get(1).amount);
+		
+		Building a = new Building();
+		Building b = new Building();
+		a.debugCreateRandom();
+		b.debugCreateRandom();
+		a.print();
+		b.print();
  
 	}
 
