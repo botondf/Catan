@@ -4,36 +4,25 @@ import java.lang.Math;
 
 public class Building {
 	BuildingType type;
-	int value;
-	Player owner;
-	int[] tilePos; // list of min 2 Tile.id 's
-
-	enum BuildingType {
-		ROAD("Road", 0), VILLAGE("Village", 1), TOWN("Town", 2);
-
-		private final int value;
-		public final String label;
-
-		BuildingType(final String newLabel, final int newValue) {
-			label = newLabel;
-			this.value = newValue;
-		}
-
-//		public int getValue() {
-//			return value;
-//		}
+	//int value;
+	private Player owner;
+	private Position position;
+	
+	// enum building colour
+	
+	@Override
+	public String toString() {
+		return "BuildingType: " + type + " , Position: (" + position +")";
 	}
 	
 	
-	Building(BuildingType type, int value, Player owner, int[] pos) {
+	Building(BuildingType type, Position position) {
 		this.type = type;
-		this.value = value;
-		this.owner = owner;
-		this.tilePos = new int[2];
+		this.position = position;
 	}
 	
-	Building() {
-		
+	public int getValue() {
+		return type.getValue();
 	}
 	
 	public static Building debugCreateRandom() {
@@ -45,12 +34,8 @@ public class Building {
 		Player owner = new Player(1);
 		int[] pos = new int[] {1, 3, 5};
 		
-		return new Building(type, value, owner, pos);
+		return new Building(type, owner, pos);
 	}
 	
-	public void print() {
-		int x = tilePos[0];
-		int y = tilePos[1];
-		System.out.println("BuildingType: " + type + ", Value: " + value + ", Owner: " + owner.id + " , Position: (" + x + ", " + y + ")");
-	}
+	
 }

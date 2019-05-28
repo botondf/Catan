@@ -21,4 +21,12 @@ public class Board {
 	    return (int) (Math.random() * range) + lowNum;
 	}
 	
+	public Tile getTileWithId(int id) {
+		return tiles[id];
+		// id = index
+	}
+	
+	public Tile[] getNeighbourTilesWithPosition(Position pos) { // array or list // position/junction
+		return null;
+	}
 }

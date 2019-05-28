@@ -5,7 +5,6 @@ import java.util.*;
 public class Player {
 	int id;
 	int vp;
-	//List[] possesions; // all of player's possessions in an array (might be redundant)
 	List<Item> items;
 	List<Card> cards;
 	List<Building> buildings;
@@ -19,7 +18,6 @@ public class Player {
 	}
 	
 	public void addItems(Item item) {
-//		items[0] = item;
 		items.add(item);
 	}
 	

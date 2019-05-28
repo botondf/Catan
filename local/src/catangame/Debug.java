@@ -1,8 +1,6 @@
 package catangame;
 
-import java.util.*; 
-
-import catangame.Tile.TileType;
+import java.util.*;
 
 //import catangame.Item.Type;
 
