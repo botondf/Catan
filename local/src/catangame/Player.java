@@ -4,15 +4,18 @@ import java.util.*;
 
 public class Player {
 	int id;
-//	Item[] items;
+	int vp;
+	//List[] possesions; // all of player's possessions in an array (might be redundant)
 	List<Item> itemsList;
+	List<Card> cardList;
+	List<Building> buildingsList;
 	
-	Player(int number) {
-		this.id = number;
-//		this.items = new Item[4]; // can only have max 4 items for now
+	Player(int id) {
+		this.id = id;
+		this.vp = 0;
 		this.itemsList = new ArrayList<Item>();
-		
-	
+		this.cardList = new ArrayList<Card>();
+		this.buildingsList = new ArrayList<Building>();
 	}
 	
 	public void addItems(Item item) {

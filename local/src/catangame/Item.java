@@ -7,7 +7,7 @@ public class Item {
 	int amount;
 	
 	enum ItemType {
-		BRICK, SHEEP, WOOD, ORE, GRAIN
+		BRICK, CATTLE, WOOD, ORE, GRAIN
 	}
 	
 	Item (ItemType type, int amount) {

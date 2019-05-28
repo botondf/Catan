@@ -42,6 +42,7 @@ public class PlayerDebug {
 		Building b = new Building();
 		a.debugCreateRandom();
 		b.debugCreateRandom();
+		Building[] buildings = {a, b};
 		a.print();
 		b.print();
  
