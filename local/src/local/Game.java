@@ -1,4 +1,4 @@
-package game;
+package local;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -16,7 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.effect.*;
 import javafx.scene.paint.*;
 import java.lang.Math;
-import game.Item.Type;
+//import game.Item.Type;
 
 
 public class Game extends Application {
@@ -61,21 +61,6 @@ public class Game extends Application {
 	}
 	
 	public static void main(String[] args) {
-		for (int p = 1; p < 5; p++) {
-			Player player = new Player(p);
-			player.addItems(new Item(Type.WOOD, 0));
-//			player.addItems(new Item(Type.STONE, 0));
-//			player.addItems(new Item(Type.ORE, 0));
-			System.out.println("Player " + player.number + ": ");
-			for (int x = 0; x == 0; x++) {
-				for (int z = 0; z == 0; z++) {
-					player.incrementItems(player.itemsList.get(z), 10);
-				}
-				System.out.println(player.itemsList.get(x).type + ", " + player.itemsList.get(x).amount);
-			}
-			System.out.println("");
-		}
-		
         launch(args);
 	}
 	
