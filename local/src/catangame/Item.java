@@ -11,10 +11,6 @@ public class Item {
 		this.amount = amount;
 	}
 	
-	Item() {
-		
-	}
-	
 	public void addAmount(int amount) {
 		this.amount += amount;
 	}

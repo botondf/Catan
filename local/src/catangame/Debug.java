@@ -40,9 +40,12 @@ public class Debug {
 //	    System.out.println(p1.itemsList.get(0).type + ", " + p1.itemsList.get(0).amount);
 //	    System.out.println(p2.itemsList.get(1).type + ", " + p2.itemsList.get(1).amount);
 		
-		while (true) {
-			Building.debugCreateRandom().print();
-		}
+		//while (true) {
+			//System.out.println(Building.debugCreateRandom().toString());
+		//}
+			//System.out.println(Tile.debugCreateRandom().toString());
+		
+		
 		
 		
 
