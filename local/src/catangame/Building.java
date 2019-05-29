@@ -1,6 +1,8 @@
 package catangame;
 
 import java.lang.Math;
+import java.util.*;
+
 /**
  * 
  * Building(BuildingType type, Player owner, Tile[] position)//Place position)
@@ -12,6 +14,7 @@ public class Building {
 	private Player owner;
 //	private Place position;
 	private Tile[] position;
+	private List<ItemType> cost;
 	
 	// enum building colour
 	
@@ -21,7 +24,7 @@ public class Building {
 	}
 	
 	
-	Building(BuildingType type, Player owner, Tile[] position) {//Place position) {
+	Building(BuildingType type, Player owner, Tile[] position, List<ItemType> cost) {//Place position) {
 		this.type = type;
 		this.position = position;
 		this.owner = owner;

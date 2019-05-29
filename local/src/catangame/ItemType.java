@@ -1,5 +1,5 @@
 package catangame;
 
 enum ItemType {
-	BRICK, CATTLE, WOOD, ORE, GRAIN, LUMBER
+	BRICK, CATTLE, LUMBER, ORE, GRAIN, STONE
 }
