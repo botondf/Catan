@@ -5,7 +5,7 @@ import java.util.*;
 import catangame.Tile.*;
 
 /**
- * Handles, holds, finds, Tiles and their positions (x,y) & board-wise. Does initial board generation. 
+ * Handles, holds, finds, Tiles and their positions (x,y) & board-wise. Does initial board generation. Also creates the harbours
  *
  */
 public class Board {
