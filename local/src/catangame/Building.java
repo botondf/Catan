@@ -14,7 +14,7 @@ public class Building {
 	private Player owner;
 //	private Place position;
 	private Tile[] position;
-	private List<ItemType> cost;
+	List<ItemType> cost;
 	
 	// enum building colour
 	
@@ -26,15 +26,21 @@ public class Building {
 	
 	Building(BuildingType type, Player owner, Tile[] position, List<ItemType> cost) {//Place position) {
 		this.type = type;
-		this.position = position;
 		this.owner = owner;
+		this.position = position;
+		this.cost = cost;
 	}
 	
 	public int getValue() {
 		return type.getValue();
 	}
 	
-	
-	
+	public boolean isBuildable() {
+		return (this.cost.isEmpty()) ? true : false;
+		return (this.cost.contains(type.getCost())) ? true : false;
+		
+		return true;
+		
+	}
 	
 }
