@@ -1,5 +1,8 @@
 package catangame;
 
+import java.util.*;
+import catangame.BuildingType.*;
+
 public class Place {
 	//array or list of neighbouring tiles
 	Place neighbours;
@@ -13,7 +16,7 @@ public class Place {
 		
 	}
 	
-	public Place getPosition(Tile[] tiles) {
-		return new Place();
-	}
+//	public Place getPosition(Tile[] tiles) {
+//		return new Place();
+//	}
 }

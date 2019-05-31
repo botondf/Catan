@@ -32,6 +32,10 @@ public class Building {
 		this.cost = cost;
 	}
 	
+	Building(BuildingType type) {
+		this.type = type;
+	}
+	
 	public int getValue() {
 		return type.getValue();
 	}
