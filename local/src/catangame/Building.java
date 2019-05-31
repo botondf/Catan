@@ -36,20 +36,4 @@ public class Building {
 		return type.getValue();
 	}
 	
-	public boolean isBuildable() { // is buildable at? // maybe should be in board or logic?
-		boolean check;
-		
-//		try {
-//			
-//		} catch () {
-//			
-//		}
-		
-		check = (this.cost.isEmpty()) ? true : false;
-		check = (this.cost.contains(new Item(ItemType.GRAIN, 1))) ? true : false;
-		
-		return check;
-		
-	}
-	
 }

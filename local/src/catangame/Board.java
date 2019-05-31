@@ -10,14 +10,13 @@ import catangame.Tile.*;
  */
 public class Board {
 	private final int[] VALUES = {5, 2, 6, 3, 8, 10, 9, 12, 11, 4, 7, 8, 10, 9, 4, 5, 6, 3, 11};
-	public Tile[] boardTiles = new Tile[18]; // total 19 tiles
+	public Tile[] boardTiles = new Tile[19]; // total 19 tiles
 	public List<Tile> selectedTiles;
 	//Player[] players;
 	
 	Board() {
-		generateNewTileSet();
-		//tiles[0] = Tile(0, TileType.HILLS, 11, {});
-		// Generate new random board
+		// Generate new randomized board
+		generateNewTileSet();		
 				//	Create Tile
 				//		Set values to Tile
 				//		*Determine (X,Y) co-ords of each tile for drawing
@@ -56,36 +55,38 @@ public class Board {
 		
 	}
 	
-//	private void shuffle() {
-//		List<Tile> clone = Arrays.asList(boardTiles);
-//		Tile[] danew = new Tile[boardTiles.length];
-//		for (int x = 0; x < boardTiles.length; x++) {
-//			int r = Logic.randomNumber(0, boardTiles.length-1);
-//			danew[x] = clone.get(r);
-//			clone.remove(r);
-//		}
-//		boardTiles = danew;
-//			
-//	}
-	
 	public void shuffle() {
 		Random rgen = new Random(); // Random number generator
-		Tile[] array = boardTiles;
-		for (int i = 0; i < array.length; i++) {
-			int randomPosition = rgen.nextInt(array.length);
-			Tile temp = array[i];
-			array[i] = array[randomPosition];
-			array[randomPosition] = temp;
+		Tile[] boardTilesClone = boardTiles;
+		for (int i = 0; i < boardTilesClone.length; i++) {
+			int randomPosition = rgen.nextInt(boardTilesClone.length);
+			Tile temp = boardTilesClone[i];
+			boardTilesClone[i] = boardTilesClone[randomPosition];
+			boardTilesClone[randomPosition] = temp;
 		}
-		boardTiles = array;
+		boardTiles = boardTilesClone;
 	}
 	
 	public void generateNewTileSet() {
-		for (int id = 0; id < boardTiles.length; id++) {
-			boardTiles[id] = new Tile(id, TileType.values()[Logic.randomNumber(0, 5)], VALUES[id]);
+		for (int i = 0; i < boardTiles.length; i++) {
+			if (i == 0) {
+				boardTiles[i] = new Tile(TileType.DESERT, 0);	// 1 desert
+			} else if (i >= 1 && i <= 4) {
+				boardTiles[i] = new Tile(TileType.PASTURE, 0);	// 4 pastures
+			} else if (i >= 5 && i <= 8) {
+				boardTiles[i] = new Tile(TileType.FOREST, 0);	// 4 forests
+			} else if (i >= 9 && i <= 11) {
+				boardTiles[i] = new Tile(TileType.HILL, 0);		// 3 hills
+			} else if (i >= 12 && i <= 14) {
+				boardTiles[i] = new Tile(TileType.MOUNTAIN, 0);	// 3 mts
+			} else if (i >= 15 && i <= 18) {
+				boardTiles[i] = new Tile(TileType.FIELD, 0);	// 4 fields
+			}
 		}
-		shuffle();
-		
+		shuffle(); // shuffle tiles to randomize board
+		for (int v = 0; v < VALUES.length; v++) {
+			boardTiles[v].setValue(VALUES[v]);	// tile value is set by VALUES
+		}
 	}
 	
 	public static void main(String[] args) {
