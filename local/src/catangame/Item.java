@@ -15,7 +15,5 @@ public class Item {
 		this.amount += amount;
 	}
 	
-//	public List newItems() {
-//		
-//	}
+
 }

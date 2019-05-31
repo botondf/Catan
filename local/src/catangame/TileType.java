@@ -1,17 +1,29 @@
 package catangame;
 
 public enum TileType {
-	HILLS("Hills", ItemType.BRICK), PASTURE("Pasture", ItemType.CATTLE), 
-	FOREST("Forest", ItemType.LUMBER), MOUNTAIN("Mountain", ItemType.ORE),
-	FIELDS("Fields", ItemType.GRAIN), DESERT("Desert", null);
+	HILL("Hill", ItemType.BRICK),
+	PASTURE("Pasture", ItemType.WOOL), 
+	FOREST("Forest", ItemType.LUMBER),
+	MOUNTAIN("Mountain", ItemType.ORE),
+	FIELD("Field", ItemType.GRAIN),
+	DESERT("Desert", null);
+//	WATER(null, null),
+//	HARBOUR("Harbour", null);
 	
 	private ItemType resource;
-	public String label;
-	private ItemType type;
+	private String label;
 	
-	TileType(String newLabel, ItemType newResource) {
-		label = newLabel;
-		type = newResource;
+	TileType(String label, ItemType resource) {
+		this.label = label;
+		this.resource = resource;
+	}
+
+	public ItemType getResource() {
+		return resource;
+	}
+	
+	public String getLabel() {
+		return label;
 	}
 
 }

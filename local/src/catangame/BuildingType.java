@@ -8,16 +8,16 @@ import java.util.*;
  */
 
 enum BuildingType {
-	ROAD("Road", 0, Arrays.asList(ItemType.BRICK, ItemType.LUMBER)),
-	SETTLEMENT("Settlement", 1, Arrays.asList(ItemType.GRAIN, ItemType.LUMBER, ItemType.CATTLE, ItemType.BRICK)),
-	CITY("City", 2, Arrays.asList(ItemType.GRAIN, ItemType.GRAIN, ItemType.STONE, ItemType.STONE, ItemType.STONE));
+	ROAD("Road", 0, Arrays.asList(new Item(ItemType.BRICK, 1), new Item(ItemType.LUMBER, 1))),
+	SETTLEMENT("Settlement", 1, Arrays.asList(new Item(ItemType.GRAIN, 1), new Item(ItemType.LUMBER, 1), new Item(ItemType.WOOL, 1), new Item(ItemType.BRICK, 1))),
+	CITY("City", 2, Arrays.asList(new Item (ItemType.GRAIN, 2), new Item(ItemType.ORE, 3)));
 	//HARBOUR("Harbour", 0, null);
 
 	private int value;
 	private String label;
-	private List<ItemType> cost;
+	private List<Item> cost;
 
-	BuildingType(String newLabel, int newValue, List<ItemType> cost) {
+	BuildingType(String newLabel, int newValue, List<Item> cost) {
 		this.label = newLabel;
 		this.value = newValue;
 		this.cost = cost;
@@ -27,7 +27,7 @@ enum BuildingType {
 		return value;
 	}
 	
-	public List<ItemType> getCost() {
+	public List<Item> getCost() {
 		return this.cost;
 	}
 }

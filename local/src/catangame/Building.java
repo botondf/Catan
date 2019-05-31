@@ -2,6 +2,7 @@ package catangame;
 
 import java.lang.Math;
 import java.util.*;
+import catangame.TileType.*;
 
 /**
  * 
@@ -14,7 +15,7 @@ public class Building {
 	private Player owner;
 //	private Place position;
 	private Tile[] position;
-	List<ItemType> cost;
+	List<Item> cost;
 	
 	// enum building colour
 	
@@ -24,7 +25,7 @@ public class Building {
 	}
 	
 	
-	Building(BuildingType type, Player owner, Tile[] position, List<ItemType> cost) {//Place position) {
+	Building(BuildingType type, Player owner, Tile[] position, List<Item> cost) {//Place position) {
 		this.type = type;
 		this.owner = owner;
 		this.position = position;
@@ -35,11 +36,19 @@ public class Building {
 		return type.getValue();
 	}
 	
-	public boolean isBuildable() {
-		return (this.cost.isEmpty()) ? true : false;
-		return (this.cost.contains(type.getCost())) ? true : false;
+	public boolean isBuildable() { // is buildable at? // maybe should be in board or logic?
+		boolean check;
 		
-		return true;
+//		try {
+//			
+//		} catch () {
+//			
+//		}
+		
+		check = (this.cost.isEmpty()) ? true : false;
+		check = (this.cost.contains(new Item(ItemType.GRAIN, 1))) ? true : false;
+		
+		return check;
 		
 	}
 	
