@@ -12,6 +12,8 @@ public class Place {
 		this.neighbours = neighbours;
 	}
 	
+	Place() {}
+	
 	public void findNeighbours() {
 		
 	}

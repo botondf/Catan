@@ -1,7 +1,7 @@
 package catangame;
 
 import java.util.*;
-
+import javafx.scene.control.Button;
 
 
 /**
@@ -14,24 +14,30 @@ import java.util.*;
 public class Tile {
 	//int id;
 	int value;
-	//private List<Building> buildings;
-	private TileType type; // each Tile.Type affects related Item.Type
+	List<Building> buildings;
+	TileType type; // each Tile.Type affects related Item.Type
+	Button button;
+	//graphic
+	//
 	//private int[] pos; // (x,y) does the tile actually need to know where it is? or can board handle that?
 	
-	Tile(TileType type, int value) { // , List<Building> buildings
+	Tile(TileType type, int value, List<Building> buildings) { // 
 		//this.id = id; // does tile need to know its id?
 		this.setType(type);
 		this.value = value;
-		//this.buildings = buildings;
+		this.setBuildings(buildings);
 	}
 	
-	Tile() {}
+//	@Override
+//	public String toString() {
+//		return "Value: " + value + ", TileType: " + getType() +  ", Resource: " + getType().getResource() + ", Buildings: " + getBuildings().toString(); //+ " , Position: (" + x + ", " + y + ")" ;
+//	}
 	
 	@Override
 	public String toString() {
-		return "Value: " + value + ", TileType: " + getType() +  ", Resource: " + getType().getResource();// + ", Buildings: " + buildings.toString(); //+ " , Position: (" + x + ", " + y + ")" ;
+		return "Tile [value=" + value + ", buildings=" + buildings + ", type=" + type + ", button=" + button + "]";
 	}
-	
+
 	public void setValue(int value) {
 		this.value = value;
 	}
@@ -42,6 +48,18 @@ public class Tile {
 
 	public void setType(TileType type) {
 		this.type = type;
+	}
+	
+	public void addBuilding(Building building) {
+		getBuildings().add(building);
+	}
+
+	public List<Building> getBuildings() {
+		return buildings;
+	}
+
+	public void setBuildings(List<Building> buildings) {
+		this.buildings = buildings;
 	}
 	
 	

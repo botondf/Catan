@@ -14,24 +14,29 @@ public class Building {
 	//int value;
 	private Player owner;
 //	private Place position;
-	private Tile[] position;
+	private Place place;
 	List<Item> cost;
 	
 	// enum building colour
 	
-	@Override
-	public String toString() {
-		return "BuildingType: " + type + " , Value: " + getValue() + ", Owner: " + owner.id + ", Position: (" + position +")";
-	}
+//	@Override
+//	public String toString() {
+//		return "\nBuildingType: " + type + " , Value: " + getValue() + ", Owner: " + owner.id + ", Place: (" + place +")";
+//	}
 	
 	
-	Building(BuildingType type, Player owner, Tile[] position, List<Item> cost) {//Place position) {
+	Building(BuildingType type, Player owner, Place place) {//Place position, List<Item> cost) {
 		this.type = type;
 		this.owner = owner;
-		this.position = position;
-		this.cost = cost;
+		this.place = place;
+		this.cost = type.getCost();
 	}
 	
+	@Override
+	public String toString() {
+		return "Building [type=" + type + ", owner=" + owner + ", place=" + place + ", cost=" + cost + "]";
+	}
+
 	Building(BuildingType type) {
 		this.type = type;
 	}

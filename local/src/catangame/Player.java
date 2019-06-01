@@ -17,6 +17,12 @@ public class Player {
 		this.buildings = new ArrayList<Building>();
 	}
 	
+	@Override
+	public String toString() {
+		return "Player [id=" + id + ", vp=" + vp + ", items=" + items + ", cards=" + cards + ", buildings=" + buildings
+				+ "]";
+	}
+
 	public void addItems(Item item) {
 		items.add(item);
 	}
