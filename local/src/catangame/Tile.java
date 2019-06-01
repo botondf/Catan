@@ -5,7 +5,10 @@ import java.util.*;
 
 
 /**
- * Tile(int id, TileType type, int value, List<Building> buildings)
+ * Tile(TileType type, int value, List<Building> buildings)
+ * has own type (w/ item/resource) and value
+ * holds the buildings that are connected to it
+ * doesn't know its location
  *
  */
 public class Tile {
