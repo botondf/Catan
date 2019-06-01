@@ -17,7 +17,7 @@ public class Tile {
 	
 	Tile(TileType type, int value) { // , List<Building> buildings
 		//this.id = id; // does tile need to know its id?
-		this.type = type;
+		this.setType(type);
 		this.value = value;
 		//this.buildings = buildings;
 	}
@@ -26,11 +26,19 @@ public class Tile {
 	
 	@Override
 	public String toString() {
-		return "Value: " + value + ", TileType: " + type +  ", Resource: " + type.getResource();// + ", Buildings: " + buildings.toString(); //+ " , Position: (" + x + ", " + y + ")" ;
+		return "Value: " + value + ", TileType: " + getType() +  ", Resource: " + getType().getResource();// + ", Buildings: " + buildings.toString(); //+ " , Position: (" + x + ", " + y + ")" ;
 	}
 	
 	public void setValue(int value) {
 		this.value = value;
+	}
+
+	public TileType getType() {
+		return type;
+	}
+
+	public void setType(TileType type) {
+		this.type = type;
 	}
 	
 	

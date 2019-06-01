@@ -36,23 +36,21 @@ public class Board {
 		// id = index
 	}
 	
-	public Tile getTileWithValue() { // find tile(s) based on the roll
-		Tile t = null;
+	public List<Tile> getTilesWithValue(int value) { // find tile(s) based on the roll
+		List<Tile> tileList = new ArrayList<Tile>();
 		
-		for (Tile x : boardTiles) {
-			t = (x.value == Logic.roll) ? x : null;
+		for (int x = 0; x < boardTiles.length; x++) {
+			if (boardTiles[x].value == value) {
+				tileList.add(boardTiles[x]);
+			}
 		}
 		
-		return t;
+		return tileList;
 		// id = index
 	}
 	
 	public Tile[] getNeighbourTilesWithPosition(Place pos) { // array or list // position/junction
 		return null;
-	}
-	
-	public void generateNewValuesSet() {
-		
 	}
 	
 	public void shuffle() {
@@ -85,11 +83,26 @@ public class Board {
 		}
 		shuffle(); // shuffle tiles to randomize board
 		for (int v = 0; v < VALUES.length; v++) {
+			if (boardTiles[v].getType() == TileType.DESERT) {
+				List<Tile> selectedTiles = getTilesWithValue(7);
+				for (int x = 0; x < selectedTiles.size(); x++) {
+					if (selectedTiles.get(x).getType() != TileType.DESERT) {
+						//
+					}
+				}
+				boardTiles[v].value = 7;
+				
+			} else {
 			boardTiles[v].setValue(VALUES[v]);	// tile value is set by VALUES
+			}
 		}
 	}
 	
 	public static void main(String[] args) {
-		System.out.println(new Board().toString());
+		Logic.rollDice();
+		Board b = new Board();
+		System.out.println(b.toString());
+		System.out.println("ID 10: " + b.getTileWithId(10).toString());
+		System.out.println("Roll: 7,  " + "Tile: "+ b.getTilesWithValue(7).toString());
 	}
 }
