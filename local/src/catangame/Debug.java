@@ -1,54 +1,27 @@
 package catangame;
 
-import java.util.*;
-
-//import catangame.Item.Type;
-
 public class Debug {
-
 	public static void main(String[] args) {
-//		Player p1 = new Player(1);
-//		Player p2 = new Player(2);
-//		
-//		p1.addItems(new Item(Type.ONE, 0));
-//		p1.addItems(new Item(Type.TWO, 1));
-//		p1.addItems(new Item(Type.THREE, 2));
-//		p2.addItems(new Item(Type.ONE, 0));
-//		p2.addItems(new Item(Type.TWO, 1));
-//		p2.addItems(new Item(Type.THREE, 2));
+		Player[] players = new Player[4];
+		for (int x = 1; x <= players.length; x++) {
+			players[x-1] = new Player(x);
+		}
+		
+		Board board = new Board();
+		System.out.println(board.toString() + "\n");
+		int j = Logic.randomNumber(1, 6) + Logic.randomNumber(1, 6);
+		Building b = new Building(BuildingType.SETTLEMENT, players[0], new Place());
+		Building b2 = new Building(BuildingType.CITY, players[0], new Place());
+		players[0].addBuildingAtTile(board.getTilesWithValue(j).get(0), b);
+		players[0].addBuildingAtTile(board.getTilesWithValue(j).get(0), b2);
 
-//		for (int p = 1; p < 5; p++) {
-//			Player player = new Player(p);
-//			player.addItems(new Item(Type.WOOD, 1));
-//			player.addItems(new Item(Type.STONE, 1));
-//			player.addItems(new Item(Type.ORE, 2));
-//			System.out.println("Player " + player.number + ": ");
-//			for (int x = 0; x < 3; x++) {
-//				for (int z = 0; z < 3; z++) {
-//					player.incrementItems(player.itemsList.get(z), 13);
-//				}
-//				System.out.println(player.itemsList.get(x).type + ", " + player.itemsList.get(x).amount);
-//			}
-//			System.out.println("");
-//		}
-
-//		p1.incrementItems(p1.itemsList.get(0), 50);	// add 50 wood
-//		System.out.println(p1.itemsList.get(0).type + ", " + p1.itemsList.get(0).amount);
-//		System.out.println(p2.itemsList.get(1).type + ", " + p2.itemsList.get(1).amount);
-//
-//	    p1.incrementItems(p1.itemsList.get(0), 10);	// add 10 wood
-//	    System.out.println(p1.itemsList.get(0).type + ", " + p1.itemsList.get(0).amount);
-//	    System.out.println(p2.itemsList.get(1).type + ", " + p2.itemsList.get(1).amount);
+		//players[0].buildings.add(b);
+		//board.getTilesWithValue(j).get(1).addBuilding(new Building(BuildingType.CITY, players[0], new Place()));
+		System.out.println("Tile w value " + j + ": " + board.getTilesWithValue(j).toString());
+		//Logic.rollDice();
+		players[0].checkVP();
+		System.out.println(players[0].toString());
+		//System.out.println("Roll: " + Logic.roll + ",  " + "Tile: "+ board.getTilesWithValue(Logic.roll).toString());
 		
-		//while (true) {
-			//System.out.println(Building.debugCreateRandom().toString());
-		//}
-			//System.out.println(Tile.debugCreateRandom().toString());
-		
-		
-		
-		
-
 	}
-
 }

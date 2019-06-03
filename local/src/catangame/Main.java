@@ -7,13 +7,13 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.*;
 import javafx.scene.media.AudioClip;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 import javafx.scene.effect.*;
 import javafx.scene.paint.*;
 import java.lang.Math;
+import javafx.stage.Popup;
 
 public class Main extends Application {
 	final int SCREEN_WIDTH = 800;
@@ -24,6 +24,7 @@ public class Main extends Application {
     boolean pressed;
     int timesPressed;
     Text Message1;
+    Polygon tile;
 
     @Override
 	public void start(Stage myStage) throws Exception {
@@ -32,7 +33,17 @@ public class Main extends Application {
     	Message1.setX(Message1.maxWidth(FONT_SIZE));
     	Message1.setY(SCREEN_HEIGHT/2-Message1.maxHeight(FONT_SIZE));
     	
-		Group root = new Group(Message1);
+		double[] points = {
+			100.0, 0.0,
+			200.0, 100.0,
+			200.0, 200.0,
+			100.0, 300.0,
+			0.0, 200.0,
+			0.0, 100.0
+			};
+    	tile = new Polygon(points);
+    	
+		Group root = new Group(tile);
 
 		timer = new GameTimer();
 		timer.start();
