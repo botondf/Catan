@@ -34,7 +34,7 @@ public class Building {
 	
 	@Override
 	public String toString() {
-		return "Building [type=" + type + ", owner=" + owner + ", place=" + place + ", cost=" + cost + "]";
+		return "Building [type=" + type + ", owner=" + owner.id + ", place=" + place + ", cost=" + cost + "]";
 	}
 
 	Building(BuildingType type) {

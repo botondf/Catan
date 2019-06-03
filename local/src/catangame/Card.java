@@ -5,7 +5,27 @@ package catangame;
  *
  */
 public class Card {
-	Card() {
-		
+	int value;
+	private CardType type;
+	
+	
+	
+	Card(int value) {
+		this.value = value;
 	}
+
+	public int getValue() {
+		return value;
+	}
+
+	public void setValue(int value) {
+		this.value = value;
+	}
+
+	@Override
+	public String toString() {
+		return "Card [value=" + value + "]";
+	}
+	
+	
 }

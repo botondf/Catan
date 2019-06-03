@@ -49,10 +49,6 @@ public class Tile {
 	public void setType(TileType type) {
 		this.type = type;
 	}
-	
-	public void addBuilding(Building building) {
-		getBuildings().add(building);
-	}
 
 	public List<Building> getBuildings() {
 		return buildings;

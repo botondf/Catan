@@ -27,6 +27,20 @@ public class Player {
 		items.add(item);
 	}
 	
+	public void addBuildingAtTile(Tile tileToBuildAt, Building newBuilding) {
+		tileToBuildAt.getBuildings().add(newBuilding);
+		this.buildings.add(newBuilding);
+	}
+	
+	public void checkVP() {
+		for (Building b : this.buildings) {
+			this.vp += b.getValue();
+		}
+		for (Card c : this.cards) {
+			this.vp += c.getValue();
+		}
+	}
+	
 	public void incrementItems(Item item, int increment) {
 		item.amount += increment;
 	}

@@ -11,11 +11,12 @@ public class debug2 {
 		System.out.println(board.toString() + "\n");
 		int j = 11;
 		Building b = new Building(BuildingType.SETTLEMENT, players[0], new Place());
-		board.getTilesWithValue(j).get(0).addBuilding(b);
+		players[0].addBuildingAtTile(board.getTilesWithValue(j).get(0), b);
 		//players[0].buildings.add(b);
 		//board.getTilesWithValue(j).get(1).addBuilding(new Building(BuildingType.CITY, players[0], new Place()));
 		System.out.println("Tile w value " + j + ": " + board.getTilesWithValue(j).toString());
 		//Logic.rollDice();
+		players[0].checkVP();
 		System.out.println(players[0].toString());
 		//System.out.println("Roll: " + Logic.roll + ",  " + "Tile: "+ board.getTilesWithValue(Logic.roll).toString());
 		

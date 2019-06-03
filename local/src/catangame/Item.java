@@ -11,6 +11,11 @@ public class Item {
 		this.amount = amount;
 	}
 	
+	@Override
+	public String toString() {
+		return "Item [type=" + type + ", amount=" + amount + "]";
+	}
+
 	public void addAmount(int amount) {
 		this.amount += amount;
 	}
