@@ -1,4 +1,4 @@
-package catangame;
+package catan;
 
 
 public class Logic {

@@ -1,8 +1,9 @@
-package catangame;
+package catan;
 
 import java.lang.Math;
 import java.util.*;
-import catangame.TileType.*;
+
+import catan.TileType.*;
 
 /**
  * 

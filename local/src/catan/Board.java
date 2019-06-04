@@ -1,8 +1,8 @@
-package catangame;
+package catan;
 
 import java.util.*;
-
-import catangame.Tile.*;
+//import catangame.Tile.*;
+import javafx.scene.shape.*;
 
 /**
  * Handles, holds, finds, Tiles and their positions (x,y) & board-wise. Does initial board generation. Also creates the harbours
@@ -12,6 +12,9 @@ public class Board {
 	private final int[] VALUES = {5, 2, 6, 3, 8, 10, 9, 12, 11, 4, 7, 8, 10, 9, 4, 5, 6, 3, 11};
 	public Tile[] boardTiles = new Tile[19]; // total 19 tiles
 	public List<Tile> selectedTiles;
+	private Circle[] markers = new Circle[19];
+	
+	
 	//Player[] players;
 	
 	Board() {
@@ -26,7 +29,7 @@ public class Board {
 	public String toString() {
 		String s = "";
 		for (int x = 0; x < boardTiles.length; x++) {
-			s += "\n" + boardTiles[x].toString();
+			s += "\n1: " + boardTiles[x].toString();
 		}
 		return "Tiles of board: " + s;
 	}

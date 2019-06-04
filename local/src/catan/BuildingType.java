@@ -1,4 +1,4 @@
-package catangame;
+package catan;
 
 import java.util.*;
 

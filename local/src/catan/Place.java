@@ -1,7 +1,8 @@
-package catangame;
+package catan;
 
 import java.util.*;
-import catangame.BuildingType.*;
+
+import catan.BuildingType.*;
 
 public class Place {
 	//array or list of neighbouring tiles

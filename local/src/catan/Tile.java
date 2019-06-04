@@ -1,7 +1,8 @@
-package catangame;
+package catan;
 
 import java.util.*;
 import javafx.scene.control.Button;
+import javafx.scene.shape.Polygon;
 
 
 /**
@@ -17,8 +18,8 @@ public class Tile {
 	List<Building> buildings;
 	TileType type; // each Tile.Type affects related Item.Type
 	Button button;
-	//graphic
-	//
+	// Graphics
+	Polygon tileShape;
 	//private int[] pos; // (x,y) does the tile actually need to know where it is? or can board handle that?
 	
 	Tile(TileType type, int value, List<Building> buildings) { // 

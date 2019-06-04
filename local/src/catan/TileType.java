@@ -1,4 +1,4 @@
-package catangame;
+package catan;
 
 public enum TileType {
 	HILL("Hill", ItemType.BRICK),

@@ -1,4 +1,4 @@
-package catangame;
+package catan;
 
 public enum CardType {	
 	SOLDIER(1),
