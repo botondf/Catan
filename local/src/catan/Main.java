@@ -27,23 +27,29 @@ public class Main extends Application {
     Scene scene;
     boolean pressed;
     int timesPressed;
-    //Text Message1;
+    Text Message1;
     Polygon tile;
     Circle circle;
     
 
     @Override
 	public void start(Stage myStage) throws Exception {
-//    	Message1 = new Text("Times Space or Enter Pressed: " + timesPressed);
-//    	Message1.setFont(Font.font(FONT_SIZE));
-//    	Message1.setX(Message1.maxWidth(FONT_SIZE));
-//    	Message1.setY(SCREEN_HEIGHT/2-Message1.maxHeight(FONT_SIZE));
+    	Message1 = new Text("Times Space or Enter Pressed: " + timesPressed);
+    	Message1.setFont(Font.font(FONT_SIZE));
+    	Message1.setX(Message1.maxWidth(FONT_SIZE));
+    	Message1.setY(SCREEN_HEIGHT/2-Message1.maxHeight(FONT_SIZE));
     	
     	List<Shape> shapes = new ArrayList<Shape>();
-    	shapes.addAll(BoardUI.makeTile(100,100));
-    	shapes.addAll(BoardUI.makeTile(100,300));
     	
-		Group group = new Group(shapes.get(0), shapes.get(1), shapes.get(2), shapes.get(3));
+    	int[] tileCoordsX = { 20, 100, 300, 300 };
+    	int[] tileCoordsY = { 20, 100, 300, 400 };
+    	
+    	for (int x = 0; x < tileCoordsX.length; x++) {
+    		shapes.addAll(BoardUI.makeTile(tileCoordsX[x],tileCoordsY[x]));
+    	}
+    	
+    	Group group = new Group(Message1);
+    	group.getChildren().addAll(shapes);
 
 		timer = new GameTimer();
 		timer.start();
@@ -55,12 +61,12 @@ public class Main extends Application {
         scene.setOnMouseReleased(event -> handleMouseReleased(event));
         
 		// Set up the stage
-//        MotionBlur motionBlur = new MotionBlur();
-//        motionBlur.setRadius(5);
-//        motionBlur.setAngle(-15.0);
-        //Message1.setFill(Color.web("0x3d226d"));
-        //Message1.setFont(Font.font("Comic Sans MS", FontWeight.NORMAL, FONT_SIZE)); //FontWeight.BOLD
-//        txtTimesPressed.setEffect(motionBlur);
+        MotionBlur motionBlur = new MotionBlur();
+        motionBlur.setRadius(5);
+        motionBlur.setAngle(-15.0);
+        Message1.setFill(Color.web("0x3d226d"));
+        Message1.setFont(Font.font("Comic Sans MS", FontWeight.NORMAL, FONT_SIZE)); //FontWeight.BOLD
+        Message1.setEffect(motionBlur);
         
 		myStage.setTitle("Main");
 		myStage.setScene(scene);
@@ -74,15 +80,15 @@ public class Main extends Application {
 	class GameTimer extends AnimationTimer {
         @Override
         public void handle(long now) {
+        	if (pressed) {
+        		timesPressed++;
+//        		txtTimesPressed.setX(Math.random() * 100 + SCREEN_WIDTH/2-txtTimesPressed.maxWidth(FONT_SIZE));
+//        		txtTimesPressed.setY(Math.random() * 100 + SCREEN_HEIGHT/2-txtTimesPressed.maxHeight(FONT_SIZE));
+        	}
 //        	if (pressed) {
-//        		timesPressed++;
-////        		txtTimesPressed.setX(Math.random() * 100 + SCREEN_WIDTH/2-txtTimesPressed.maxWidth(FONT_SIZE));
-////        		txtTimesPressed.setY(Math.random() * 100 + SCREEN_HEIGHT/2-txtTimesPressed.maxHeight(FONT_SIZE));
+//        		//player.incrementItems(player.itemsList.get(z), 10);
 //        	}
-//        	if (pressed) {
-//        		player.incrementItems(player.itemsList.get(z), 10);
-//        	}
-        	//Message1.setText("Times Space or Enter Pressed: " + timesPressed);
+        	Message1.setText("Times Space or Enter Pressed: " + timesPressed);
     		
         }
     }

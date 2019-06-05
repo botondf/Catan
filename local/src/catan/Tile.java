@@ -17,9 +17,9 @@ public class Tile {
 	int value;
 	List<Building> buildings;
 	TileType type; // each Tile.Type affects related Item.Type
-	Button button;
+	//Button button;
 	// Graphics
-	Polygon tileShape;
+	//Polygon tileShape;
 	//private int[] pos; // (x,y) does the tile actually need to know where it is? or can board handle that?
 	
 	Tile(TileType type, int value, List<Building> buildings) { // 
@@ -36,7 +36,7 @@ public class Tile {
 	
 	@Override
 	public String toString() {
-		return "Tile [value=" + value + ", buildings=" + buildings + ", type=" + type + ", button=" + button + "]";
+		return "Tile [value=" + value + ", buildings=" + buildings + ", type=" + type + "]";
 	}
 
 	public void setValue(int value) {

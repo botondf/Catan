@@ -29,7 +29,7 @@ public class Board {
 	public String toString() {
 		String s = "";
 		for (int x = 0; x < boardTiles.length; x++) {
-			s += "\n1: " + boardTiles[x].toString();
+			s += "\n" + (x+1) + ": " + boardTiles[x].toString();
 		}
 		return "Tiles of board: " + s;
 	}
