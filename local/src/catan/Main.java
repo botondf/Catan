@@ -39,8 +39,11 @@ public class Main extends Application {
 //    	Message1.setX(Message1.maxWidth(FONT_SIZE));
 //    	Message1.setY(SCREEN_HEIGHT/2-Message1.maxHeight(FONT_SIZE));
     	
-    	List<Shape> shapes = BoardUI.makeTile(100,100);
-		Group group = new Group(shapes.get(0), shapes.get(1));
+    	List<Shape> shapes = new ArrayList<Shape>();
+    	shapes.addAll(BoardUI.makeTile(100,100));
+    	shapes.addAll(BoardUI.makeTile(100,300));
+    	
+		Group group = new Group(shapes.get(0), shapes.get(1), shapes.get(2), shapes.get(3));
 
 		timer = new GameTimer();
 		timer.start();
