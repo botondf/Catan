@@ -3,19 +3,27 @@ package catan;
 import catan.BoardUI;
 import java.util.*;
 
+import javafx.geometry.Rectangle2D;
 import javafx.scene.paint.Color;
 //import catangame.Tile.*;
 import javafx.scene.shape.*;
+import javafx.stage.Screen;
 
 /**
  * Handles, holds, finds, Tiles and their positions (x,y) & board-wise. Does initial board generation. Also creates the harbours
  *
  */
 public class Board {
+	private Screen screen = Screen.getPrimary();
+	private Rectangle2D bounds = screen.getVisualBounds();
+	
+	private final double SCREEN_WIDTH = bounds.getWidth();
+	private final double SCREEN_HEIGHT = bounds.getHeight();
+	
 	private final int[] VALUES = {5, 2, 6, 3, 8, 10, 9, 12, 11, 4, 7, 8, 10, 9, 4, 5, 6, 3, 11};
 	public Tile[] boardTiles = new Tile[19]; // total 19 tiles
 	public List<Tile> selectedTiles;
-	private Circle[] markers = new Circle[19];
+	//private Circle[] markers = new Circle[19];
 	
 	
 	//Player[] players;
@@ -30,9 +38,9 @@ public class Board {
 	}
 	
 	public void generateBoardUI() {
-		double x = Main.SCREEN_WIDTH / 2;
-		double y = Main.SCREEN_HEIGHT / 2;
-		double edge = 99; // edge
+		double x = SCREEN_WIDTH / 2;
+		double y = SCREEN_HEIGHT / 2;
+		double edge = 99.5; // edge
 		double length = (int) (Math.sqrt(3) * edge) + 1;
 		int a = (int) (length * Math.cos(Math.toRadians(60)));
 		int b = (int) (length * Math.cos(Math.toRadians(30)));
@@ -65,7 +73,7 @@ public class Board {
 	
 	public void makeShapes() {
 		for (Tile tile : boardTiles) {
-			tile.setShape(new Hexagon(tile.x, tile.y));
+			tile.setShape(new Hexagon(tile.x, tile.y, tile.value));
 		}
 	}
 	
@@ -143,4 +151,9 @@ public class Board {
 				boardTiles[v].setValue(VALUES[v]);	// tile value is set by VALUES
 			}
 		}
+	
+	public static void main(String[] args) {
+		Board board = new Board();
+		System.out.println(board.SCREEN_WIDTH+ "\n" + board.SCREEN_HEIGHT);
+	}
 }
