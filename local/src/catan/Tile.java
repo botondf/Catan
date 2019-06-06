@@ -13,10 +13,13 @@ import javafx.scene.shape.Polygon;
  *
  */
 public class Tile {
-	//int id;
 	int value;
 	List<Building> buildings;
 	TileType type; // each Tile.Type affects related Item.Type
+	double x;
+	double y;
+	Hexagon shape;
+	
 	//Button button;
 	// Graphics
 	//Polygon tileShape;
@@ -29,20 +32,24 @@ public class Tile {
 		this.setBuildings(buildings);
 	}
 	
-//	@Override
-//	public String toString() {
-//		return "Value: " + value + ", TileType: " + getType() +  ", Resource: " + getType().getResource() + ", Buildings: " + getBuildings().toString(); //+ " , Position: (" + x + ", " + y + ")" ;
-//	}
+	public void setPosition(double x, double y) {
+		this.x = x;
+		this.y = y;
+	}
 	
 	@Override
 	public String toString() {
-		return "Tile [value=" + value + ", buildings=" + buildings + ", type=" + type + "]";
+		return "Tile [value=" + value + ", buildings=" + buildings + ", type=" + type + ", centre=("+x+","+y+")]";
 	}
 
 	public void setValue(int value) {
 		this.value = value;
 	}
 
+	public void setShape(Hexagon shape) {
+		this.shape = shape;
+	}
+	
 	public TileType getType() {
 		return type;
 	}

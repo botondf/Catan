@@ -8,6 +8,10 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
 
+import java.lang.Math;
+
+import catan.Board.*;
+
 public class BoardUI {
 	//public List<Shape> shapes = new ArrayList<Shape>();
 	
@@ -25,7 +29,7 @@ public class BoardUI {
     	shapes.add(circle);
 		return shapes;	
     }
-    
+
     public static Polygon makeRegularHexagon(int x, int y, Color color) {
     	double[] points = {
     			x + 50,   y + 0,

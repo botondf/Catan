@@ -24,4 +24,22 @@ public class Debug {
 		//System.out.println("Roll: " + Logic.roll + ",  " + "Tile: "+ board.getTilesWithValue(Logic.roll).toString());
 		
 	}
+	
+	public static void init() {
+		Player[] players = new Player[4];
+		for (int x = 1; x <= players.length; x++) {
+			players[x-1] = new Player(x);
+		}
+		
+		Board board = new Board();
+		
+		int j = Logic.randomNumber(1, 6) + Logic.randomNumber(1, 6);
+		Building b = new Building(BuildingType.SETTLEMENT, players[0], new Place());
+		Building b2 = new Building(BuildingType.CITY, players[0], new Place());
+		
+		players[0].addBuildingAtTile(board.getTilesWithValue(j).get(0), b);
+		players[0].addBuildingAtTile(board.getTilesWithValue(j).get(0), b2);
+		players[0].checkVP();
+		board.draw();
+	}
 }

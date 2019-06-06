@@ -9,36 +9,61 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
 
 public class Hexagon {
-	int x;
-	int y;
+	double x;
+	double y;
+	Polygon hex;
 	Color color;
-	Polygon shape;
 	
-	Hexagon(int x, int y, Color color) {
+	Hexagon(double x, double y) {
 		this.x = x;
 		this.y = y;
+		this.hex = makeRegularHexagon(this.x, this.y);
+	}
+	
+	@Override
+	public String toString() {
+		return "Hexagon [x=" + x + ", y=" + y + ", hex=" + hex + "]";
+	}
+
+	public void rotatePoints(int n, double radius) {
+        this.x = (int) (radius * Math.cos(Math.toRadians(n*60)));
+        this.y = (int) (radius * Math.sin(Math.toRadians(n*60)));
+	}
+	
+	public void setCentre(double x, double y) {
+		this.x = x;
+		this.y = y;
+	}
+	
+	public void setColor(Color color) {
 		this.color = color;
 	}
 	
-	 public static Polygon makeRegularHexagon(int x, int y, Color color) {
+	 public Polygon makeRegularHexagon(double x, double y) {
 	    	double[] points = {
-	    			x+5, y+0,
-	    			x+15, y+0,
-	    			x+20, y+8.66,
-	    			x+15, y+17.32,
-	    			x+5, y+17.32,
-	    			x+0, y+8.66
-	    			
 //	    			x+50, y+0,
 //	    			x+150, y+0,
 //	    			x+200, y+86.6,
 //	    			x+150, y+173.2,
 //	    			x+50, y+173.2,
 //	    			x+0, y+86.6
+	    			x+50, y+86.6,//
+	    			x+100, y,//
+	    			x+50, y-86.6,//
+	    			x-50, y-86.6,
+	    			x-100, y,
+	    			x-50, y+86.6
 				};
 	    	
 	    	Polygon hexagon = new Polygon(points);
 	    	hexagon.setFill(color);
 			return hexagon;
 	    }
+	 
+	 public static void main(String[] args) {
+		 Hexagon hex = new Hexagon(100, 100);
+		 System.out.println(hex.toString());
+		 hex.rotatePoints(1, 60);
+		 System.out.println(hex.toString());
+	 }
 }

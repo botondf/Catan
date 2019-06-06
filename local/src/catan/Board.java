@@ -1,5 +1,6 @@
 package catan;
 
+import catan.BoardUI;
 import java.util.*;
 //import catangame.Tile.*;
 import javafx.scene.shape.*;
@@ -19,10 +20,51 @@ public class Board {
 	
 	Board() {
 		// Generate new randomized board
-		generateNewTileSet();		
+		generateNewTileSet();
+		generateBoardUI();
 				//	Create Tile
 				//		Set values to Tile
 				//		*Determine (X,Y) co-ords of each tile for drawing
+	}
+	
+	public void generateBoardUI() {
+		double x = Main.SCREEN_WIDTH / 2;
+		double y = Main.SCREEN_HEIGHT / 2;
+		double edge = 50.0; // edge
+		double length = (int) (Math.sqrt(3) * edge) + 1;
+		int a = (int) (length * Math.cos(Math.toRadians(60)));
+		int b = (int) (length * Math.cos(Math.toRadians(30)));
+		int c1 = (int) (3 * edge * Math.tan(Math.toRadians(30)));
+		int c2 = (int) (1.5 * edge * Math.tan(Math.toRadians(60)));
+
+		// setting centre of each tile pos counter-clockwise from middle tile based on base x, y
+		boardTiles[0].setPosition(x, y);
+		boardTiles[1].setPosition(x - b, y - a);
+		boardTiles[2].setPosition(x, y - length);
+		boardTiles[3].setPosition(x + b, y - a);
+		boardTiles[4].setPosition(x + b, y + a);
+		boardTiles[5].setPosition(x, y + length);
+		boardTiles[6].setPosition(x - b, y + a);
+
+		boardTiles[7].setPosition(x - 3 * edge, y);
+		boardTiles[8].setPosition(x - 3 * edge, y - c1);
+		boardTiles[9].setPosition(x - 1.5 * edge, y - c2);
+		boardTiles[10].setPosition(x, y - 2 * length);
+		boardTiles[11].setPosition(x + 1.5 * edge, y - c2);
+		boardTiles[12].setPosition(x + 3 * edge, y - c1);
+		boardTiles[13].setPosition(x + 3 * edge, y);
+		boardTiles[14].setPosition(x + 3 * edge, y + c1);
+		boardTiles[15].setPosition(x + 1.5 * edge, y + c2);
+		boardTiles[16].setPosition(x, y + 2 * length);
+		boardTiles[17].setPosition(x - 1.5 * edge, y + c2);
+		boardTiles[18].setPosition(x - 3 * edge, y + c1);
+		//return board;
+	}
+	
+	public void makeSHapes() {
+		for (Tile tile : boardTiles) {
+			tile.setShape(new Hexagon(tile.x, tile.y));
+		}
 	}
 	
 	@Override
