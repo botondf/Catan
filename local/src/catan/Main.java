@@ -2,6 +2,7 @@ package catan;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.geometry.Bounds;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
@@ -24,30 +25,38 @@ import catan.BoardUI.*;
 
 import javafx.stage.Popup;
 import javafx.stage.Screen;
-import javafx.scene.input.KeyCombination;
 
 
 public class Main extends Application {
 	Screen screen = Screen.getPrimary();
 	Rectangle2D bounds = screen.getVisualBounds();
 	
-	public final double SCREEN_WIDTH = bounds.getWidth();
-	public final double SCREEN_HEIGHT = bounds.getHeight();
+	public final double SCREEN_WIDTH = 1920;
+	public final double SCREEN_HEIGHT = 1980;
 	final int FONT_SIZE = 20;
 	GameTimer timer;
     Scene scene;
     Circle circle;
     Button reset;
 	boolean fs;
+	boolean close;
 	//Board board;
+	boolean pressed;
+	public Board board;
 	
     @Override
 	public void start(Stage myStage) throws Exception { 	
     	List<Shape> shapes = new ArrayList<Shape>();
     	
+    	
+    	
     	Board board = new Board();
+    	
+    	reset = new Button();
     	reset.setText("Reset");
-    	//reset.setOnMouseClicked(event -> board = new Board());
+    	reset.setLayoutX(10);
+    	reset.setLayoutY(10);
+    	reset.setOnAction((event -> System.out.println(board.toString())));//handleButtonClick(event)));
     	
     	for (Tile tile : board.boardTiles) {
 			tile.setShape(new Hexagon(tile.x, tile.y, tile.value));
@@ -57,11 +66,11 @@ public class Main extends Application {
 			shapes.add(tile.shape.text);
 		}
     	
-    	myStage.setX(bounds.getMinX());
-    	myStage.setY(bounds.getMinY());
+    	myStage.setX(0);
+    	myStage.setY(0);
     	myStage.setWidth(bounds.getWidth());//bounds.getWidth());
     	myStage.setHeight(bounds.getHeight());//bounds.getHeight());
-    	//myStage.setFullScreen(true);
+    	myStage.setFullScreen(true);
     	//myStage.setFullScreenExitHint("ESC to exit fullscreen");
     	
     	Group group = new Group();
@@ -70,6 +79,9 @@ public class Main extends Application {
     	
 		timer = new GameTimer();
 		timer.start();
+		
+//		Button exitButton = new Button("Exit");
+//		exitButton.setOnAction(event -> handleButtonClicked(event));
 		
 		Scene scene = new Scene(group, SCREEN_WIDTH, SCREEN_HEIGHT);
         scene.setOnKeyPressed(event -> handleKeyPressed(event));
@@ -91,9 +103,18 @@ public class Main extends Application {
 
 		@Override
         public void handle(long now) {
-        	
+        	if (pressed) {
+	        	System.out.println("aa");
+	        	board = new Board();
+        	}
         }
     }
+	
+	private void handleButtonClick(ActionEvent event) {
+		if (event.getSource().equals(reset)) {
+			pressed = true;
+		}
+	}
 	
 	/*
      * Method that handles key input from the user
@@ -126,7 +147,7 @@ public class Main extends Application {
     	
     	if (code == MouseButton.PRIMARY) {
     		
-    	}
+    	}    	
     }
     
     private void handleMouseReleased(MouseEvent event) {
