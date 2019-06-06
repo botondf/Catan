@@ -2,6 +2,8 @@ package catan;
 
 import catan.BoardUI;
 import java.util.*;
+
+import javafx.scene.paint.Color;
 //import catangame.Tile.*;
 import javafx.scene.shape.*;
 
@@ -30,7 +32,7 @@ public class Board {
 	public void generateBoardUI() {
 		double x = Main.SCREEN_WIDTH / 2;
 		double y = Main.SCREEN_HEIGHT / 2;
-		double edge = 50.0; // edge
+		double edge = 99; // edge
 		double length = (int) (Math.sqrt(3) * edge) + 1;
 		int a = (int) (length * Math.cos(Math.toRadians(60)));
 		int b = (int) (length * Math.cos(Math.toRadians(30)));
@@ -61,7 +63,7 @@ public class Board {
 		//return board;
 	}
 	
-	public void makeSHapes() {
+	public void makeShapes() {
 		for (Tile tile : boardTiles) {
 			tile.setShape(new Hexagon(tile.x, tile.y));
 		}
@@ -131,7 +133,7 @@ public class Board {
 			} else if (i == 10) {
 				boardTiles[i] = new Tile(TileType.DESERT, 0, new ArrayList<Building>());	// 1 desert (will always have value 7)
 			} else if (i >= 11 && i <= 14) {
-				boardTiles[i] = new Tile(TileType.MOUNTAIN, 0, new ArrayList<Building>());	// 4 forests
+				boardTiles[i] = new Tile(TileType.FOREST, 0, new ArrayList<Building>());	// 4 forests
 			} else if (i >= 15 && i <= 18) {
 				boardTiles[i] = new Tile(TileType.FIELD, 0, new ArrayList<Building>());	// 4 fields
 			}

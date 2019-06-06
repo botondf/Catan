@@ -1,20 +1,20 @@
 package catan;
 
+import javafx.scene.paint.Color;
+
 public enum TileType {
-	HILL("Hill", ItemType.BRICK),
-	PASTURE("Pasture", ItemType.WOOL), 
-	FOREST("Forest", ItemType.LUMBER),
-	MOUNTAIN("Mountain", ItemType.ORE),
-	FIELD("Field", ItemType.GRAIN),
-	DESERT("Desert", null);
-//	WATER(null, null),
-//	HARBOUR("Harbour", null);
+	HILL(Color.BROWN , ItemType.BRICK),
+	PASTURE(Color.YELLOWGREEN , ItemType.WOOL), 
+	FOREST(Color.DARKGREEN, ItemType.LUMBER),
+	MOUNTAIN(Color.DARKGREY, ItemType.ORE),
+	FIELD(Color.web("e5bf29"), ItemType.GRAIN),
+	DESERT(Color.ANTIQUEWHITE, null);
 	
+	private Color color;
 	private ItemType resource;
-	private String label;
 	
-	TileType(String label, ItemType resource) {
-		this.label = label;
+	TileType(Color color, ItemType resource) {
+		this.color = color;
 		this.resource = resource;
 	}
 
@@ -22,8 +22,12 @@ public enum TileType {
 		return resource;
 	}
 	
-	public String getLabel() {
-		return label;
+	public Color getColor() {
+		return color;
+	}
+	
+	public void setColor(Color color) {
+		this.color = color;
 	}
 
 }

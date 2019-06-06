@@ -18,6 +18,7 @@ public class Hexagon {
 		this.x = x;
 		this.y = y;
 		this.hex = makeRegularHexagon(this.x, this.y);
+		//this.color = color;
 	}
 	
 	@Override
@@ -37,6 +38,7 @@ public class Hexagon {
 	
 	public void setColor(Color color) {
 		this.color = color;
+		this.hex.setFill(color);
 	}
 	
 	 public Polygon makeRegularHexagon(double x, double y) {

@@ -25,13 +25,12 @@ public class Main extends Application {
 	Screen screen = Screen.getPrimary();
 	Rectangle2D bounds = screen.getVisualBounds();
 	
-	public final static double SCREEN_WIDTH = 800;
-	public final static double SCREEN_HEIGHT = 600;
+	public final static double SCREEN_WIDTH = 1920;
+	public final static double SCREEN_HEIGHT = 1080;
 	final int FONT_SIZE = 20;
 	GameTimer timer;
     Scene scene;
     Circle circle;
-    Hexagon
     
     @Override
 	public void start(Stage myStage) throws Exception { 	
@@ -46,20 +45,20 @@ public class Main extends Application {
     	Board board = new Board();
     	
     	for (Tile tile : board.boardTiles) {
-			tile.setShape(new Polygon(tile.x, tile.y));
-			tile.shape
+			tile.setShape(new Hexagon(tile.x, tile.y));
+			tile.shape.setColor(tile.type.getColor());
+			shapes.add(tile.shape.hex);
 		}
     	
-    	myStage.setX(SCREEN_WIDTH);
-    	myStage.setY(SCREEN_HEIGHT);
-    	myStage.setWidth(bounds.getWidth());
-    	myStage.setHeight(bounds.getHeight());
+    	myStage.setX(0);
+    	myStage.setY(0);
+    	myStage.setWidth(SCREEN_WIDTH);//bounds.getWidth());
+    	myStage.setHeight(SCREEN_HEIGHT);//bounds.getHeight());
+    	myStage.setFullScreen(true);
     	
     	Group group = new Group();
     	group.getChildren().addAll(shapes);
     	
-    	
-
 		timer = new GameTimer();
 		timer.start();
 		
