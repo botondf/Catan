@@ -55,7 +55,6 @@ public class Board {
 		boardTiles[4].setPosition(x + b, y + a);
 		boardTiles[5].setPosition(x, y + length);
 		boardTiles[6].setPosition(x - b, y + a);
-
 		boardTiles[7].setPosition(x - 3 * edge, y);
 		boardTiles[8].setPosition(x - 3 * edge, y - c1);
 		boardTiles[9].setPosition(x - 1.5 * edge, y - c2);
@@ -68,7 +67,6 @@ public class Board {
 		boardTiles[16].setPosition(x, y + 2 * length);
 		boardTiles[17].setPosition(x - 1.5 * edge, y + c2);
 		boardTiles[18].setPosition(x - 3 * edge, y + c1);
-		//return board;
 	}
 	
 	public void makeShapes() {
@@ -155,5 +153,20 @@ public class Board {
 	public static void main(String[] args) {
 		Board board = new Board();
 		System.out.println(board.SCREEN_WIDTH+ "\n" + board.SCREEN_HEIGHT);
+	}
+
+	public List<Shape> buildTileShapes() {
+		List<Shape> shapes = new ArrayList<Shape>();
+		
+		for (Tile tile : this.boardTiles) {
+			Hexagon tileShapes = new Hexagon(tile.x, tile.y, tile.value);
+			tile.setShape(tileShapes);
+			tileShapes.setColor(tile.type.getColor());
+			
+			shapes.add(tileShapes.hex);
+			shapes.add(tileShapes.circle);
+			shapes.add(tileShapes.text);
+		}
+		return shapes;
 	}
 }

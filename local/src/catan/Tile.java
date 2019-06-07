@@ -2,6 +2,7 @@ package catan;
 
 import java.util.*;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Polygon;
 
 
@@ -48,6 +49,11 @@ public class Tile {
 
 	public void setShape(Hexagon shape) {
 		this.shape = shape;
+		this.shape.setOnMouseClicked(this::onHexagonMouseClicked);
+	}
+	
+	public Hexagon getShape() {
+		return shape;
 	}
 	
 	public TileType getType() {
@@ -64,6 +70,10 @@ public class Tile {
 
 	public void setBuildings(List<Building> buildings) {
 		this.buildings = buildings;
+	}
+
+	public void onHexagonMouseClicked(MouseEvent event) {
+		System.out.println("Tile clicked = " + toString());
 	}
 	
 	

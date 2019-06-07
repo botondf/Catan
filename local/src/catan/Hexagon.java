@@ -1,14 +1,16 @@
 package catan;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+//import java.util.ArrayList;
+//import java.util.List;
+//import java.util.Objects;
 
 import javafx.scene.text.*;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Shape;
+//import javafx.scene.shape.Shape;
 
 public class Hexagon {
 	double FONT_SIZE = 15;
@@ -60,21 +62,7 @@ public class Hexagon {
         this.y = (int) (radius * Math.sin(Math.toRadians(n*60)));
 	}
 	
-	public List<Shape> makeTile(int x, int y) {
-		List<Shape> shapes = new ArrayList<Shape>();
-		double r = 20.0;
-    	Circle circle = new Circle();
-    	circle.setCenterX(x+100);
-    	circle.setCenterY(y+100-r/2);
-    	circle.setRadius(r);
-    	circle.setFill(Color.BLANCHEDALMOND);
-    	circle.setStroke(Color.BLACK);
-    	
-    	shapes.add(hex);
-    	shapes.add(circle);
-		return shapes;	
-    }
-	
+	//NOTUSED
 	public void setCentre(double x, double y) {
 		this.x = x;
 		this.y = y;
@@ -98,7 +86,10 @@ public class Hexagon {
 	    	Polygon hexagon = new Polygon(points);
 	    	hexagon.setFill(color);
 	    	hexagon.setStroke(Color.BLACK);
-	    	//hexagon.setOnMouseClicked(value);
 			this.hex = hexagon;
 	    }
+	 
+	 public void setOnMouseClicked(EventHandler<? super MouseEvent> eventHandlerFunction) {
+		 hex.setOnMouseClicked(eventHandlerFunction);
+	 }
 }
