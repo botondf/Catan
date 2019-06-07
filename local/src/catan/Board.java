@@ -144,12 +144,15 @@ public class Board {
 				boardTiles[i] = new Tile(TileType.FIELD, 0, new ArrayList<Building>());	// 4 fields
 			}
 		}
+		
 		shuffle(); // shuffle tiles to randomize board
+		
 		for (int v = 0; v < VALUES.length; v++) {
 				boardTiles[v].setValue(VALUES[v]);	// tile value is set by VALUES
 			}
 		}
 	
+	// test screen
 	public static void main(String[] args) {
 		Board board = new Board();
 		System.out.println(board.SCREEN_WIDTH+ "\n" + board.SCREEN_HEIGHT);

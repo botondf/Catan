@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.*;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
 import javafx.scene.shape.*;
@@ -134,6 +135,10 @@ public class Main extends Application {
 			}
 			if (rollClicked) {
 				turnText.setText("Roll: " + logic.roll);
+				for (Tile t : board.getTilesWithValue(logic.roll)) {
+					t.getShape().hex.setStroke(Color.DARKGOLDENROD);
+				}
+				drawBoard(board);
 				rollClicked = false;
 			}
 		}
