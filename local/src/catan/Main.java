@@ -32,13 +32,14 @@ public class Main extends Application {
 	Screen screen = Screen.getPrimary();
 	Rectangle2D bounds = screen.getVisualBounds();
 
-	public final double SCREEN_WIDTH = 1920;
-	public final double SCREEN_HEIGHT = 1980;
+	public final double SCREEN_WIDTH = bounds.getWidth();;
+	public final double SCREEN_HEIGHT = bounds.getHeight();
 	final int FONT_SIZE = 20;
 	GameTimer timer;
 	Scene scene;
 	private Group group;
-
+	private boolean fullscreen = true;
+	
 	boolean reset;
 	boolean pressed;
 	public Board board;
@@ -48,17 +49,17 @@ public class Main extends Application {
 	private Text turnText;
 	private Logic logic;
 	boolean rollClicked;
-	
+
 	@Override
-	public void start(Stage myStage) throws Exception {
-		myStage.setX(0);
-		myStage.setY(0);
-		myStage.setWidth(bounds.getWidth());// bounds.getWidth());
-		myStage.setHeight(bounds.getHeight());// bounds.getHeight());
-		//myStage.setFullScreen(true);
+	public void start(Stage stage) throws Exception {
+		stage.setX(0);
+		stage.setY(0);
+		stage.setWidth(bounds.getWidth());
+		stage.setHeight(bounds.getHeight());
+		// stage.setFullScreen(true);
 
 		logic = new Logic();
-		
+
 		resetButton = new Button();
 		resetButton.setText("Reset");
 		resetButton.setLayoutX(10);
@@ -69,15 +70,15 @@ public class Main extends Application {
 		exitButton.setLayoutX(10);
 		exitButton.setLayoutY(50);
 		exitButton.setOnAction(this::handleExitButtonClicked);
-		
+
 		rollButton = new Button("Roll");
 		rollButton.setLayoutX(10);
 		rollButton.setLayoutY(100);
 		rollButton.setOnAction(this::handleRollButtonClicked);
-		
+
 		turnText = new Text();
 		turnText.setText("Roll: ");
-		turnText.setX(SCREEN_WIDTH/2);
+		turnText.setX(SCREEN_WIDTH / 2);
 		turnText.setY(20);
 
 		group = new Group();
@@ -87,21 +88,24 @@ public class Main extends Application {
 		drawBoard(board);
 
 		Scene scene = new Scene(group, SCREEN_WIDTH, SCREEN_HEIGHT);
-        scene.setOnKeyPressed(event -> handleKeyPressed(event));
-        scene.setOnKeyReleased(event -> handleKeyReleased(event));
-        scene.setOnMousePressed(event -> handleMousePressed(event));
-        scene.setOnMouseReleased(event -> handleMouseReleased(event));
-        
+		scene.setOnKeyPressed(event -> handleKeyPressed(event));
+		scene.setOnKeyReleased(event -> handleKeyReleased(event));
+		scene.setOnMousePressed(event -> handleMousePressed(event));
+		scene.setOnMouseReleased(event -> handleMouseReleased(event));
+
 		// Set up the stage
-		myStage.setTitle("Main");
-		myStage.setScene(scene);
-		myStage.show();
-    	
+		stage.setFullScreen(fullscreen);
+		stage.setTitle("Main");
+		stage.setScene(scene);
+		stage.show();
+
 		timer = new GameTimer();
 		timer.start();
 	}
-	
-	/**List<Shape> shapes = new ArrayList<Shape>();
+
+	/**
+	 * List<Shape> shapes = new ArrayList<Shape>();
+	 * 
 	 * @param board
 	 */
 	private void drawBoard(Board board) {
@@ -116,79 +120,79 @@ public class Main extends Application {
 	}
 
 	public static void main(String[] args) {
-        launch(args);
+		launch(args);
 	}
-	
+
 	class GameTimer extends AnimationTimer {
 
 		@Override
-        public void handle(long now) {
-        	if (reset) {
-	        	board = new Board();
-	        	drawBoard(board);
-	        	reset = false;
-        	}
-        	if (rollClicked) {
-        		turnText.setText("Roll: " + logic.roll);
-        		rollClicked = false;
-        	}
-        }
-    }
-	
+		public void handle(long now) {
+			if (reset) {
+				board = new Board();
+				drawBoard(board);
+				reset = false;
+			}
+			if (rollClicked) {
+				turnText.setText("Roll: " + logic.roll);
+				rollClicked = false;
+			}
+		}
+	}
+
 	private void handleResetButtonClicked(ActionEvent event) {
 		reset = true;
 		System.out.println("Reset event = " + event);
 	}
-	
+
 	private void handleExitButtonClicked(ActionEvent event) {
 		System.exit(0);
 	}
-	
+
 	private void handleRollButtonClicked(ActionEvent event) {
 		logic.rollDice();
 		rollClicked = true;
 	}
-	
+
 	/*
-     * Method that handles key input from the user
-     */
-    private void handleKeyPressed(KeyEvent event) {
-        KeyCode code = event.getCode();
- 
-        if (code == KeyCode.SPACE || code == KeyCode.ENTER) {
-        	//board = new Board();
-        }
-        
-        if (code == KeyCode.F11) {
-        	
-        }
-    }
+	 * Method that handles key input from the user
+	 */
+	private void handleKeyPressed(KeyEvent event) {
+		KeyCode code = event.getCode();
 
-    /*
-     * Makes the paddle stop moving when the user release the directional key
-     */
-    private void handleKeyReleased(KeyEvent event) {
-        KeyCode code = event.getCode();
+		if (code == KeyCode.SPACE || code == KeyCode.ENTER) {
+			// board = new Board();
+		}
 
-        if (code == KeyCode.SPACE || code == KeyCode.ENTER) {
-        	//board = new Board();
-        }
-    }
-    
-    private void handleMousePressed(MouseEvent event) {
-    	MouseButton code = event.getButton();
-    	
-    	if (code == MouseButton.PRIMARY) {
-    		
-    	}    	
-    }
-    
-    private void handleMouseReleased(MouseEvent event) {
-    	MouseButton code = event.getButton();
-    	
-    	if (code == MouseButton.PRIMARY) {
-    		
-    	}
-    }
+		if (code == KeyCode.F11) {
+
+		}
+	}
+
+	/*
+	 * Makes the paddle stop moving when the user release the directional key
+	 */
+	private void handleKeyReleased(KeyEvent event) {
+		KeyCode code = event.getCode();
+
+		if (code == KeyCode.SPACE || code == KeyCode.ENTER) {
+			// board = new Board();
+		}
+	}
+
+	private void handleMousePressed(MouseEvent event) {
+		MouseButton code = event.getButton();
+
+		if (code == MouseButton.PRIMARY) {
+
+		}
+	}
+
+	private void handleMouseReleased(MouseEvent event) {
+		MouseButton code = event.getButton();
+
+		if (code == MouseButton.PRIMARY) {
+
+		}
+	}
 
 }

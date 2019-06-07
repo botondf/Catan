@@ -17,8 +17,8 @@ public class Board {
 	private Screen screen = Screen.getPrimary();
 	private Rectangle2D bounds = screen.getVisualBounds();
 	
-	private final double SCREEN_WIDTH = 1920;//bounds.getWidth();
-	private final double SCREEN_HEIGHT = 1080;//bounds.getHeight();
+	private final double SCREEN_WIDTH = bounds.getWidth();
+	private final double SCREEN_HEIGHT = bounds.getHeight();
 	
 	private final int[] VALUES = {5, 2, 6, 3, 8, 10, 9, 12, 11, 4, 7, 8, 10, 9, 4, 5, 6, 3, 11};
 	public Tile[] boardTiles = new Tile[19]; // total 19 tiles
