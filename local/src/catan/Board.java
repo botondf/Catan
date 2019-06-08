@@ -14,33 +14,25 @@ import javafx.stage.Screen;
  *
  */
 public class Board {
-	private Screen screen = Screen.getPrimary();
-	private Rectangle2D bounds = screen.getVisualBounds();
-	
-	private final double SCREEN_WIDTH = bounds.getWidth();
-	private final double SCREEN_HEIGHT = bounds.getHeight();
-	
-	private final int[] VALUES = {5, 2, 6, 3, 8, 10, 9, 12, 11, 4, 7, 8, 10, 9, 4, 5, 6, 3, 11};
+	private static final int[] VALUES = {5, 2, 6, 3, 8, 10, 9, 12, 11, 4, 7, 8, 10, 9, 4, 5, 6, 3, 11};
 	public Tile[] boardTiles = new Tile[19]; // total 19 tiles
 	public List<Tile> selectedTiles;
-	//private Circle[] markers = new Circle[19];
-	
-	
 	//Player[] players;
 	
-	Board() {
-		// Generate new randomized board
-		generateNewTileSet();
-		generateBoardUI();
-				//	Create Tile
-				//		Set values to Tile
-				//		*Determine (X,Y) co-ords of each tile for drawing
+	public Board() {
 	}
 	
-	public void generateBoardUI() {
-		double x = SCREEN_WIDTH / 2;
-		double y = SCREEN_HEIGHT / 2;
-		double edge = 99.5; // edge
+	public static Board newBoardWithTiles()
+	{
+		Board board = new Board();
+		board.generateNewTileSet();
+		return board;
+	}
+	
+	private void setTilePositions() {
+		double x = Main.SCREEN_WIDTH / 2;
+		double y = Main.SCREEN_HEIGHT / 2;
+		double edge = 105; // length of one edge of hex
 		double length = (int) (Math.sqrt(3) * edge) + 1;
 		int a = (int) (length * Math.cos(Math.toRadians(60)));
 		int b = (int) (length * Math.cos(Math.toRadians(30)));
@@ -48,32 +40,26 @@ public class Board {
 		int c2 = (int) (1.5 * edge * Math.tan(Math.toRadians(60)));
 
 		// setting centre of each tile pos counter-clockwise from middle tile based on base x, y
-		boardTiles[0].setPosition(x, y);
-		boardTiles[1].setPosition(x - b, y - a);
-		boardTiles[2].setPosition(x, y - length);
-		boardTiles[3].setPosition(x + b, y - a);
-		boardTiles[4].setPosition(x + b, y + a);
-		boardTiles[5].setPosition(x, y + length);
-		boardTiles[6].setPosition(x - b, y + a);
-		boardTiles[7].setPosition(x - 3 * edge, y);
-		boardTiles[8].setPosition(x - 3 * edge, y - c1);
-		boardTiles[9].setPosition(x - 1.5 * edge, y - c2);
-		boardTiles[10].setPosition(x, y - 2 * length);
-		boardTiles[11].setPosition(x + 1.5 * edge, y - c2);
-		boardTiles[12].setPosition(x + 3 * edge, y - c1);
-		boardTiles[13].setPosition(x + 3 * edge, y);
-		boardTiles[14].setPosition(x + 3 * edge, y + c1);
-		boardTiles[15].setPosition(x + 1.5 * edge, y + c2);
-		boardTiles[16].setPosition(x, y + 2 * length);
-		boardTiles[17].setPosition(x - 1.5 * edge, y + c2);
-		boardTiles[18].setPosition(x - 3 * edge, y + c1);
-	}
-	
-	public void makeShapes() {
-		for (Tile tile : boardTiles) {
-			tile.setShape(new Hexagon(tile.x, tile.y, tile.value));
-		}
-	}
+		boardTiles[0].getHexagon().setPosition(x, y);
+		boardTiles[1].getHexagon().setPosition(x - b, y - a);
+		boardTiles[2].getHexagon().setPosition(x, y - length);
+		boardTiles[3].getHexagon().setPosition(x + b, y - a);
+		boardTiles[4].getHexagon().setPosition(x + b, y + a);
+		boardTiles[5].getHexagon().setPosition(x, y + length);
+		boardTiles[6].getHexagon().setPosition(x - b, y + a);
+		boardTiles[7].getHexagon().setPosition(x - 3 * edge, y);
+		boardTiles[8].getHexagon().setPosition(x - 3 * edge, y - c1);
+		boardTiles[9].getHexagon().setPosition(x - 1.5 * edge, y - c2);
+		boardTiles[10].getHexagon().setPosition(x, y - 2 * length);
+		boardTiles[11].getHexagon().setPosition(x + 1.5 * edge, y - c2);
+		boardTiles[12].getHexagon().setPosition(x + 3 * edge, y - c1);
+		boardTiles[13].getHexagon().setPosition(x + 3 * edge, y);
+		boardTiles[14].getHexagon().setPosition(x + 3 * edge, y + c1);
+		boardTiles[15].getHexagon().setPosition(x + 1.5 * edge, y + c2);
+		boardTiles[16].getHexagon().setPosition(x, y + 2 * length);
+		boardTiles[17].getHexagon().setPosition(x - 1.5 * edge, y + c2);
+		boardTiles[18].getHexagon().setPosition(x - 3 * edge, y + c1);
+}
 	
 	@Override
 	public String toString() {
@@ -89,16 +75,16 @@ public class Board {
 		// id = index
 	}
 	
-	public List<Tile> getTilesWithValue(int value) { // find tile(s) based on the roll
+	public void getTilesWithValue(int value) { // find tile(s) based on the roll
 		List<Tile> tileList = new ArrayList<Tile>();
 		
 		for (int x = 0; x < boardTiles.length; x++) {
-			if (boardTiles[x].value == value) {
+			if (boardTiles[x].rollValue == value) {
 				tileList.add(boardTiles[x]);
 			}
 		}
 		
-		return tileList;
+		selectedTiles = tileList;
 		// id = index
 	}
 	
@@ -148,28 +134,22 @@ public class Board {
 		shuffle(); // shuffle tiles to randomize board
 		
 		for (int v = 0; v < VALUES.length; v++) {
-				boardTiles[v].setValue(VALUES[v]);	// tile value is set by VALUES
+				boardTiles[v].setRollValue(VALUES[v]);	// tile value is set by VALUES
 			}
 		}
 	
-	// test screen
-	public static void main(String[] args) {
-		Board board = new Board();
-		System.out.println(board.SCREEN_WIDTH+ "\n" + board.SCREEN_HEIGHT);
-	}
-
 	public List<Shape> buildTileShapes() {
-		List<Shape> shapes = new ArrayList<Shape>();
 		
+		setTilePositions();
+		
+		List<Shape> shapes = new ArrayList<Shape>();
+
 		for (Tile tile : this.boardTiles) {
-			Hexagon tileShapes = new Hexagon(tile.x, tile.y, tile.value);
-			tile.setShape(tileShapes);
-			tileShapes.setColor(tile.type.getColor());
+			Hexagon hexagon = tile.getHexagon();
 			
-			shapes.add(tileShapes.hex);
-			shapes.add(tileShapes.circle);
-			shapes.add(tileShapes.text);
+			shapes.addAll(hexagon.makeShapes());
 		}
+
 		return shapes;
 	}
 }

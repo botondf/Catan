@@ -40,6 +40,6 @@ public class Debug {
 		players[0].addBuildingAtTile(board.getTilesWithValue(j).get(0), b);
 		players[0].addBuildingAtTile(board.getTilesWithValue(j).get(0), b2);
 		players[0].checkVP();
-		board.draw();
+		board.makeShapes();
 	}
 }

@@ -34,7 +34,7 @@ public class Logic {
 	 * Interprets the roll.
 	 */
 	public void handleRoll(Board board) {
-		 List<Tile> tiles = board.getTilesWithValue(roll);
+		 List<Tile> tiles = board.selectedTiles;
 		// Robber
 		if (roll == 7) {
 			tiles.get(1);
@@ -43,6 +43,14 @@ public class Logic {
 		} else {
 			throw new IllegalArgumentException("Something went wrong: Roll was (somehow) out of range");
 		}
+	}
+	
+	public static void main(String[] args) {
+		Logic logic = new Logic();
+		logic.rollDice();
+		Board board = new Board();
+		board.generateNewTileSet();
+		logic.handleRoll(board);
 	}
 
 }

@@ -3,6 +3,7 @@ package catan;
 import java.util.*;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
 
@@ -14,46 +15,36 @@ import javafx.scene.shape.Polygon;
  *
  */
 public class Tile {
-	int value;
+	int rollValue;
 	List<Building> buildings;
-	TileType type; // each Tile.Type affects related Item.Type
-	double x;
-	double y;
-	Hexagon shape;
+	private TileType type; // each Tile.Type affects related Item.Type
+	private Hexagon hexagon;
+	private boolean selected;
 	
 	//Button button;
 	// Graphics
 	//Polygon tileShape;
 	//private int[] pos; // (x,y) does the tile actually need to know where it is? or can board handle that?
 	
-	Tile(TileType type, int value, List<Building> buildings) { // 
+	Tile(TileType type, int rollValue, List<Building> buildings) { // 
 		//this.id = id; // does tile need to know its id?
 		this.setType(type);
-		this.value = value;
+		this.rollValue = rollValue;
 		this.setBuildings(buildings);
-	}
-	
-	public void setPosition(double x, double y) {
-		this.x = x;
-		this.y = y;
+		hexagon = new Hexagon(this);
 	}
 	
 	@Override
 	public String toString() {
-		return "Tile [value=" + value + ", buildings=" + buildings + ", type=" + type + ", centre=("+x+","+y+")]";
+		return "Tile [value=" + rollValue + ", buildings=" + buildings + ", type=" + type + "]";
 	}
 
-	public void setValue(int value) {
-		this.value = value;
+	public void setRollValue(int value) {
+		this.rollValue = value;
 	}
 
-	public void setShape(Hexagon shape) {
-		this.shape = shape;
-		this.shape.setOnMouseClicked(this::onHexagonMouseClicked);
-	}
-	
-	public Hexagon getShape() {
-		return shape;
+	public Hexagon getHexagon() {
+		return hexagon;
 	}
 	
 	public TileType getType() {
@@ -72,9 +63,28 @@ public class Tile {
 		this.buildings = buildings;
 	}
 
-	public void onHexagonMouseClicked(MouseEvent event) {
-		System.out.println("Tile clicked = " + toString());
+	public void toggleSelected()
+	{
+		System.out.println("Tile selected = " + toString());
+		boolean oldSelected = this.selected;
+		this.selected = !oldSelected;
+
+		hexagon.redraw();
 	}
+
+	public int getRollValue() {
+		return rollValue;
+	}
+
+	public boolean isSelected() {
+		return selected;
+	}
+
+	public Color getColor() {
+		return type.getColor();
+	}
+	
+	
 	
 	
 }

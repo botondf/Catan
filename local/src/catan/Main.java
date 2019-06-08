@@ -17,6 +17,8 @@ import javafx.scene.shape.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 import javafx.scene.effect.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.*;
 import java.lang.Math;
 import java.util.*;
@@ -30,13 +32,13 @@ import javafx.stage.Screen;
 
 
 public class Main extends Application {
-	Screen screen = Screen.getPrimary();
-	Rectangle2D bounds = screen.getVisualBounds();
+	private static Screen screen = Screen.getPrimary();
+	private static Rectangle2D bounds = screen.getVisualBounds();
 
-	public final double SCREEN_WIDTH = bounds.getWidth();;
-	public final double SCREEN_HEIGHT = bounds.getHeight();
+	public static final double SCREEN_WIDTH = bounds.getWidth();
+	public static final double SCREEN_HEIGHT = bounds.getHeight();
+	
 	final int FONT_SIZE = 20;
-	GameTimer timer;
 	Scene scene;
 	private Group group;
 	private boolean fullscreen = true;
@@ -50,7 +52,12 @@ public class Main extends Application {
 	private Text turnText;
 	private Logic logic;
 	boolean rollClicked;
-
+	boolean rollSetColor;
+	boolean tileClicked;
+	boolean exit;
+	//Stage stage;
+	//Turn turn;
+	
 	@Override
 	public void start(Stage stage) throws Exception {
 		stage.setX(0);
@@ -83,25 +90,32 @@ public class Main extends Application {
 		turnText.setY(20);
 
 		group = new Group();
+		
+		//turn = new Turn();
+		//handle();
 
-		Board board = new Board();
+		Board board = Board.newBoardWithTiles();
 
 		drawBoard(board);
-
+		
 		Scene scene = new Scene(group, SCREEN_WIDTH, SCREEN_HEIGHT);
 		scene.setOnKeyPressed(event -> handleKeyPressed(event));
 		scene.setOnKeyReleased(event -> handleKeyReleased(event));
 		scene.setOnMousePressed(event -> handleMousePressed(event));
 		scene.setOnMouseReleased(event -> handleMouseReleased(event));
 
+		//BackgroundImage = bkgImage = new BackgroundImage(); 
+		
+//		stage.getIcons().add(new Image(getClass().getResourceAsStream("icon.png")));
+//		Image test = new Image(getClass().getResourceAsStream("icon.png"), 1000,0, false, false);
+//		ImageView imageView = new ImageView(test); 
+//		group.getChildren().add(imageView);
+		
 		// Set up the stage
 		stage.setFullScreen(fullscreen);
 		stage.setTitle("Main");
 		stage.setScene(scene);
-		stage.show();
-
-		timer = new GameTimer();
-		timer.start();
+		stage.show();		
 	}
 
 	/**
@@ -112,6 +126,7 @@ public class Main extends Application {
 	private void drawBoard(Board board) {
 		List<Node> children = group.getChildren();
 		children.clear();
+
 		List<Shape> shapes = board.buildTileShapes();
 		children.addAll(shapes);
 		children.add(resetButton);
@@ -123,11 +138,18 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-
-	class GameTimer extends AnimationTimer {
-
-		@Override
-		public void handle(long now) {
+	
+	//class Turn {
+	public void handle() {
+			if (exit) {
+				System.exit(0);
+				exit = false;
+			}
+			//if (fullscreen) {
+				//stage.setFullScreen(fullscreen);
+				//fullscreen = false;
+			//}
+		
 			if (reset) {
 				board = new Board();
 				drawBoard(board);
@@ -135,27 +157,34 @@ public class Main extends Application {
 			}
 			if (rollClicked) {
 				turnText.setText("Roll: " + logic.roll);
-				for (Tile t : board.getTilesWithValue(logic.roll)) {
-					t.getShape().hex.setStroke(Color.DARKGOLDENROD);
-				}
-				drawBoard(board);
+				System.out.println(board.selectedTiles.toString());
+				rollSetColor = true;
 				rollClicked = false;
 			}
+			
+			if (rollSetColor) {
+				for (Tile t : board.selectedTiles) {
+					t.getHexagon().hex.setStroke(Color.DARKGOLDENROD);
+				}
+				rollSetColor = false;
+			}
 		}
-	}
+	//}
 
 	private void handleResetButtonClicked(ActionEvent event) {
-		reset = true;
 		System.out.println("Reset event = " + event);
+		board = Board.newBoardWithTiles();
+		drawBoard(board);
 	}
 
 	private void handleExitButtonClicked(ActionEvent event) {
+		System.out.println("Exit event = " + event);
 		System.exit(0);
 	}
 
 	private void handleRollButtonClicked(ActionEvent event) {
+		System.out.println("Roll event = " + event);
 		logic.rollDice();
-		rollClicked = true;
 	}
 
 	/*
@@ -169,7 +198,7 @@ public class Main extends Application {
 		}
 
 		if (code == KeyCode.F11) {
-
+			fullscreen = true;
 		}
 	}
 
@@ -182,6 +211,10 @@ public class Main extends Application {
 		if (code == KeyCode.SPACE || code == KeyCode.ENTER) {
 			// board = new Board();
 		}
+		
+//		if (code == KeyCode.F11) {
+//			fullscreen = false;
+//		}
 	}
 
 	private void handleMousePressed(MouseEvent event) {
