@@ -1,6 +1,6 @@
 package catan;
 
-import java.util.*; 
+import java.util.*;
 
 public class Player {
 	private int id;
@@ -8,7 +8,7 @@ public class Player {
 	private List<Item> items;
 	private List<Card> cards;
 	private List<Building> buildings;
-	
+
 	Player(int id) {
 		this.id = id;
 		vp = 0;
@@ -16,7 +16,7 @@ public class Player {
 		cards = new ArrayList<Card>();
 		buildings = new ArrayList<Building>();
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Player [id=" + id + ", vp=" + vp + ", items=" + items + ", cards=" + cards + ", buildings=" + buildings
@@ -26,12 +26,12 @@ public class Player {
 	public void addItems(Item item) {
 		items.add(item);
 	}
-	
+
 	public void addBuildingAtTile(Tile tileToBuildAt, Building newBuilding) {
 		tileToBuildAt.getBuildings().add(newBuilding);
 		this.buildings.add(newBuilding);
 	}
-	
+
 	public void checkVP() {
 		for (Building b : this.buildings) {
 			vp += b.getValue();
@@ -40,7 +40,7 @@ public class Player {
 			vp += c.getValue();
 		}
 	}
-	
+
 //	public void incrementItems(Item item, int increment) {
 //		this.items.getAmount() += increment;
 //	}

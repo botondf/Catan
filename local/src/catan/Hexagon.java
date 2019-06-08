@@ -1,27 +1,19 @@
 package catan;
 
-//import java.util.ArrayList;
-//import java.util.List;
-//import java.util.Objects;
-
 import javafx.scene.text.*;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
-//import javafx.scene.shape.Shape;
 import javafx.scene.shape.Shape;
 
 public class Hexagon {
-	private static final double HEX_STROKE_WIDTH_DEFAULT = 5;
-	private static final double HEX_STROKE_WIDTH_SELECTED= 7;
+	private static final double HEX_STROKE_WIDTH_DEFAULT = 4;
+	private static final double HEX_STROKE_WIDTH_SELECTED = 6.5;
 	private static final Color HEX_STROKE_COLOR_SELECTED = Color.BLUE;
 	private static final Color HEX_STROKE_COLOR_DEFAULT = Color.BLACK;
 	private static final double FONT_SIZE = 15;
@@ -74,12 +66,12 @@ public class Hexagon {
 		return hexagon;
 	}
 
-	public void rotatePoints(int n, double radius) {
-		this.x = (int) (radius * Math.cos(Math.toRadians(n * 60)));
-		this.y = (int) (radius * Math.sin(Math.toRadians(n * 60)));
-	}
+//	public void rotatePoints(int n, double radius) {
+//		this.x = (int) (radius * Math.cos(Math.toRadians(n * 60)));
+//		this.y = (int) (radius * Math.sin(Math.toRadians(n * 60)));
+//	}
 
-	public void setPosition(double x, double y) {
+	public void setCentre(double x, double y) {
 		this.x = x;
 		this.y = y;
 	}

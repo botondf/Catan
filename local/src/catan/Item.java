@@ -1,19 +1,19 @@
 package catan;
 
-import java.util.*; 
+//import java.util.List;
 
 public class Item {
 	ItemType type;
-	//int amount;
-	
-	Item (ItemType type, int amount) {
+	// int amount;
+
+	Item(ItemType type, int amount) {
 		this.type = type;
-		//this.amount = amount;
+		// this.amount = amount;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Item [type=" + type + "]";//+ ", amount=" + amount + "]";
+		return "Item [type=" + type + "]";// + ", amount=" + amount + "]";
 	}
 
 //	public void addAmount(int amount) {

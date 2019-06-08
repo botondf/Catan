@@ -1,31 +1,35 @@
 package catan;
 
-import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
-import javafx.geometry.Bounds;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.*;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
-import javafx.scene.media.AudioClip;
 import javafx.scene.shape.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
-import javafx.scene.effect.*;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.*;
-import java.lang.Math;
-import java.util.*;
-import javax.lang.model.element.Modifier;
+import java.util.List;
+import java.util.ArrayList;
+import javafx.stage.Screen;
+
+/**
 import catan.BoardUI.*;
 import javafx.stage.Popup;
-import javafx.stage.Screen;
+import javax.lang.model.element.Modifier;
+import javafx.scene.image.ImageView;
+import javafx.scene.effect.*;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioClip;
+import java.lang.Math;
+import javafx.geometry.Bounds;
+import javafx.animation.AnimationTimer;
+**/
 
 
 public class Main extends Application {
@@ -34,12 +38,12 @@ public class Main extends Application {
 
 	public static final double SCREEN_WIDTH = bounds.getWidth();
 	public static final double SCREEN_HEIGHT = bounds.getHeight();
-	
+
 	final int FONT_SIZE = 20;
 	Scene scene;
 	private Group group;
 	private boolean fullscreen = true;
-	
+
 	boolean reset;
 	boolean pressed;
 	public Board board;
@@ -52,10 +56,10 @@ public class Main extends Application {
 	boolean rollSetColor;
 	boolean tileClicked;
 	boolean exit;
-	//Stage stage;
-	//Turn turn;
-	//List<Node> playersScreenData;
-	
+	// Stage stage;
+	// Turn turn;
+	// List<Node> playersScreenData;
+
 	@Override
 	public void start(Stage stage) throws Exception {
 		stage.setX(0);
@@ -86,32 +90,32 @@ public class Main extends Application {
 		turnText.setText("Roll: ");
 		turnText.setX(SCREEN_WIDTH / 2);
 		turnText.setY(20);
-		
+
 		final int NUM_PLAYERS = 2;
 		Player[] players = new Player[NUM_PLAYERS];
-		
+
 		for (int x = 0; x < NUM_PLAYERS; x++) {
-			players[x] = new Player(x+1);
+			players[x] = new Player(x + 1);
 			players[x].setVP(1);
 		}
-		
+
 		List<Node> playersScreenData = new ArrayList<Node>();
-		
+
 		for (int x = 0; x < NUM_PLAYERS; x++) {
-			playersScreenData.add(new Text(20, ((x+1)*50)+150, "ID: " + Integer.toString(players[x].getId())));
-			playersScreenData.add(new Text(20, ((x*+1)*50)+300, "VP: " + Integer.toString(players[x].getVp())));
-			playersScreenData.add(new Text(20, ((x+1)*50)+350, "ITEMS: " + players[x].getItems().toString()));
+			playersScreenData.add(new Text(20, ((x + 1) * 50) + 150, "ID: " + Integer.toString(players[x].getId())));
+			playersScreenData.add(new Text(20, ((x * +1) * 50) + 300, "VP: " + Integer.toString(players[x].getVp())));
+			playersScreenData.add(new Text(20, ((x + 1) * 50) + 350, "ITEMS: " + players[x].getItems().toString()));
 		}
 
 		group = new Group();
 
-		//turn = new Turn();
-		//handle();
-		
+		// turn = new Turn();
+		// handle();
+
 		Board board = Board.newBoardWithTiles();
 
 		drawBoard(board);
-		
+
 		Scene scene = new Scene(group, SCREEN_WIDTH, SCREEN_HEIGHT);
 		scene.setOnKeyPressed(event -> handleKeyPressed(event));
 		scene.setOnKeyReleased(event -> handleKeyReleased(event));
@@ -119,20 +123,20 @@ public class Main extends Application {
 		scene.setOnMouseReleased(event -> handleMouseReleased(event));
 		scene.setFill(Color.SKYBLUE);
 
-		//BackgroundImage = bkgImage = new BackgroundImage(); 
-		
+		// BackgroundImage = bkgImage = new BackgroundImage();
+
 		stage.getIcons().add(new Image(getClass().getResourceAsStream("icon.png")));
 //		Image test = new Image(getClass().getResourceAsStream("icon.png"), 1000,0, false, false);
 //		ImageView imageView = new ImageView(test); 
 //		group.getChildren().add(imageView);
-		
+
 		group.getChildren().addAll(playersScreenData);
-		
+
 		// Set up the stage
 		stage.setFullScreen(fullscreen);
 		stage.setTitle("Main");
 		stage.setScene(scene);
-		stage.show();		
+		stage.show();
 	}
 
 	/**
@@ -155,8 +159,8 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
-	//class Turn {
+
+	// class Turn {
 //	public void handle() {
 //			if (exit) {
 //				System.exit(0);
@@ -186,7 +190,7 @@ public class Main extends Application {
 //				rollSetColor = false;
 //			}
 //		}
-	//}
+	// }
 
 	private void handleResetButtonClicked(ActionEvent event) {
 		System.out.println("Reset event = " + event);
@@ -228,7 +232,7 @@ public class Main extends Application {
 		if (code == KeyCode.SPACE || code == KeyCode.ENTER) {
 			// board = new Board();
 		}
-		
+
 //		if (code == KeyCode.F11) {
 //			fullscreen = false;
 //		}

@@ -1,17 +1,12 @@
 package catan;
 
-import java.util.*;
-import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
+import java.util.List;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
-
 
 /**
- * Tile(TileType type, int value, List<Building> buildings)
- * has own type (w/ item/resource) and value
- * holds the buildings that are connected to it
- * doesn't know its location
+ * Tile(TileType type, int value, List<Building> buildings) has own type (w/
+ * item/resource) and value holds the buildings that are connected to it doesn't
+ * know its location
  *
  */
 public class Tile {

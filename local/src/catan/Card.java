@@ -1,15 +1,16 @@
 package catan;
+
 /**
  * 
- * The different cards that can be bought throughout the game. Have an affect on Player (vp's, resources) and Board (robber location), Bank (draw resources), Building (build roads)
+ * The different cards that can be bought throughout the game. Have an affect on
+ * Player (vp's, resources) and Board (robber location), Bank (draw resources),
+ * Building (build roads)
  *
  */
 public class Card {
 	private int value;
 	private CardType type;
-	
-	
-	
+
 	Card(int value) {
 		this.value = value;
 	}
@@ -26,6 +27,5 @@ public class Card {
 	public String toString() {
 		return "Card [value=" + value + "]";
 	}
-	
-	
+
 }

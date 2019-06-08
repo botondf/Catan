@@ -8,8 +8,8 @@ class FindTilesTest {
 
 	@Test
 	void test() {
-		int[] a = {1,2,3};
-		int[] b = {1,2,3};
+		int[] a = { 1, 2, 3 };
+		int[] b = { 1, 2, 3 };
 		assertArrayEquals(a, b);
 	}
 
