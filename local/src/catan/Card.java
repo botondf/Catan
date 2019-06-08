@@ -5,7 +5,7 @@ package catan;
  *
  */
 public class Card {
-	int value;
+	private int value;
 	private CardType type;
 	
 	

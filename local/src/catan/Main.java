@@ -22,11 +22,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.*;
 import java.lang.Math;
 import java.util.*;
-
 import javax.lang.model.element.Modifier;
-
 import catan.BoardUI.*;
-
 import javafx.stage.Popup;
 import javafx.stage.Screen;
 
@@ -57,6 +54,7 @@ public class Main extends Application {
 	boolean exit;
 	//Stage stage;
 	//Turn turn;
+	//List<Node> playersScreenData;
 	
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -88,12 +86,28 @@ public class Main extends Application {
 		turnText.setText("Roll: ");
 		turnText.setX(SCREEN_WIDTH / 2);
 		turnText.setY(20);
+		
+		final int NUM_PLAYERS = 2;
+		Player[] players = new Player[NUM_PLAYERS];
+		
+		for (int x = 0; x < NUM_PLAYERS; x++) {
+			players[x] = new Player(x+1);
+			players[x].setVP(1);
+		}
+		
+		List<Node> playersScreenData = new ArrayList<Node>();
+		
+		for (int x = 0; x < NUM_PLAYERS; x++) {
+			playersScreenData.add(new Text(20, ((x+1)*50)+150, "ID: " + Integer.toString(players[x].getId())));
+			playersScreenData.add(new Text(20, ((x*+1)*50)+300, "VP: " + Integer.toString(players[x].getVp())));
+			playersScreenData.add(new Text(20, ((x+1)*50)+350, "ITEMS: " + players[x].getItems().toString()));
+		}
 
 		group = new Group();
-		
+
 		//turn = new Turn();
 		//handle();
-
+		
 		Board board = Board.newBoardWithTiles();
 
 		drawBoard(board);
@@ -103,13 +117,16 @@ public class Main extends Application {
 		scene.setOnKeyReleased(event -> handleKeyReleased(event));
 		scene.setOnMousePressed(event -> handleMousePressed(event));
 		scene.setOnMouseReleased(event -> handleMouseReleased(event));
+		scene.setFill(Color.SKYBLUE);
 
 		//BackgroundImage = bkgImage = new BackgroundImage(); 
 		
-//		stage.getIcons().add(new Image(getClass().getResourceAsStream("icon.png")));
+		stage.getIcons().add(new Image(getClass().getResourceAsStream("icon.png")));
 //		Image test = new Image(getClass().getResourceAsStream("icon.png"), 1000,0, false, false);
 //		ImageView imageView = new ImageView(test); 
 //		group.getChildren().add(imageView);
+		
+		group.getChildren().addAll(playersScreenData);
 		
 		// Set up the stage
 		stage.setFullScreen(fullscreen);
@@ -140,35 +157,35 @@ public class Main extends Application {
 	}
 	
 	//class Turn {
-	public void handle() {
-			if (exit) {
-				System.exit(0);
-				exit = false;
-			}
-			//if (fullscreen) {
-				//stage.setFullScreen(fullscreen);
-				//fullscreen = false;
-			//}
-		
-			if (reset) {
-				board = new Board();
-				drawBoard(board);
-				reset = false;
-			}
-			if (rollClicked) {
-				turnText.setText("Roll: " + logic.roll);
-				System.out.println(board.selectedTiles.toString());
-				rollSetColor = true;
-				rollClicked = false;
-			}
-			
-			if (rollSetColor) {
-				for (Tile t : board.selectedTiles) {
-					t.getHexagon().hex.setStroke(Color.DARKGOLDENROD);
-				}
-				rollSetColor = false;
-			}
-		}
+//	public void handle() {
+//			if (exit) {
+//				System.exit(0);
+//				exit = false;
+//			}
+//			//if (fullscreen) {
+//				//stage.setFullScreen(fullscreen);
+//				//fullscreen = false;
+//			//}
+//		
+//			if (reset) {
+//				board = new Board();
+//				drawBoard(board);
+//				reset = false;
+//			}
+//			if (rollClicked) {
+//				turnText.setText("Roll: " + logic.roll);
+//				System.out.println(board.selectedTiles.toString());
+//				rollSetColor = true;
+//				rollClicked = false;
+//			}
+//			
+//			if (rollSetColor) {
+//				for (Tile t : board.selectedTiles) {
+//					t.getHexagon().getHex().setStroke(Color.DARKGOLDENROD);
+//				}
+//				rollSetColor = false;
+//			}
+//		}
 	//}
 
 	private void handleResetButtonClicked(ActionEvent event) {

@@ -11,12 +11,12 @@ import catan.TileType.*;
  *
  */
 public class Building {
-	BuildingType type;
+	private BuildingType type;
 	//int value;
 	private Player owner;
 //	private Place position;
 	private Place place;
-	List<Item> cost;
+	private List<Item> cost;
 	
 	// enum building colour
 	
@@ -35,7 +35,7 @@ public class Building {
 	
 	@Override
 	public String toString() {
-		return "Building [type=" + type + ", owner=" + owner.id + ", place=" + place + ", cost=" + cost + "]";
+		return "Building [type=" + type + ", owner=" + owner.getId() + ", place=" + place + ", cost=" + cost + "]";
 	}
 
 	Building(BuildingType type) {

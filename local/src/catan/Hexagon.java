@@ -20,13 +20,17 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
 
 public class Hexagon {
+	private static final double HEX_STROKE_WIDTH_DEFAULT = 5;
+	private static final double HEX_STROKE_WIDTH_SELECTED= 7;
+	private static final Color HEX_STROKE_COLOR_SELECTED = Color.BLUE;
+	private static final Color HEX_STROKE_COLOR_DEFAULT = Color.BLACK;
 	private static final double FONT_SIZE = 15;
-	double x;
-	double y;
-	Polygon hex;
-	Circle circle;
-	Text text;
-	Tile tile;
+	private double x;
+	private double y;
+	private Polygon hex;
+	private Circle circle;
+	private Text text;
+	private Tile tile;
 
 	Hexagon(Tile tile) {
 		this.tile = tile;
@@ -52,7 +56,7 @@ public class Hexagon {
 		text.setX(x - FONT_SIZE / 3);
 		text.setY(y + FONT_SIZE / 3);
 		text.setTextAlignment(TextAlignment.CENTER);
-		text.setText(Integer.toString(tile.rollValue));
+		text.setText(Integer.toString(tile.getRollValue()));
 		text.setFill(Color.BLACK);
 		text.setFont(Font.font("Arial", FontWeight.NORMAL, FONT_SIZE));
 		return text;
@@ -64,8 +68,8 @@ public class Hexagon {
 
 		Polygon hexagon = new Polygon(points);
 		hexagon.setFill(tile.getColor());
-		hexagon.setStroke(tile.isSelected() ? Color.BLUE : Color.BLACK);
-		hexagon.setStrokeWidth(5);
+		hexagon.setStroke(tile.isSelected() ? HEX_STROKE_COLOR_SELECTED : HEX_STROKE_COLOR_DEFAULT);
+		hexagon.setStrokeWidth(HEX_STROKE_WIDTH_DEFAULT);
 		hexagon.setOnMouseClicked((event) -> tile.toggleSelected());
 		return hexagon;
 	}
@@ -88,7 +92,8 @@ public class Hexagon {
 	}
 
 	public void redraw() {
-		hex.setStroke(tile.isSelected() ? Color.BLUE : Color.BLACK);
+		hex.setStroke(tile.isSelected() ? HEX_STROKE_COLOR_SELECTED : HEX_STROKE_COLOR_DEFAULT);
+		hex.setStrokeWidth(tile.isSelected() ? HEX_STROKE_WIDTH_SELECTED : HEX_STROKE_WIDTH_DEFAULT);
 	}
 
 	public List<Shape> getShapes() {
@@ -96,5 +101,9 @@ public class Hexagon {
 		Objects.requireNonNull(circle, "circle");
 		Objects.requireNonNull(text, "text");
 		return Arrays.asList(hex, circle, text);
+	}
+
+	public Polygon getHex() {
+		return hex;
 	}
 }

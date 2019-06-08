@@ -3,18 +3,18 @@ package catan;
 import java.util.*; 
 
 public class Player {
-	int id;
-	int vp;
-	List<Item> items;
-	List<Card> cards;
-	List<Building> buildings;
+	private int id;
+	private int vp;
+	private List<Item> items;
+	private List<Card> cards;
+	private List<Building> buildings;
 	
 	Player(int id) {
 		this.id = id;
-		this.vp = 0;
-		this.items = new ArrayList<Item>();
-		this.cards = new ArrayList<Card>();
-		this.buildings = new ArrayList<Building>();
+		vp = 0;
+		items = new ArrayList<Item>();
+		cards = new ArrayList<Card>();
+		buildings = new ArrayList<Building>();
 	}
 	
 	@Override
@@ -34,14 +34,58 @@ public class Player {
 	
 	public void checkVP() {
 		for (Building b : this.buildings) {
-			this.vp += b.getValue();
+			vp += b.getValue();
 		}
 		for (Card c : this.cards) {
-			this.vp += c.getValue();
+			vp += c.getValue();
 		}
 	}
 	
-	public void incrementItems(Item item, int increment) {
-		item.amount += increment;
+//	public void incrementItems(Item item, int increment) {
+//		this.items.getAmount() += increment;
+//	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setVP(int vp) {
+		this.vp = vp;
+	}
+
+	public int getVp() {
+		return vp;
+	}
+
+	public void setVp(int vp) {
+		this.vp = vp;
+	}
+
+	public List<Item> getItems() {
+		return items;
+	}
+
+	public void setItems(List<Item> items) {
+		this.items = items;
+	}
+
+	public List<Card> getCards() {
+		return cards;
+	}
+
+	public void setCards(List<Card> cards) {
+		this.cards = cards;
+	}
+
+	public List<Building> getBuildings() {
+		return buildings;
+	}
+
+	public void setBuildings(List<Building> buildings) {
+		this.buildings = buildings;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

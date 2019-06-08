@@ -20,20 +20,21 @@ public class Tile {
 	private TileType type; // each Tile.Type affects related Item.Type
 	private Hexagon hexagon;
 	private boolean selected;
-	
-	//Button button;
+
+	// Button button;
 	// Graphics
-	//Polygon tileShape;
-	//private int[] pos; // (x,y) does the tile actually need to know where it is? or can board handle that?
-	
-	Tile(TileType type, int rollValue, List<Building> buildings) { // 
-		//this.id = id; // does tile need to know its id?
+	// Polygon tileShape;
+	// private int[] pos; // (x,y) does the tile actually need to know where it is?
+	// or can board handle that?
+
+	Tile(TileType type, int rollValue, List<Building> buildings) { //
+		// this.id = id; // does tile need to know its id?
 		this.setType(type);
 		this.rollValue = rollValue;
 		this.setBuildings(buildings);
 		hexagon = new Hexagon(this);
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Tile [value=" + rollValue + ", buildings=" + buildings + ", type=" + type + "]";
@@ -46,7 +47,7 @@ public class Tile {
 	public Hexagon getHexagon() {
 		return hexagon;
 	}
-	
+
 	public TileType getType() {
 		return type;
 	}
@@ -63,15 +64,6 @@ public class Tile {
 		this.buildings = buildings;
 	}
 
-	public void toggleSelected()
-	{
-		System.out.println("Tile selected = " + toString());
-		boolean oldSelected = this.selected;
-		this.selected = !oldSelected;
-
-		hexagon.redraw();
-	}
-
 	public int getRollValue() {
 		return rollValue;
 	}
@@ -83,8 +75,12 @@ public class Tile {
 	public Color getColor() {
 		return type.getColor();
 	}
-	
-	
-	
-	
+
+	public void toggleSelected() {
+		System.out.println("Tile selected = " + toString());
+		boolean oldSelected = this.selected;
+		this.selected = !oldSelected;
+
+		hexagon.redraw();
+	}
 }
