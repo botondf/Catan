@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
@@ -28,7 +29,7 @@ public class TileGraphics {
 	private Text text;
 	private Tile tile;
 	private List<Place> places;
-	public static final double K = 100;
+	public static final double TRANSLATION = Board.EDGE * 0.9;
 
 	TileGraphics(Tile tile) {
 		this.tile = tile;
@@ -99,17 +100,15 @@ public class TileGraphics {
 		}
 	}
 	
-
-	
-	private void makePlaces() {
+	public List<Node> makePlaces() {
 		
-		List<Place> shapes = new ArrayList<>();
+		List<Node> nodes = new ArrayList<>();
 		
 		double[] vertices = makeVertices();
 		double[] edges = makeEdges();
 		
-		transformPoints(K, centre.getPoint(), vertices);
-		transformPoints(K, centre.getPoint(), edges);
+		transformPoints(TRANSLATION, centre.getPoint(), vertices);
+		transformPoints(TRANSLATION, centre.getPoint(), edges);
 		
 		for (int i = 0; i < vertices.length; i+=2) {
 			Circle circle = new Circle();
@@ -118,11 +117,12 @@ public class TileGraphics {
 			circle.setCenterY(vertices[i+1]);
 			circle.setFill(Color.ALICEBLUE);
 			circle.setStroke(Color.BLACK);
-			circle.setVisible(false);
+			circle.setVisible(true);
 
-			Place place = new Place(PlaceType.INTERSECTION);
-			place.setShape(circle);
-			places.add(place);
+			nodes.add(circle);
+//			Place place = new Place(PlaceType.INTERSECTION);
+//			place.setShape(circle);
+//			places.add(place);
 		}
 		
 		for (int i = 0; i < edges.length; i+=2) {
@@ -132,23 +132,26 @@ public class TileGraphics {
 			circle.setCenterY(edges[i+1]);
 			circle.setFill(Color.RED);
 			circle.setStroke(Color.BLACK);
-			circle.setVisible(false);
+			circle.setVisible(true);
 			
-			Place place = new Place(PlaceType.INTERSECTION);
-			place.setShape(circle);
-			places.add(place);
+			nodes.add(circle);
+//			Place place = new Place(PlaceType.INTERSECTION);
+//			place.setShape(circle);
+//			places.add(place);
 		}
+		return nodes;
 	}
 
 	private Polygon makeRegularHexagon() {
 		double[] vertices = makeVertices();
-		transformPoints(K, centre.getPoint(), vertices);
+		
+		transformPoints(TRANSLATION, getCentre().getPoint(), vertices);
 		
 		Polygon hexagon = new Polygon(vertices);
-		hexagon.setFill(tile.getColor());
-		hexagon.setStroke(tile.isSelected() ? HEX_STROKE_COLOR_SELECTED : HEX_STROKE_COLOR_DEFAULT);
+		hexagon.setFill(getTile().getColor());
+		hexagon.setStroke(getTile().isSelected() ? HEX_STROKE_COLOR_SELECTED : HEX_STROKE_COLOR_DEFAULT);
 		hexagon.setStrokeWidth(HEX_STROKE_WIDTH_DEFAULT);
-		hexagon.setOnMouseClicked((event) -> tile.toggleSelected());
+		hexagon.setOnMouseClicked((event) -> getTile().toggleSelected());
 		return hexagon;
 	}
 
@@ -165,23 +168,31 @@ public class TileGraphics {
 		this.centre = centre;
 	}
 
-	public List<Shape> makeShapes() {
+	public List<Node> makeShapes() {
 		hex = makeRegularHexagon();
 		circle = makeCircle();
 		text = makeText();
 		return getShapes();
 	}
 
+	public Tile getTile() {
+		return tile;
+	}
+
+	public void setTile(Tile tile) {
+		this.tile = tile;
+	}
+
 	public void redraw() {
-		hex.setStroke(tile.isSelected() ? HEX_STROKE_COLOR_SELECTED : HEX_STROKE_COLOR_DEFAULT);
-		hex.setStrokeWidth(tile.isSelected() ? HEX_STROKE_WIDTH_SELECTED : HEX_STROKE_WIDTH_DEFAULT);
+		hex.setStroke(getTile().isSelected() ? HEX_STROKE_COLOR_SELECTED : HEX_STROKE_COLOR_DEFAULT);
+		hex.setStrokeWidth(getTile().isSelected() ? HEX_STROKE_WIDTH_SELECTED : HEX_STROKE_WIDTH_DEFAULT);
 		
 //		if (tile.isSelected()) {
 //			getPlaces().forEach(getShapes().forEach(setVisibility(true)));
 //		}
 	}
 
-	public List<Shape> getShapes() {
+	public List<Node> getShapes() {
 		Objects.requireNonNull(hex, "hex");
 		Objects.requireNonNull(circle, "circle");
 		Objects.requireNonNull(text, "text");

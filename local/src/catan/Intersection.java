@@ -14,7 +14,7 @@ public class Intersection extends Place {
 
 	@Override
 	public String toString() {
-		return "Intersection [paths=" + paths + ", point=" + point + "]";
+		return "Intersection [point=" + point + "]"; //paths=" + paths + ", 
 	}
 
 	public List<Path> getPaths() {
@@ -37,4 +37,5 @@ public class Intersection extends Place {
 	public Point getPoint() {
 		return point;
 	}
+	
 }

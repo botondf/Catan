@@ -38,8 +38,8 @@ public class Main extends Application {
 
 	public static final double SCREEN_WIDTH = bounds.getWidth();
 	public static final double SCREEN_HEIGHT = bounds.getHeight();
-
-	final int FONT_SIZE = 20;
+	
+	final double FONT_SIZE = 20;
 	Scene scene;
 	private Group group;
 	private boolean fullscreen = true;
@@ -58,7 +58,6 @@ public class Main extends Application {
 	boolean exit;
 	// Stage stage;
 	// Turn turn;
-	// List<Node> playersScreenData;
 	List<Node> playersScreenData;
 
 	@Override
@@ -88,7 +87,7 @@ public class Main extends Application {
 		rollButton.setOnAction(this::handleRollButtonClicked);
 
 		turnText = new Text();
-		turnText.setText("Roll: ");
+		turnText.setText("Roll");
 		turnText.setX(SCREEN_WIDTH / 2);
 		turnText.setY(20);
 
@@ -114,7 +113,7 @@ public class Main extends Application {
 		//
 		Circle boardCircleBlank = new Circle();
 		boardCircleBlank.setFill(Color.WHITE);
-		boardCircleBlank.setRadius(SCREEN_WIDTH / 5.45); //4.9 (1080p)
+		boardCircleBlank.setRadius(SCREEN_WIDTH * .2); //4.9 (1080p) 5.45
 		boardCircleBlank.setCenterX(SCREEN_WIDTH / 2);
 		boardCircleBlank.setCenterY(SCREEN_HEIGHT / 2);
 		playersScreenData.add(boardCircleBlank);
@@ -181,9 +180,10 @@ public class Main extends Application {
 		List<Node> children = group.getChildren();
 		children.clear();
 
-		List<Shape> shapes = board.buildTileShapes();
+		List<Node> tileShapes = board.buildTileShapes();
+
 		children.addAll(playersScreenData);
-		children.addAll(shapes);
+		children.addAll(tileShapes);
 		children.add(resetButton);
 		children.add(exitButton);
 		children.add(rollButton);
@@ -208,6 +208,7 @@ public class Main extends Application {
 	private void handleRollButtonClicked(ActionEvent event) {
 		System.out.println("Roll event = " + event);
 		logic.rollDice();
+		turnText.setText("Roll: " + logic.roll);
 	}
 
 	/*

@@ -40,8 +40,8 @@ public class CentrePoint {
 		return transformPoint(x, y);
 	}
 	public Point transformPoint(double x, double y) {
-		double tx = x * TileGraphics.K + center.getX();
-		double ty = y * TileGraphics.K + center.getY();
+		double tx = x * TileGraphics.TRANSLATION + center.getX();
+		double ty = y * TileGraphics.TRANSLATION + center.getY();
 		return new Point(tx, ty);
 	}
 

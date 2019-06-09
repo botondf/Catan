@@ -2,6 +2,8 @@ package catan;
 
 import java.util.List;
 import java.util.ArrayList;
+
+import javafx.scene.Node;
 import javafx.scene.shape.Shape;
 
 /**
@@ -11,7 +13,7 @@ import javafx.scene.shape.Shape;
  */
 public class Board {
 	private static final int[] VALUES = { 5, 2, 6, 3, 8, 10, 9, 12, 11, 4, 7, 8, 10, 9, 4, 5, 6, 3, 11 };
-	private static final double EDGE = 105.0	;
+	public static final double EDGE = 105.0	;
 	public Tile[] boardTiles = new Tile[19]; // total 19 tiles
 	public List<Tile> selectedTiles;
 	public List<Intersection> intersections = new ArrayList<>();
@@ -65,19 +67,25 @@ public class Board {
 		centrePoints[17] = new CentrePoint(x - 1.5 * EDGE, y + c2);
 		centrePoints[18] = new CentrePoint(x - 3 * EDGE, y + c1);
 		
-		for(int i = 0; i < centrePoints.length; i++) {
+		for (int i = 0; i < centrePoints.length; i++) {
+			TileGraphics tgfx = new TileGraphics(boardTiles[i]);
+			tgfx.setTile(boardTiles[i]);
+			boardTiles[i].setTileGraphics(tgfx);
 			boardTiles[i].getTileGraphics().setCentre(centrePoints[i]);
+			
 			for (int j = 0; j < 6; j++) {
-				CentrePoint centre = centrePoints[j];
+				CentrePoint centre = centrePoints[i];
 				Point point = centre.getPointAt(j);
-				Intersection inters = new Intersection(point);
-				intersections.add(inters);
+				
+				if (!point.arePointsNearby(centre.getPointAt( (j == 5) ? j-j : j+1 ) ) ) {
+					Intersection inters = new Intersection(point);
+					boardTiles[i].getPlaces().add(inters);
+					intersections.add(inters);
+					
+				}
 			}
 		}
-		
-		
 		System.out.println(intersections.toString());
-	
 	}
 
 	public Tile getTileWithId(int id) { // find tile(s) based on the place in board array
@@ -144,20 +152,31 @@ public class Board {
 		for (int v = 0; v < VALUES.length; v++) {
 			boardTiles[v].setRollValue(VALUES[v]); // tile value is set by VALUES
 		}
+		
+		//tessellation();
 	}
 
-	public List<Shape> buildTileShapes() {
+	public List<Node> buildTileShapes() {
 
 		tessellation();
 
-		List<Shape> shapes = new ArrayList<Shape>();
+		List<Node> nodes = new ArrayList<>();
+		//List<Place> places = new ArrayList<>();
 
 		for (Tile tile : this.boardTiles) {
-			TileGraphics hexagon = tile.getTileGraphics();
-
-			shapes.addAll(hexagon.makeShapes());
+			TileGraphics gfx = tile.getTileGraphics();
+			
+			//gfx.makePlaces();
+			//places = gfx.getPlaces();
+			
+//			for (int i = 0; i < places.size(); i++) {
+//				nodes.add(places.get(i).getShape());
+//			}
+			
+			nodes.addAll(gfx.makeShapes());
+			nodes.addAll(gfx.makePlaces());
 		}
 
-		return shapes;
+		return nodes;
 	}
 }

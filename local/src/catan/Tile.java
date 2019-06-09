@@ -1,6 +1,7 @@
 package catan;
 
 import java.util.List;
+import java.util.ArrayList;
 import javafx.scene.paint.Color;
 
 /**
@@ -23,6 +24,7 @@ public class Tile {
 		this.rollValue = rollValue;
 		this.setBuildings(buildings);
 		tileGfx = new TileGraphics(this);
+		places = new ArrayList<>();
 		//places = hexagon.getPlaces()
 	}
 
@@ -30,21 +32,21 @@ public class Tile {
 	public String toString() {
 		return "Tile [value=" + rollValue + ", buildings=" + buildings + ", type=" + type + ", places=" + places + "]";
 	}
-	
+
 	public List<Place> getPlaces() {
 		return places;
 	}
-	
-	public void setPlaces(List<Place> places) {
-		this.places = places;
-	}
-	
+
 	public void setRollValue(int value) {
 		this.rollValue = value;
 	}
 
 	public TileGraphics getTileGraphics() {
 		return tileGfx;
+	}
+	
+	public void setTileGraphics(TileGraphics tileGfx) {
+		this.tileGfx = tileGfx;
 	}
 
 	public TileType getType() {

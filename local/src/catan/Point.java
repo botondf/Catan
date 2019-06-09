@@ -3,6 +3,8 @@ package catan;
 public class Point {
 	private double x;
 	private double y;
+	private static final double POINT_NEARBY_RANGE = Board.EDGE - TileGraphics.TRANSLATION + 100;
+
 
 	Point(double x, double y) {
 		this.x = x;
@@ -30,11 +32,11 @@ public class Point {
 		this.y = y;
 	}
 	
-	public boolean isPointInArea(Point point, double distance) {
+	public boolean arePointsNearby(Point point) {
 		boolean xTrue;
 		boolean yTrue;
 
-		if (point.getX() - distance <= getX() || point.getX() + distance <= getX()) {
+		if (point.getX() - POINT_NEARBY_RANGE <= getX() || point.getX() + POINT_NEARBY_RANGE <= getX()) {
 			xTrue = true;
 		} else if (getX() == point.getX()) {
 			xTrue = true;
@@ -42,7 +44,7 @@ public class Point {
 			xTrue = false;
 		}
 
-		if (point.getY() - distance <= getY() || point.getY() + distance <= getY()) {
+		if (point.getY() - POINT_NEARBY_RANGE <= getY() || point.getY() + POINT_NEARBY_RANGE <= getY()) {
 			yTrue = true;
 		} else if (getY() == point.getY()) {
 			yTrue = true;
