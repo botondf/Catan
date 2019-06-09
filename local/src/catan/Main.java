@@ -59,6 +59,7 @@ public class Main extends Application {
 	// Stage stage;
 	// Turn turn;
 	// List<Node> playersScreenData;
+	List<Node> playersScreenData;
 
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -96,15 +97,49 @@ public class Main extends Application {
 
 		for (int x = 0; x < NUM_PLAYERS; x++) {
 			players[x] = new Player(x + 1);
-			players[x].setVP(1);
+			players[x].getBuildings().add(new Building(BuildingType.CITY, players[x], new Place(PlaceType.INTERSECTION)));
+			players[x].checkVP();
 		}
+		
+		playersScreenData = new ArrayList<Node>();
+		
+		// circle water background
+		Circle boardCircle = new Circle();
+		boardCircle.setFill(Color.SKYBLUE);
+		boardCircle.setRadius(SCREEN_WIDTH / 3.75);
+		boardCircle.setCenterX(SCREEN_WIDTH / 2);
+		boardCircle.setCenterY(SCREEN_HEIGHT / 2);
+		playersScreenData.add(boardCircle);
+		
+		//
+		Circle boardCircleBlank = new Circle();
+		boardCircleBlank.setFill(Color.WHITE);
+		boardCircleBlank.setRadius(SCREEN_WIDTH / 4.9);
+		boardCircleBlank.setCenterX(SCREEN_WIDTH / 2);
+		boardCircleBlank.setCenterY(SCREEN_HEIGHT / 2);
+		playersScreenData.add(boardCircleBlank);
 
-		List<Node> playersScreenData = new ArrayList<Node>();
-
+		// rectangle water background
+//		Rectangle rect = new Rectangle();
+//		rect.setX(SCREEN_WIDTH / 4);
+//		rect.setY(50);
+//		rect.setFill(Color.SKYBLUE);
+//		rect.setWidth(SCREEN_WIDTH / 2);
+//		rect.setHeight(SCREEN_HEIGHT - 100);
+//		playersScreenData.add(rect);
+		
 		for (int x = 0; x < NUM_PLAYERS; x++) {
-			playersScreenData.add(new Text(20, ((x + 1) * 50) + 150, "ID: " + Integer.toString(players[x].getId())));
-			playersScreenData.add(new Text(20, ((x * +1) * 50) + 300, "VP: " + Integer.toString(players[x].getVp())));
-			playersScreenData.add(new Text(20, ((x + 1) * 50) + 350, "ITEMS: " + players[x].getItems().toString()));
+			Text id = new Text();
+			id.setX((players[x].getId() == 1) ? 50 : SCREEN_WIDTH/1.25);
+			id.setY(200);
+//			id.setLayoutX(100);//SCREEN_WIDTH - id.getLayoutBounds().getMinX());
+//			id.setLayoutY(100);//SCREEN_HEIGHT - id.getLayoutBounds().getMinY());
+			id.setText("ID: " + Integer.toString(players[x].getId()));
+
+			playersScreenData.add(id);
+			playersScreenData.add(new Text( (x == 1) ? 50 : SCREEN_WIDTH/1.25, 250, "VP: " + Integer.toString(players[x].getVp())));
+			playersScreenData.add(new Text( (x == 1) ? 50 : SCREEN_WIDTH/1.25, 300, "ITEMS: " + players[x].getItems().toString()));
+			playersScreenData.add(new Text( (x == 1) ? 50 : SCREEN_WIDTH/1.25, 700, "CARDS: " + players[x].getCards().toString()));
 		}
 
 		group = new Group();
@@ -121,7 +156,7 @@ public class Main extends Application {
 		scene.setOnKeyReleased(event -> handleKeyReleased(event));
 		scene.setOnMousePressed(event -> handleMousePressed(event));
 		scene.setOnMouseReleased(event -> handleMouseReleased(event));
-		scene.setFill(Color.SKYBLUE);
+		scene.setFill(Color.WHITE);
 
 		// BackgroundImage = bkgImage = new BackgroundImage();
 
@@ -129,8 +164,6 @@ public class Main extends Application {
 //		Image test = new Image(getClass().getResourceAsStream("icon.png"), 1000,0, false, false);
 //		ImageView imageView = new ImageView(test); 
 //		group.getChildren().add(imageView);
-
-		group.getChildren().addAll(playersScreenData);
 
 		// Set up the stage
 		stage.setFullScreen(fullscreen);
@@ -149,6 +182,7 @@ public class Main extends Application {
 		children.clear();
 
 		List<Shape> shapes = board.buildTileShapes();
+		children.addAll(playersScreenData);
 		children.addAll(shapes);
 		children.add(resetButton);
 		children.add(exitButton);
@@ -159,38 +193,6 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-
-	// class Turn {
-//	public void handle() {
-//			if (exit) {
-//				System.exit(0);
-//				exit = false;
-//			}
-//			//if (fullscreen) {
-//				//stage.setFullScreen(fullscreen);
-//				//fullscreen = false;
-//			//}
-//		
-//			if (reset) {
-//				board = new Board();
-//				drawBoard(board);
-//				reset = false;
-//			}
-//			if (rollClicked) {
-//				turnText.setText("Roll: " + logic.roll);
-//				System.out.println(board.selectedTiles.toString());
-//				rollSetColor = true;
-//				rollClicked = false;
-//			}
-//			
-//			if (rollSetColor) {
-//				for (Tile t : board.selectedTiles) {
-//					t.getHexagon().getHex().setStroke(Color.DARKGOLDENROD);
-//				}
-//				rollSetColor = false;
-//			}
-//		}
-	// }
 
 	private void handleResetButtonClicked(ActionEvent event) {
 		System.out.println("Reset event = " + event);

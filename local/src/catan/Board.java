@@ -7,12 +7,15 @@ import javafx.scene.shape.Shape;
 /**
  * Handles, holds, finds, Tiles and their positions (x,y) & board-wise. Does
  * initial board generation. Also creates the harbours
- *
+ * @
  */
 public class Board {
 	private static final int[] VALUES = { 5, 2, 6, 3, 8, 10, 9, 12, 11, 4, 7, 8, 10, 9, 4, 5, 6, 3, 11 };
+	private static final double EDGE = 105.0	;
 	public Tile[] boardTiles = new Tile[19]; // total 19 tiles
 	public List<Tile> selectedTiles;
+	public List<Intersection> intersections = new ArrayList<>();
+	public CentrePoint[] centrePoints = new CentrePoint[19];
 	
 	public Board() { }
 	
@@ -31,36 +34,50 @@ public class Board {
 		return board;
 	}
 
-	private void setTilePositions() {
+	private void tessellation() {
 		double x = Main.SCREEN_WIDTH / 2;
 		double y = Main.SCREEN_HEIGHT / 2;
-		double edge = 105; // length of one edge of hex
-		double length = (int) (Math.sqrt(3) * edge) + 1;
-		int a = (int) (length * Math.cos(Math.toRadians(60)));
-		int b = (int) (length * Math.cos(Math.toRadians(30)));
-		int c1 = (int) (3 * edge * Math.tan(Math.toRadians(30)));
-		int c2 = (int) (1.5 * edge * Math.tan(Math.toRadians(60)));
+		//double edge = 105; // length of one edge of hex
+		double length = (Math.sqrt(3) * EDGE) + 1;
+		double a = length * Math.cos(Math.toRadians(60));
+		double b = length * Math.cos(Math.toRadians(30));
+		double c1 = 3 * EDGE * Math.tan(Math.toRadians(30));
+		double c2 =  1.5 * EDGE * Math.tan(Math.toRadians(60));
 
-		// setting centre (position) of each tile pos counter-clockwise from middle tile based on base x, y
-		boardTiles[0].getHexagon().setCentre(x, y);
-		boardTiles[1].getHexagon().setCentre(x - b, y - a);
-		boardTiles[2].getHexagon().setCentre(x, y - length);
-		boardTiles[3].getHexagon().setCentre(x + b, y - a);
-		boardTiles[4].getHexagon().setCentre(x + b, y + a);
-		boardTiles[5].getHexagon().setCentre(x, y + length);
-		boardTiles[6].getHexagon().setCentre(x - b, y + a);
-		boardTiles[7].getHexagon().setCentre(x - 3 * edge, y);
-		boardTiles[8].getHexagon().setCentre(x - 3 * edge, y - c1);
-		boardTiles[9].getHexagon().setCentre(x - 1.5 * edge, y - c2);
-		boardTiles[10].getHexagon().setCentre(x, y - 2 * length);
-		boardTiles[11].getHexagon().setCentre(x + 1.5 * edge, y - c2);
-		boardTiles[12].getHexagon().setCentre(x + 3 * edge, y - c1);
-		boardTiles[13].getHexagon().setCentre(x + 3 * edge, y);
-		boardTiles[14].getHexagon().setCentre(x + 3 * edge, y + c1);
-		boardTiles[15].getHexagon().setCentre(x + 1.5 * edge, y + c2);
-		boardTiles[16].getHexagon().setCentre(x, y + 2 * length);
-		boardTiles[17].getHexagon().setCentre(x - 1.5 * edge, y + c2);
-		boardTiles[18].getHexagon().setCentre(x - 3 * edge, y + c1);
+		// setting centre (position) of each tile pos counter-clockwise from middle tile based on base x, y		
+		centrePoints[0] = new CentrePoint(x, y);
+		centrePoints[1] = new CentrePoint(x - b, y - a);
+		centrePoints[2] = new CentrePoint(x, y - length);
+		centrePoints[3] = new CentrePoint(x + b, y - a);
+		centrePoints[4] = new CentrePoint(x + b, y + a);
+		centrePoints[5] = new CentrePoint(x, y + length);
+		centrePoints[6] = new CentrePoint(x - b, y + a);
+		centrePoints[7] = new CentrePoint(x - 3 * EDGE, y);
+		centrePoints[8] = new CentrePoint(x - 3 * EDGE, y - c1);
+		centrePoints[9] = new CentrePoint(x - 1.5 * EDGE, y - c2);
+		centrePoints[10] = new CentrePoint(x, y - 2 * length);
+		centrePoints[11] = new CentrePoint(x + 1.5 * EDGE, y - c2);
+		centrePoints[12] = new CentrePoint(x + 3 * EDGE, y - c1);
+		centrePoints[13] = new CentrePoint(x + 3 * EDGE, y);
+		centrePoints[14] = new CentrePoint(x + 3 * EDGE, y + c1);
+		centrePoints[15] = new CentrePoint(x + 1.5 * EDGE, y + c2);
+		centrePoints[16] = new CentrePoint(x, y + 2 * length);
+		centrePoints[17] = new CentrePoint(x - 1.5 * EDGE, y + c2);
+		centrePoints[18] = new CentrePoint(x - 3 * EDGE, y + c1);
+		
+		for(int i = 0; i < centrePoints.length; i++) {
+			boardTiles[i].getTileGraphics().setCentre(centrePoints[i]);
+			for (int j = 0; j < 6; j++) {
+				CentrePoint centre = centrePoints[j];
+				Point point = centre.getPointAt(j);
+				Intersection inters = new Intersection(point);
+				intersections.add(inters);
+			}
+		}
+		
+		
+		System.out.println(intersections.toString());
+	
 	}
 
 	public Tile getTileWithId(int id) { // find tile(s) based on the place in board array
@@ -131,12 +148,12 @@ public class Board {
 
 	public List<Shape> buildTileShapes() {
 
-		setTilePositions();
+		tessellation();
 
 		List<Shape> shapes = new ArrayList<Shape>();
 
 		for (Tile tile : this.boardTiles) {
-			Hexagon hexagon = tile.getHexagon();
+			TileGraphics hexagon = tile.getTileGraphics();
 
 			shapes.addAll(hexagon.makeShapes());
 		}

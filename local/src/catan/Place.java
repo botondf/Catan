@@ -1,32 +1,39 @@
 package catan;
 
-import java.util.*;
-import catan.BuildingType.*;
+import java.util.List;
+import javafx.scene.control.Button;
+import javafx.scene.shape.Shape;
 
 public class Place {
-	// array or list of neighbouring tiles
-	Place neighbours;
-	PlaceType placeType;
-	// int[] coord = {x,y};
 
-	Place(Place neighbours, PlaceType placeType) {
-		this.neighbours = neighbours;
+	private PlaceType placeType;
+//	private Button placeBuildingButton;
+	private double x;
+	private double y;
+	private Shape shape;
+	private List<Tile> connectedTiles;
+
+	Place(PlaceType placeType) { //Place neighbours
+		//this.neighbours = neighbours;
 		this.placeType = placeType;
 	}
+	
+	
+	@Override
+	public String toString() {
+		return "Place [placeType=" + placeType + "]";
+	}
+	
+	public Shape getShape() {
+		return shape;
+	}
 
-	Place() {
+	public void setShape(Shape shape) {
+		this.shape = shape;
 	}
 
 	public void findNeighbours() {
 
 	}
 
-	@Override
-	public String toString() {
-		return "Place [neighbours=" + neighbours + ", placeType=" + placeType + "]";
-	}
-
-//	public Place getPosition(Tile[] tiles) {
-//		return new Place();
-//	}
 }
