@@ -113,7 +113,7 @@ public class Main extends Application {
 		//
 		Circle boardCircleBlank = new Circle();
 		boardCircleBlank.setFill(Color.WHITE);
-		boardCircleBlank.setRadius(SCREEN_WIDTH * .2); //4.9 (1080p) 5.45
+		boardCircleBlank.setRadius(SCREEN_WIDTH / 5.45); //4.9 (1080p) /5.45 * .2
 		boardCircleBlank.setCenterX(SCREEN_WIDTH / 2);
 		boardCircleBlank.setCenterY(SCREEN_HEIGHT / 2);
 		playersScreenData.add(boardCircleBlank);
