@@ -151,10 +151,10 @@ public class Main extends Application {
 		drawBoard(board);
 
 		Scene scene = new Scene(group, SCREEN_WIDTH, SCREEN_HEIGHT);
-		scene.setOnKeyPressed(event -> handleKeyPressed(event));
-		scene.setOnKeyReleased(event -> handleKeyReleased(event));
-		scene.setOnMousePressed(event -> handleMousePressed(event));
-		scene.setOnMouseReleased(event -> handleMouseReleased(event));
+//		scene.setOnKeyPressed(event -> handleKeyPressed(event));
+//		scene.setOnKeyReleased(event -> handleKeyReleased(event));
+//		scene.setOnMousePressed(event -> handleMousePressed(event));
+//		scene.setOnMouseReleased(event -> handleMouseReleased(event));
 		scene.setFill(Color.WHITE);
 
 		// BackgroundImage = bkgImage = new BackgroundImage();
@@ -214,47 +214,47 @@ public class Main extends Application {
 	/*
 	 * Method that handles key input from the user
 	 */
-	private void handleKeyPressed(KeyEvent event) {
-		KeyCode code = event.getCode();
-
-		if (code == KeyCode.SPACE || code == KeyCode.ENTER) {
-			// board = new Board();
-		}
-
-		if (code == KeyCode.F11) {
-			fullscreen = true;
-		}
-	}
+//	private void handleKeyPressed(KeyEvent event) {
+//		KeyCode code = event.getCode();
+//
+//		if (code == KeyCode.SPACE || code == KeyCode.ENTER) {
+//			// board = new Board();
+//		}
+//
+//		if (code == KeyCode.F11) {
+//			fullscreen = true;
+//		}
+//	}
 
 	/*
 	 * Makes the paddle stop moving when the user release the directional key
 	 */
-	private void handleKeyReleased(KeyEvent event) {
-		KeyCode code = event.getCode();
-
-		if (code == KeyCode.SPACE || code == KeyCode.ENTER) {
-			// board = new Board();
-		}
-
-//		if (code == KeyCode.F11) {
-//			fullscreen = false;
+//	private void handleKeyReleased(KeyEvent event) {
+//		KeyCode code = event.getCode();
+//
+//		if (code == KeyCode.SPACE || code == KeyCode.ENTER) {
+//			// board = new Board();
 //		}
-	}
-
-	private void handleMousePressed(MouseEvent event) {
-		MouseButton code = event.getButton();
-
-		if (code == MouseButton.PRIMARY) {
-
-		}
-	}
-
-	private void handleMouseReleased(MouseEvent event) {
-		MouseButton code = event.getButton();
-
-		if (code == MouseButton.PRIMARY) {
-
-		}
-	}
+//
+////		if (code == KeyCode.F11) {
+////			fullscreen = false;
+////		}
+//	}
+//
+//	private void handleMousePressed(MouseEvent event) {
+//		MouseButton code = event.getButton();
+//
+//		if (code == MouseButton.PRIMARY) {
+//
+//		}
+//	}
+//
+//	private void handleMouseReleased(MouseEvent event) {
+//		MouseButton code = event.getButton();
+//
+//		if (code == MouseButton.PRIMARY) {
+//
+//		}
+//	}
 
 }

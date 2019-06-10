@@ -22,7 +22,7 @@ public class TileGraphics {
 	private static final Color HEX_STROKE_COLOR_SELECTED = Color.BLUE;
 	private static final Color HEX_STROKE_COLOR_DEFAULT = Color.BLACK;
 	private static final double FONT_SIZE = 15;
-	public static final double PLACE_CIRCLE_RADIUS = 10;
+	public static final double PLACE_CIRCLE_RADIUS = 11;
 	private CentrePoint centre;
 	private Polygon hex;
 	private Circle circle;
@@ -37,7 +37,7 @@ public class TileGraphics {
 
 	@Override
 	public String toString() {
-		return "Hexagon [centre=" + centre + ", hex=" + hex + "]";
+		return "TileGraphics [centre=" + centre + ", hex=" + hex + "]";
 	}
 
 	public CentrePoint getCentre() {
@@ -46,7 +46,7 @@ public class TileGraphics {
 
 	private Circle makeCircle() {
 		Circle circle = new Circle();
-		circle.setRadius(FONT_SIZE * 1.1);
+		circle.setRadius(PLACE_CIRCLE_RADIUS);
 		circle.setCenterX(centre.getPoint().getX());
 		circle.setCenterY(centre.getPoint().getY());
 		circle.setFill(Color.ALICEBLUE);
@@ -185,9 +185,13 @@ public class TileGraphics {
 	}
 
 	public void redraw() {
-		hex.setStroke(getTile().isSelected() ? HEX_STROKE_COLOR_SELECTED : HEX_STROKE_COLOR_DEFAULT);
-		hex.setStrokeWidth(getTile().isSelected() ? HEX_STROKE_WIDTH_SELECTED : HEX_STROKE_WIDTH_DEFAULT);
-		
+		boolean isSelected = getTile().isSelected();
+		hex.setStroke(isSelected ? HEX_STROKE_COLOR_SELECTED : HEX_STROKE_COLOR_DEFAULT);
+		hex.setStrokeWidth(isSelected ? HEX_STROKE_WIDTH_SELECTED : HEX_STROKE_WIDTH_DEFAULT);
+		for (Place p : Board.intersections) {
+			System.out.println(getTile().getPlaces());
+			p.getShape().setVisible((isSelected) ? true : false);
+		}
 //		if (tile.isSelected()) {
 //			getPlaces().forEach(getShapes().forEach(setVisibility(true)));
 //		}
@@ -211,6 +215,5 @@ public class TileGraphics {
 	public void setPlaces(List<Place> places) {
 		this.places = places;
 	}
-	
-	
+
 }

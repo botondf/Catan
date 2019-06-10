@@ -1,9 +1,11 @@
 package catan;
 
+import java.lang.Math.*;
+
 public class Point {
 	private double x;
 	private double y;
-	private static final double POINT_NEARBY_RANGE = 10;//Board.EDGE - TileGraphics.TRANSFORMATION;
+	private static final double POINT_NEARBY_RADIUS = 10;//Board.EDGE - TileGraphics.TRANSFORMATION;
 
 
 	Point(double x, double y) {
@@ -32,26 +34,16 @@ public class Point {
 		this.y = y;
 	}
 	
-	public boolean isPointNearby(Point point) {
-		boolean xTrue;
-		boolean yTrue;
+	public boolean isPointNearby(Point otherPoint) {
+		double x1 = getX();
+		double y1 = getY();
+		double x2 = otherPoint.getX();
+		double y2 = otherPoint.getY();
 
-		if (point.getX() - POINT_NEARBY_RANGE <= getX() || point.getX() + POINT_NEARBY_RANGE <= getX()) {
-			xTrue = true;
-		} else if (getX() == point.getX()) {
-			xTrue = true;
-		} else {
-			xTrue = false;
-		}
-
-		if (point.getY() - POINT_NEARBY_RANGE <= getY() || point.getY() + POINT_NEARBY_RANGE <= getY()) {
-			yTrue = true;
-		} else if (getY() == point.getY()) {
-			yTrue = true;
-		} else {
-			yTrue = false;
-		}
-
-		return (xTrue && yTrue) ? true : false;
+		double distance = Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));
+		
+		boolean inside = (distance <= POINT_NEARBY_RADIUS) ? true : false;
+		
+		return (inside) ? true : false;
 	}
 }

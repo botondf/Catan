@@ -18,7 +18,7 @@ public class Board {
 	public static final double EDGE = 105.0	;
 	public Tile[] boardTiles = new Tile[19]; // total 19 tiles
 	public List<Tile> selectedTiles;
-	public List<Intersection> intersections = new ArrayList<>();
+	public static List<Intersection> intersections = new ArrayList<>();
 	public CentrePoint[] centrePoints = new CentrePoint[19];
 	
 	public Board() { }
@@ -101,17 +101,18 @@ public class Board {
 			}
 			
 			System.out.println("");
-			System.out.println("nearbyPoints");
+			System.out.println("nearbyPoints of " + point);
 
 			double sumX = 0;
 			double sumY = 0;
-			for(TilePoint nearbyPoint : nearbyPoints) {
-				sumY += nearbyPoint.getPoint().getX();
+			
+			for (TilePoint nearbyPoint : nearbyPoints) {
+				sumX += nearbyPoint.getPoint().getX();
 				sumY += nearbyPoint.getPoint().getY();
 				System.out.println(nearbyPoint);
 			}
-			double averageX = sumY / nearbyPoints.size();
-			double averageY = sumY /nearbyPoints.size();
+			double averageX = sumX / (double) (nearbyPoints.size());
+			double averageY = sumY / (double) (nearbyPoints.size());
 			
 			Point intersectionPoint = new Point(averageX, averageY);
 			
@@ -127,7 +128,8 @@ public class Board {
 			circle.setRadius(TileGraphics.PLACE_CIRCLE_RADIUS);
 			circle.setCenterX(intersectionPoint.getX());
 			circle.setCenterY(intersectionPoint.getY());
-			circle.setFill(Color.YELLOW);
+			circle.setFill(Color.RED);
+			circle.setVisible(false);
 			circle.setStroke(Color.BLACK);
 			//circle.setVisible(true);
 
