@@ -22,14 +22,14 @@ public class TileGraphics {
 	private static final Color HEX_STROKE_COLOR_SELECTED = Color.BLUE;
 	private static final Color HEX_STROKE_COLOR_DEFAULT = Color.BLACK;
 	private static final double FONT_SIZE = 15;
-	private static final double PLACE_CIRCLE_RADIUS = 10;
+	public static final double PLACE_CIRCLE_RADIUS = 10;
 	private CentrePoint centre;
 	private Polygon hex;
 	private Circle circle;
 	private Text text;
 	private Tile tile;
 	private List<Place> places;
-	public static final double TRANSLATION = Board.EDGE * 0.9;
+	public static final double TRANSFORMATION = 100;//Board.EDGE * 0.9;
 
 	TileGraphics(Tile tile) {
 		this.tile = tile;
@@ -100,15 +100,16 @@ public class TileGraphics {
 		}
 	}
 	
-	public List<Node> makePlaces() {
+	//not used
+	public void makePlaces() {
 		
 		List<Node> nodes = new ArrayList<>();
 		
 		double[] vertices = makeVertices();
 		double[] edges = makeEdges();
 		
-		transformPoints(TRANSLATION, centre.getPoint(), vertices);
-		transformPoints(TRANSLATION, centre.getPoint(), edges);
+		transformPoints(TRANSFORMATION, centre.getPoint(), vertices);
+		transformPoints(TRANSFORMATION-10, centre.getPoint(), edges);
 		
 		for (int i = 0; i < vertices.length; i+=2) {
 			Circle circle = new Circle();
@@ -139,13 +140,13 @@ public class TileGraphics {
 //			place.setShape(circle);
 //			places.add(place);
 		}
-		return nodes;
+		//return nodes;
 	}
 
 	private Polygon makeRegularHexagon() {
 		double[] vertices = makeVertices();
 		
-		transformPoints(TRANSLATION, getCentre().getPoint(), vertices);
+		transformPoints(TRANSFORMATION, getCentre().getPoint(), vertices);
 		
 		Polygon hexagon = new Polygon(vertices);
 		hexagon.setFill(getTile().getColor());

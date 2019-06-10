@@ -3,7 +3,7 @@ package catan;
 public class Point {
 	private double x;
 	private double y;
-	private static final double POINT_NEARBY_RANGE = Board.EDGE - TileGraphics.TRANSLATION + 100;
+	private static final double POINT_NEARBY_RANGE = 10;//Board.EDGE - TileGraphics.TRANSFORMATION;
 
 
 	Point(double x, double y) {
@@ -32,7 +32,7 @@ public class Point {
 		this.y = y;
 	}
 	
-	public boolean arePointsNearby(Point point) {
+	public boolean isPointNearby(Point point) {
 		boolean xTrue;
 		boolean yTrue;
 

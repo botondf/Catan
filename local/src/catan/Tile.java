@@ -30,7 +30,7 @@ public class Tile {
 
 	@Override
 	public String toString() {
-		return "Tile [value=" + rollValue + ", buildings=" + buildings + ", type=" + type + ", places=" + places + "]";
+		return "Tile [value=" + rollValue + ", type=" + type + "]";
 	}
 
 	public List<Place> getPlaces() {
