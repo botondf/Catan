@@ -1,5 +1,6 @@
 package catan;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.Node;
@@ -14,6 +15,7 @@ public class Place {
 	private double y;
 	private Node shape;
 	private List<Tile> connectedTiles;
+	private List<Tile> tiles = new ArrayList<>();
 
 	Place(PlaceType placeType) { //Place neighbours
 		//this.neighbours = neighbours;
@@ -21,7 +23,6 @@ public class Place {
 	}
 	
 	Place () {
-		
 	}
 	
 	
@@ -42,4 +43,11 @@ public class Place {
 
 	}
 
+	public void addTile(Tile tile) {
+		tiles.add(tile);		
+	}
+
+	public List<Tile> getTiles() {
+		return tiles;
+	}
 }

@@ -46,4 +46,11 @@ public class Point {
 		
 		return (inside) ? true : false;
 	}
+	
+	public Point transform(Point moveTo, double scaleBy) {
+		double tx = x * scaleBy + moveTo.getX();
+		double ty = y * scaleBy + moveTo.getY();
+		return new Point(tx, ty);
+	}
+
 }

@@ -11,7 +11,6 @@ public class Intersection extends Place {
 	Intersection(Point point) {
 		super(PlaceType.INTERSECTION);
 		this.point = point;
-		tiles = new ArrayList<>();
 	}
 
 	@Override
@@ -38,13 +37,5 @@ public class Intersection extends Place {
 
 	public Point getPoint() {
 		return point;
-	}
-
-	public void addTile(Tile tile) {
-		tiles.add(tile);		
-	}
-
-	public List<Tile> getTiles() {
-		return tiles;
 	}
 }

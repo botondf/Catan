@@ -19,6 +19,8 @@ public class Board {
 	public Tile[] boardTiles = new Tile[19]; // total 19 tiles
 	public List<Tile> selectedTiles;
 	public static List<Intersection> intersections = new ArrayList<>();
+	public static List<Path> paths = new ArrayList<>();
+	public static List<Place> places = new ArrayList<>();
 	public CentrePoint[] centrePoints = new CentrePoint[19];
 	
 	public Board() { }
@@ -69,9 +71,11 @@ public class Board {
 		centrePoints[17] = new CentrePoint(x - 1.5 * EDGE, y + c2);
 		centrePoints[18] = new CentrePoint(x - 3 * EDGE, y + c1);
 		
-		List<TilePoint> tilePoints = new ArrayList<>();
+		List<TilePoint> tileVertexPoints = new ArrayList<>();
+		List<TileSide> tileEdgePoints = new ArrayList<>();
 		
 		for (int i = 0; i < centrePoints.length; i++) {
+			
 			Tile tile = boardTiles[i];
 			CentrePoint centrePoint = centrePoints[i];
 			
@@ -81,36 +85,97 @@ public class Board {
 			tile.setTileGraphics(tgfx);
 
 			for (int j = 0; j < 6; j++) {
-				Point point = centrePoint.getPointAt(j);
-				tilePoints.add(new TilePoint(point, tile));
+				Point point = centrePoint.getVerticePointAt(j);
+				tileVertexPoints.add(new TilePoint(point, tile));
+			}
+			
+			for (int j = 0; j < 6; j++) {
+				Side side = centrePoint.getSideAt(j);
+				tileEdgePoints.add(new TileSide(side, tile));
 			}
 		}
 		
-		for(int i = 0; i < tilePoints.size(); i++) {
-			TilePoint point = tilePoints.get(i);
+		// PATHS
+		for (int i = 0; i < tileEdgePoints.size(); i++) {
+			
+			TileSide point = tileEdgePoints.get(i);
+			List<TileSide> nearbyPoints = new ArrayList<>();
+			
+			for (int j = 0; j < tileEdgePoints.size(); j++) {
+				
+				TileSide otherPoint = tileEdgePoints.get(j);
+				
+				if (point.getSide().getCentre().isPointNearby(otherPoint.getSide().getCentre())) {
+					nearbyPoints.add(otherPoint);
+				}
+			}
+			
+			if (nearbyPoints.isEmpty()) {
+				throw new RuntimeException("no nearby points found");
+			}
+		
+			double sumX = 0;
+			double sumY = 0;
+			
+			for (TileSide nearbyPoint : nearbyPoints) {
+				sumX += nearbyPoint.getSide().getCentre().getX();
+				sumY += nearbyPoint.getSide().getCentre().getY();
+			}
+			
+			double averageX = sumX / (double) (nearbyPoints.size());
+			double averageY = sumY / (double) (nearbyPoints.size());
+			
+			Point pathPoint = new Point(averageX, averageY);
+			
+			Path path = new Path(pathPoint);
+		
+			for (TileSide nearbyPoint : nearbyPoints) {
+				Tile tile = nearbyPoint.getTile();
+				tile.getPlaces().add(path);
+				path.addTile(tile);
+			}
+						
+			Circle circle = new Circle();
+			circle.setRadius(TileGraphics.PLACE_CIRCLE_RADIUS);
+			circle.setCenterX(pathPoint.getX());
+			circle.setCenterY(pathPoint.getY());
+			circle.setFill(Color.WHITE);
+			circle.setVisible(false);
+			circle.setStroke(Color.BLACK);
+//			circle.setOnMouseClicked((event) -> );
+
+			path.setShape(circle);
+
+			paths.add(path);
+		}
+		
+		// INTERSECTIONS
+		for (int i = 0; i < tileVertexPoints.size(); i++) {
+			
+			TilePoint point = tileVertexPoints.get(i);
 			List<TilePoint> nearbyPoints = new ArrayList<>();
-			for(int j = 0; j < tilePoints.size(); j++) {
-				TilePoint otherPoint = tilePoints.get(j);
+			
+			for (int j = 0; j < tileVertexPoints.size(); j++) {
+				
+				TilePoint otherPoint = tileVertexPoints.get(j);
+				
 				if (point.getPoint().isPointNearby(otherPoint.getPoint())) {
 					nearbyPoints.add(otherPoint);
 				}
 			}
 			
-			if(nearbyPoints.isEmpty()) {
-				throw new RuntimeException("a bug in code");
+			if (nearbyPoints.isEmpty()) {
+				throw new RuntimeException("no nearby points found");
 			}
-			
-			System.out.println("");
-			System.out.println("nearbyPoints of " + point);
-
+		
 			double sumX = 0;
 			double sumY = 0;
 			
 			for (TilePoint nearbyPoint : nearbyPoints) {
 				sumX += nearbyPoint.getPoint().getX();
 				sumY += nearbyPoint.getPoint().getY();
-				System.out.println(nearbyPoint);
 			}
+			
 			double averageX = sumX / (double) (nearbyPoints.size());
 			double averageY = sumY / (double) (nearbyPoints.size());
 			
@@ -118,7 +183,7 @@ public class Board {
 			
 			Intersection inters = new Intersection(intersectionPoint);
 			
-			for(TilePoint nearbyPoint : nearbyPoints) {
+			for (TilePoint nearbyPoint : nearbyPoints) {
 				Tile tile = nearbyPoint.getTile();
 				tile.getPlaces().add(inters);
 				inters.addTile(tile);
@@ -131,14 +196,17 @@ public class Board {
 			circle.setFill(Color.RED);
 			circle.setVisible(false);
 			circle.setStroke(Color.BLACK);
-			//circle.setVisible(true);
+//			circle.setOnMouseClicked((event) -> );
 
 			inters.setShape(circle);
 
 			intersections.add(inters);
 		}
 		
-		System.out.println(intersections.toString());
+//		System.out.println(intersections.toString());
+		
+		places.addAll(intersections);
+		places.addAll(paths);
 	}
 	
 	public Tile getTileWithId(int id) { // find tile(s) based on the place in board array
@@ -229,8 +297,12 @@ public class Board {
 			nodes.addAll(gfx.makeShapes());
 		}
 		
-		for(Intersection inters : intersections) {
+		for( Intersection inters : intersections) {
 			nodes.add(inters.getShape());
+		}
+		
+		for( Path path : paths) {
+			nodes.add(path.getShape());
 		}
 
 		return nodes;

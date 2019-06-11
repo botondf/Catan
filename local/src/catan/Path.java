@@ -1,5 +1,8 @@
 package catan;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Path extends Place {
 
 	private Intersection a;
@@ -9,6 +12,10 @@ public class Path extends Place {
 		super(PlaceType.PATH);
 	}
 
+	public Path(Point pathPoint) {
+		
+	}
+
 	public Intersection getA() {
 		return a;
 	}
@@ -16,5 +23,7 @@ public class Path extends Place {
 	public Intersection getB() {
 		return b;
 	}
+	
+	
 
 }

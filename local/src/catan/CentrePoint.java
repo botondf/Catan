@@ -10,6 +10,15 @@ public class CentrePoint {
 			{-0.5, 0.866}
 	};
 	
+	private static final double[][] EDGES = {
+			{0, 1}, 
+			{0.866, 0.5},
+			{0.866, -0.5},
+			{0, -1},
+			{-0.866, -0.5},
+			{-0.866, 0.5},
+	};
+	
 	private Point centre;
 
 	CentrePoint(Point point) {
@@ -33,16 +42,38 @@ public class CentrePoint {
 		this.centre = point;
 	}
 		
-	public Point getPointAt(int arrayPos) {
+	public Point getVerticePointAt(int arrayPos) {
 		double x = VERTICES[arrayPos][0]; //x
 		double y = VERTICES[arrayPos][1]; //y
 		
-		return transformPoint(x, y);
+		return new Point(x, y).transform(centre, TileGraphics.TRANSFORMATION);
 	}
-	public Point transformPoint(double x, double y) {
-		double tx = x * TileGraphics.TRANSFORMATION + centre.getX();
-		double ty = y * TileGraphics.TRANSFORMATION + centre.getY();
-		return new Point(tx, ty);
+	
+//	public Point getEdgePointAt(int arrayPos) {
+//		double x = EDGES[arrayPos][0]; //x
+//		double y = EDGES[arrayPos][1]; //y
+//		
+//		return transformPoint(x, y);
+//	}
+	
+	public Side getSideAt(int arrayPos) {
+		double ax = VERTICES[arrayPos][0];
+		double ay = VERTICES[arrayPos][1];
+		
+		int nextPos;
+		if(arrayPos == 5) {
+			nextPos = 0;
+		} else {
+			nextPos = arrayPos + 1;
+		}
+
+		double bx = VERTICES[nextPos][0];
+		double by = VERTICES[nextPos][1];
+
+		Point a = new Point(ax, ay).transform(centre, TileGraphics.TRANSFORMATION);
+		Point b = new Point(bx, by).transform(centre, TileGraphics.TRANSFORMATION);
+		
+		return new Side(a, b);
 	}
 
 }

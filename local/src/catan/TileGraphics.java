@@ -188,13 +188,10 @@ public class TileGraphics {
 		boolean isSelected = getTile().isSelected();
 		hex.setStroke(isSelected ? HEX_STROKE_COLOR_SELECTED : HEX_STROKE_COLOR_DEFAULT);
 		hex.setStrokeWidth(isSelected ? HEX_STROKE_WIDTH_SELECTED : HEX_STROKE_WIDTH_DEFAULT);
-		for (Place p : Board.intersections) {
+		for (Place p : Board.places) {
 			System.out.println(getTile().getPlaces());
 			p.getShape().setVisible((isSelected) ? true : false);
 		}
-//		if (tile.isSelected()) {
-//			getPlaces().forEach(getShapes().forEach(setVisibility(true)));
-//		}
 	}
 
 	public List<Node> getShapes() {
