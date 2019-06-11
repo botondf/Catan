@@ -3,7 +3,7 @@ package catan;
 import javafx.scene.paint.Color;
 
 public enum TileType {
-	HILL(Color.BROWN, ItemType.BRICK),
+	HILL(Color.web("a53f1a"), ItemType.BRICK),
 	PASTURE(Color.YELLOWGREEN, ItemType.WOOL),
 	FOREST(Color.DARKGREEN, ItemType.LUMBER),
 	MOUNTAIN(Color.DARKGREY, ItemType.ORE),
