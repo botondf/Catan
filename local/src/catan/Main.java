@@ -60,17 +60,12 @@ public class Main extends Application {
 	boolean rollSetColor;
 	boolean tileClicked;
 	boolean exit;
-	// Stage stage;
-	// Turn turn;
 	List<Node> playersScreenData;
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		//stage.setX(0);
-		//stage.setY(0);
 		stage.setWidth(SCREEN_WIDTH);//bounds.getWidth());
 		stage.setHeight(SCREEN_HEIGHT);//bounds.getHeight());
-		// stage.setFullScreen(true);
 
 		logic = new Logic();
 
@@ -88,13 +83,7 @@ public class Main extends Application {
 		drawBoard(board);
 
 		Scene scene = new Scene(group, SCREEN_WIDTH, SCREEN_HEIGHT);
-//		scene.setOnKeyPressed(event -> handleKeyPressed(event));
-//		scene.setOnKeyReleased(event -> handleKeyReleased(event));
-//		scene.setOnMousePressed(event -> handleMousePressed(event));
-//		scene.setOnMouseReleased(event -> handleMouseReleased(event));
 		scene.setFill(backgroundColor);
-
-		// BackgroundImage = bkgImage = new BackgroundImage();
 
 		stage.getIcons().add(new Image(getClass().getResourceAsStream("icon.png")));
 //		Image test = new Image(getClass().getResourceAsStream("icon.png"), 1000,0, false, false);

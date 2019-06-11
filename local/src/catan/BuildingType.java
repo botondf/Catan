@@ -9,19 +9,18 @@ import java.util.*;
  */
 
 enum BuildingType {
-	ROAD("Road", 0, Arrays.asList(new Item(ItemType.BRICK, 1), new Item(ItemType.LUMBER, 1))),
-	SETTLEMENT("Settlement", 1,
-			Arrays.asList(new Item(ItemType.GRAIN, 1), new Item(ItemType.LUMBER, 1), new Item(ItemType.WOOL, 1),
-					new Item(ItemType.BRICK, 1))),
-	CITY("City", 2, Arrays.asList(new Item(ItemType.GRAIN, 2), new Item(ItemType.ORE, 3))), PORT("Port", 0, null);
+	ROAD("Road", 0, Arrays.asList(new Item(ItemType.BRICK), new Item(ItemType.LUMBER))),
+	SETTLEMENT("Settlement", 1, Arrays.asList(new Item(ItemType.GRAIN), new Item(ItemType.LUMBER), new Item(ItemType.WOOL), new Item(ItemType.BRICK))),
+	CITY("City", 2, Arrays.asList(new Item(ItemType.GRAIN), new Item(ItemType.ORE)));
+	//PORT("Port", 0, null);
 
 	private int value;
 	private String label;
 	private List<Item> cost;
 
-	BuildingType(String newLabel, int newValue, List<Item> cost) {
-		this.label = newLabel;
-		this.value = newValue;
+	BuildingType(String label, int value, List<Item> cost) {
+		this.label = label;
+		this.value = value;
 		this.cost = cost;
 	}
 
