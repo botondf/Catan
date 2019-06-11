@@ -285,23 +285,12 @@ public class Board {
 
 		for (Tile tile : this.boardTiles) {
 			TileGraphics gfx = tile.getTileGraphics();
-			
-//			gfx.makePlaces();
-			//places = gfx.getPlaces();
-			
-//			for (int i = 0; i < places.size(); i++) {
-//				nodes.add(places.get(i).getShape());
-//			}
-			
+
 			nodes.addAll(gfx.makeShapes());
 		}
 		
-		for( Intersection inters : intersections) {
-			nodes.add(inters.getShape());
-		}
-		
-		for( Path path : paths) {
-			nodes.add(path.getShape());
+		for (Place p : places) {
+			nodes.add(p.getShape());
 		}
 
 		return nodes;

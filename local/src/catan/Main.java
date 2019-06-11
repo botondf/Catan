@@ -37,8 +37,8 @@ public class Main extends Application {
 	private static Screen screen = Screen.getPrimary();
 	private static Rectangle2D bounds = screen.getVisualBounds();
 
-	public static final double SCREEN_WIDTH = bounds.getWidth();
-	public static final double SCREEN_HEIGHT = bounds.getHeight();
+	public static final double SCREEN_WIDTH = 1920;//bounds.getWidth();
+	public static final double SCREEN_HEIGHT = 1080;//bounds.getHeight();
 	
 	final double FONT_SIZE = 20;
 	final Color backgroundColor = Color.web("2f2f2f"); // 23272A // 2C2F33 //2f2f2f //313238
@@ -66,96 +66,20 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		stage.setX(0);
-		stage.setY(0);
-		stage.setWidth(bounds.getWidth());
-		stage.setHeight(bounds.getHeight());
+		//stage.setX(0);
+		//stage.setY(0);
+		stage.setWidth(SCREEN_WIDTH);//bounds.getWidth());
+		stage.setHeight(SCREEN_HEIGHT);//bounds.getHeight());
 		// stage.setFullScreen(true);
 
 		logic = new Logic();
 
-		resetButton = new Button();
-		resetButton.setText("Reset");
-		resetButton.setLayoutX(5);
-		resetButton.setLayoutY(5);
-		resetButton.setOnAction(this::handleResetButtonClicked);
-
-		exitButton = new Button("Exit");
-		exitButton.setLayoutX(60);
-		exitButton.setLayoutY(5);
-		exitButton.setOnAction(this::handleExitButtonClicked);
-
-		rollButton = new Button("Roll");
-		rollButton.setLayoutX(110);
-		rollButton.setLayoutY(5);
-		rollButton.setOnAction(this::handleRollButtonClicked);
-
-		turnText = new Text();
-		turnText.setText("Roll");
-		turnText.setX(SCREEN_WIDTH / 2);
-		turnText.setY(20);
-
-		final int NUM_PLAYERS = 2;
-		Player[] players = new Player[NUM_PLAYERS];
-
-		for (int x = 0; x < NUM_PLAYERS; x++) {
-			players[x] = new Player(x + 1);
-			players[x].getBuildings().add(new Building(BuildingType.CITY, players[x], new Place(PlaceType.INTERSECTION)));
-			players[x].checkVP();
-		}
-		
-		playersScreenData = new ArrayList<Node>();
-		
-		// circle water background
-		Circle boardCircle = new Circle();
-		boardCircle.setFill(Color.SKYBLUE);
-		boardCircle.setRadius(SCREEN_WIDTH / 3.75);
-		boardCircle.setCenterX(SCREEN_WIDTH / 2);
-		boardCircle.setCenterY(SCREEN_HEIGHT / 2);
-		playersScreenData.add(boardCircle);
-		
-		//
-		Circle boardCircleBlank = new Circle();
-		boardCircleBlank.setFill(contrastColor);
-		boardCircleBlank.setRadius(SCREEN_WIDTH / 5.45); //4.9 (1080p) /5.45 * .2
-		boardCircleBlank.setCenterX(SCREEN_WIDTH / 2);
-		boardCircleBlank.setCenterY(SCREEN_HEIGHT / 2);
-		playersScreenData.add(boardCircleBlank);
-		
-		// rectangle water background
-//		Rectangle rect = new Rectangle();
-//		rect.setX(SCREEN_WIDTH / 4);
-//		rect.setY(50);
-//		rect.setFill(Color.SKYBLUE);
-//		rect.setWidth(SCREEN_WIDTH / 2);
-//		rect.setHeight(SCREEN_HEIGHT - 100);
-//		playersScreenData.add(rect);
-		
-		for (int x = 0; x < NUM_PLAYERS; x++) {
-			Text id = new Text();
-			id.setX((players[x].getId() == 1) ? 50 : SCREEN_WIDTH/1.25);
-			id.setY(50);
-			id.setText("ID: " + Integer.toString(players[x].getId()));
-			id.setFill(contrastColor);
-			
-			Text vp = new Text( (x == 1) ? 50 : SCREEN_WIDTH/1.25, 100, "VP: " + Integer.toString(players[x].getVp()));
-			vp.setFill(contrastColor);
-			
-			Text items = new Text( (x == 1) ? 50 : SCREEN_WIDTH/1.25, 150, "ITEMS: " + players[x].getItems().toString());
-			items.setFill(contrastColor);
-			items.setWrappingWidth(SCREEN_WIDTH/1.25);
-			
-			Text cards = new Text( (x == 1) ? 50 : SCREEN_WIDTH/1.25, 700, "CARDS: " + players[x].getCards().toString());
-			cards.setFill(contrastColor);
-
-			playersScreenData.add(id);
-			playersScreenData.add(vp);
-			playersScreenData.add(items);
-			playersScreenData.add(cards);
-		}
 
 		group = new Group();
 
+		ui();
+		playerUi();
+		
 		// turn = new Turn();
 		// handle();
 
@@ -177,13 +101,6 @@ public class Main extends Application {
 //		ImageView imageView = new ImageView(test); 
 //		group.getChildren().add(imageView);
 		
-		Rectangle bkg = new Rectangle();
-		bkg.setX(0);
-		bkg.setY(0);
-		bkg.setWidth(SCREEN_WIDTH);
-		bkg.setHeight(SCREEN_HEIGHT);
-		bkg.setFill(backgroundColor);
-				
 		// Set up the stage
 		stage.setFullScreen(fullscreen);
 		stage.setTitle("Settlers of Catan");
@@ -208,6 +125,91 @@ public class Main extends Application {
 		children.add(exitButton);
 		children.add(rollButton);
 		children.add(turnText);
+	}
+	
+	private List<Node> ui() {
+		List<Node> ui = new ArrayList<Node>();
+		
+		resetButton = new Button();
+		resetButton.setText("Reset");
+		resetButton.setLayoutX(5);
+		resetButton.setLayoutY(5);
+		resetButton.setOnAction(this::handleResetButtonClicked);
+		ui.add(resetButton);
+
+		exitButton = new Button("Exit");
+		exitButton.setLayoutX(60);
+		exitButton.setLayoutY(5);
+		exitButton.setOnAction(this::handleExitButtonClicked);
+		ui.add(exitButton);
+
+		rollButton = new Button("Roll");
+		rollButton.setLayoutX(110);
+		rollButton.setLayoutY(5);
+		rollButton.setOnAction(this::handleRollButtonClicked);
+		ui.add(rollButton);
+		
+		turnText = new Text();
+		turnText.setText("Roll");
+		turnText.setX(SCREEN_WIDTH / 2);
+		turnText.setY(20);
+		turnText.setFill(contrastColor);
+		ui.add(turnText);
+		
+		return ui;
+	}
+	
+	private List<Node> playerUi() {
+		final int NUM_PLAYERS = 2;
+		Player[] players = new Player[NUM_PLAYERS];
+
+		for (int x = 0; x < NUM_PLAYERS; x++) {
+			players[x] = new Player(x + 1);
+			//players[x].getBuildings().add(new Building(BuildingType.CITY, players[x], new Place(PlaceType.INTERSECTION)));
+			//players[x].addItem(new Item(ItemType.BRICK));
+			players[x].checkVP();
+		}
+		
+		playersScreenData = new ArrayList<Node>();
+		
+		Circle boardCircle = new Circle();
+		boardCircle.setFill(Color.SKYBLUE);
+		boardCircle.setRadius(SCREEN_WIDTH / 3.75);
+		boardCircle.setCenterX(SCREEN_WIDTH / 2);
+		boardCircle.setCenterY(SCREEN_HEIGHT / 2);
+		playersScreenData.add(boardCircle);
+		
+		Circle boardCircleBlank = new Circle();
+		boardCircleBlank.setFill(contrastColor);
+		boardCircleBlank.setRadius(SCREEN_WIDTH / 5.1); //4.9 (1080p)  5.1 //5.45 * .2
+		boardCircleBlank.setCenterX(SCREEN_WIDTH / 2);
+		boardCircleBlank.setCenterY(SCREEN_HEIGHT / 2);
+		playersScreenData.add(boardCircleBlank);
+		
+		for (int x = 0; x < NUM_PLAYERS; x++) {
+			Text id = new Text();
+			id.setX((players[x].getId() == 1) ? 50 : SCREEN_WIDTH/1.25);
+			id.setY(50);
+			id.setText("ID: " + Integer.toString(players[x].getId()));
+			id.setFill(contrastColor);
+			
+			Text vp = new Text( (x == 1) ? 50 : SCREEN_WIDTH/1.25, 100, "VP: " + Integer.toString(players[x].getVp()));
+			vp.setFill(contrastColor);
+			
+			Text items = new Text( (x == 1) ? 50 : SCREEN_WIDTH/1.25, 150, "ITEMS: " + players[x].getItems().toString());
+			items.setFill(contrastColor);
+			items.setWrappingWidth(SCREEN_WIDTH/1.25);
+			
+			Text cards = new Text( (x == 1) ? 50 : SCREEN_WIDTH/1.25, 700, "CARDS: " + players[x].getCards().toString());
+			cards.setFill(contrastColor);
+
+			playersScreenData.add(id);
+			playersScreenData.add(vp);
+			playersScreenData.add(items);
+			playersScreenData.add(cards);
+			
+		}
+		return playersScreenData;
 	}
 
 	public static void main(String[] args) {

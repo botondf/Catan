@@ -4,16 +4,14 @@ package catan;
 
 public class Item {
 	ItemType type;
-	// int amount;
 
-	Item(ItemType type, int amount) {
+	Item(ItemType type) {
 		this.type = type;
-		// this.amount = amount;
 	}
 
 	@Override
 	public String toString() {
-		return "Item [type=" + type + "]";// + ", amount=" + amount + "]";
+		return "Item [type=" + type + "]";
 	}
 
 //	public void addAmount(int amount) {

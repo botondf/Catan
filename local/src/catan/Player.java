@@ -23,8 +23,12 @@ public class Player {
 				+ "]";
 	}
 
-	public void addItems(Item item) {
+	public void addItem(Item item) {
 		items.add(item);
+	}
+	
+	public void addItems(List<Item> items) {
+		items.addAll(items);
 	}
 
 	public void addBuildingAtTile(Tile tileToBuildAt, Building newBuilding) {
