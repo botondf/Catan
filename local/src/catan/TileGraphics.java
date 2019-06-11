@@ -189,7 +189,6 @@ public class TileGraphics {
 		hex.setStroke(isSelected ? HEX_STROKE_COLOR_SELECTED : HEX_STROKE_COLOR_DEFAULT);
 		hex.setStrokeWidth(isSelected ? HEX_STROKE_WIDTH_SELECTED : HEX_STROKE_WIDTH_DEFAULT);
 		for (Place p : Board.places) {
-			System.out.println(getTile().getPlaces());
 			p.getShape().setVisible((isSelected) ? true : false);
 		}
 	}

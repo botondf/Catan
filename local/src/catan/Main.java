@@ -7,7 +7,6 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.input.*;
 import javafx.scene.shape.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
@@ -18,6 +17,8 @@ import java.util.ArrayList;
 import javafx.stage.Screen;
 
 /**
+ * import javafx.scene.input.*;
+ * 
 import catan.BoardUI.*;
 import javafx.stage.Popup;
 import javax.lang.model.element.Modifier;
@@ -40,6 +41,9 @@ public class Main extends Application {
 	public static final double SCREEN_HEIGHT = bounds.getHeight();
 	
 	final double FONT_SIZE = 20;
+	final Color backgroundColor = Color.web("2f2f2f"); // 23272A // 2C2F33 //2f2f2f //313238
+	final Color contrastColor = Color.WHITE;
+	
 	Scene scene;
 	private Group group;
 	private boolean fullscreen = true;
@@ -72,18 +76,18 @@ public class Main extends Application {
 
 		resetButton = new Button();
 		resetButton.setText("Reset");
-		resetButton.setLayoutX(10);
-		resetButton.setLayoutY(10);
+		resetButton.setLayoutX(5);
+		resetButton.setLayoutY(5);
 		resetButton.setOnAction(this::handleResetButtonClicked);
 
 		exitButton = new Button("Exit");
-		exitButton.setLayoutX(10);
-		exitButton.setLayoutY(50);
+		exitButton.setLayoutX(60);
+		exitButton.setLayoutY(5);
 		exitButton.setOnAction(this::handleExitButtonClicked);
 
 		rollButton = new Button("Roll");
-		rollButton.setLayoutX(10);
-		rollButton.setLayoutY(100);
+		rollButton.setLayoutX(110);
+		rollButton.setLayoutY(5);
 		rollButton.setOnAction(this::handleRollButtonClicked);
 
 		turnText = new Text();
@@ -112,12 +116,12 @@ public class Main extends Application {
 		
 		//
 		Circle boardCircleBlank = new Circle();
-		boardCircleBlank.setFill(Color.WHITE);
+		boardCircleBlank.setFill(contrastColor);
 		boardCircleBlank.setRadius(SCREEN_WIDTH / 5.45); //4.9 (1080p) /5.45 * .2
 		boardCircleBlank.setCenterX(SCREEN_WIDTH / 2);
 		boardCircleBlank.setCenterY(SCREEN_HEIGHT / 2);
 		playersScreenData.add(boardCircleBlank);
-
+		
 		// rectangle water background
 //		Rectangle rect = new Rectangle();
 //		rect.setX(SCREEN_WIDTH / 4);
@@ -130,15 +134,24 @@ public class Main extends Application {
 		for (int x = 0; x < NUM_PLAYERS; x++) {
 			Text id = new Text();
 			id.setX((players[x].getId() == 1) ? 50 : SCREEN_WIDTH/1.25);
-			id.setY(200);
-//			id.setLayoutX(100);//SCREEN_WIDTH - id.getLayoutBounds().getMinX());
-//			id.setLayoutY(100);//SCREEN_HEIGHT - id.getLayoutBounds().getMinY());
+			id.setY(50);
 			id.setText("ID: " + Integer.toString(players[x].getId()));
+			id.setFill(contrastColor);
+			
+			Text vp = new Text( (x == 1) ? 50 : SCREEN_WIDTH/1.25, 100, "VP: " + Integer.toString(players[x].getVp()));
+			vp.setFill(contrastColor);
+			
+			Text items = new Text( (x == 1) ? 50 : SCREEN_WIDTH/1.25, 150, "ITEMS: " + players[x].getItems().toString());
+			items.setFill(contrastColor);
+			items.setWrappingWidth(SCREEN_WIDTH/1.25);
+			
+			Text cards = new Text( (x == 1) ? 50 : SCREEN_WIDTH/1.25, 700, "CARDS: " + players[x].getCards().toString());
+			cards.setFill(contrastColor);
 
 			playersScreenData.add(id);
-			playersScreenData.add(new Text( (x == 1) ? 50 : SCREEN_WIDTH/1.25, 250, "VP: " + Integer.toString(players[x].getVp())));
-			playersScreenData.add(new Text( (x == 1) ? 50 : SCREEN_WIDTH/1.25, 300, "ITEMS: " + players[x].getItems().toString()));
-			playersScreenData.add(new Text( (x == 1) ? 50 : SCREEN_WIDTH/1.25, 700, "CARDS: " + players[x].getCards().toString()));
+			playersScreenData.add(vp);
+			playersScreenData.add(items);
+			playersScreenData.add(cards);
 		}
 
 		group = new Group();
@@ -155,7 +168,7 @@ public class Main extends Application {
 //		scene.setOnKeyReleased(event -> handleKeyReleased(event));
 //		scene.setOnMousePressed(event -> handleMousePressed(event));
 //		scene.setOnMouseReleased(event -> handleMouseReleased(event));
-		scene.setFill(Color.WHITE);
+		scene.setFill(backgroundColor);
 
 		// BackgroundImage = bkgImage = new BackgroundImage();
 
@@ -163,10 +176,17 @@ public class Main extends Application {
 //		Image test = new Image(getClass().getResourceAsStream("icon.png"), 1000,0, false, false);
 //		ImageView imageView = new ImageView(test); 
 //		group.getChildren().add(imageView);
-
+		
+		Rectangle bkg = new Rectangle();
+		bkg.setX(0);
+		bkg.setY(0);
+		bkg.setWidth(SCREEN_WIDTH);
+		bkg.setHeight(SCREEN_HEIGHT);
+		bkg.setFill(backgroundColor);
+				
 		// Set up the stage
 		stage.setFullScreen(fullscreen);
-		stage.setTitle("Main");
+		stage.setTitle("Settlers of Catan");
 		stage.setScene(scene);
 		stage.show();
 	}

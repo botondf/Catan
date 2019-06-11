@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Shape;
 
 /**
  * Handles, holds, finds, Tiles and their positions (x,y) & board-wise. Does
