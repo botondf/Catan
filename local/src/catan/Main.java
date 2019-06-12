@@ -11,6 +11,7 @@ import javafx.scene.shape.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.*;
 import java.util.List;
 import java.util.ArrayList;
@@ -84,6 +85,13 @@ public class Main extends Application {
 		children.addAll(playerUi());
 		children.addAll(tileShapes);
 		children.addAll(placeShapes);
+		
+//		Image pic = new Image(getClass().getResourceAsStream("icon.png"));
+//		ImageView picView = new ImageView(pic);
+//		picView.setX(1050);
+//		picView.setY(350);
+		
+//		children.add(picView);
 	}
 	
 	private List<Node> ui() {
@@ -114,7 +122,7 @@ public class Main extends Application {
 		turnText.setY(20);
 		turnText.setFill(contrastColor);
 		ui.add(turnText);
-
+		
 		return ui;
 	}
 	
