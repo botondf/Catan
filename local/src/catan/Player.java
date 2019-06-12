@@ -2,12 +2,15 @@ package catan;
 
 import java.util.*;
 
+import javafx.scene.paint.Color;
+
 public class Player {
 	private int id;
 	private int vp;
 	private List<Item> items;
 	private List<Card> cards;
 	private List<Building> buildings;
+	private Color color;
 
 	Player(int id) {
 		this.id = id;
@@ -88,5 +91,13 @@ public class Player {
 		Building building = new Building(type, this, place);
 		
 		return building;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
 	}
 }
