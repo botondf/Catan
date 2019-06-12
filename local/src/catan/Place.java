@@ -11,6 +11,7 @@ public class Place {
 
 	private Node shape;
 	private List<Tile> tiles = new ArrayList<>();
+	private Building building;
 
 	Place(PlaceType placeType) {
 		this.placeType = placeType;
@@ -23,6 +24,10 @@ public class Place {
 	@Override
 	public String toString() {
 		return "Place [placeType=" + placeType + "]";
+	}
+	
+	public void addBuilding(Building building) {
+		this.building = building;
 	}
 	
 	public Node getShape() {

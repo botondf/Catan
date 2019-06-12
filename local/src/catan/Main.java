@@ -94,6 +94,20 @@ public class Main extends Application {
 //		children.add(picView);
 	}
 	
+	private List<Node> mainMenu() {
+		List<Node> mainMenu = new ArrayList<Node>();
+		
+		Text title = new Text();
+		title.setText("Settlers of Catan");
+		title.setX(SCREEN_WIDTH/2);
+		title.setY(SCREEN_HEIGHT/2);
+		title.setFont();
+		
+		mainMenu.add(title);
+		
+		return mainMenu;
+	}
+	
 	private List<Node> ui() {
 		List<Node> ui = new ArrayList<Node>();
 		

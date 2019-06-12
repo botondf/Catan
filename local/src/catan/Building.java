@@ -4,6 +4,7 @@ import java.lang.Math;
 import java.util.*;
 
 import catan.TileType.*;
+import javafx.scene.shape.Rectangle;
 
 /**
  * 
@@ -15,6 +16,7 @@ public class Building {
 	private Player owner;
 	private Place place;
 	private List<Item> cost;
+	private Node graphic;
 
 	Building(BuildingType type, Player owner, Place place) {
 		this.type = type;
@@ -34,6 +36,11 @@ public class Building {
 
 	public int getValue() {
 		return type.getValue();
+	}
+	
+	public void draw() {
+		Rectangle rect = new Rectangle();
+		rect
 	}
 
 }

@@ -145,7 +145,7 @@ public class Board {
 	
 	private void makePlaceGraphics() {
 		List<TilePoint> tileVertexPoints = new ArrayList<>();
-		List<TileSide> tileEdgePoints = new ArrayList<>();
+		List<TileSide> tileSidePoints = new ArrayList<>();
 			
 		for (Tile tile : boardTiles) {
 			
@@ -158,19 +158,19 @@ public class Board {
 			
 			for (int j = 0; j < 6; j++) {
 				Side side = centrePoint.getSideAt(j);
-				tileEdgePoints.add(new TileSide(side, tile));
+				tileSidePoints.add(new TileSide(side, tile));
 			}
 		}
 		
 		// PATHS
-		for (int i = 0; i < tileEdgePoints.size(); i++) {
+		for (int i = 0; i < tileSidePoints.size(); i++) {
 			
-			TileSide point = tileEdgePoints.get(i);
+			TileSide point = tileSidePoints.get(i);
 			List<TileSide> nearbyPoints = new ArrayList<>();
 			
-			for (int j = 0; j < tileEdgePoints.size(); j++) {
+			for (int j = 0; j < tileSidePoints.size(); j++) {
 				
-				TileSide otherPoint = tileEdgePoints.get(j);
+				TileSide otherPoint = tileSidePoints.get(j);
 				
 				if (point.getSide().getCentre().isPointNearby(otherPoint.getSide().getCentre())) {
 					nearbyPoints.add(otherPoint);
@@ -287,12 +287,12 @@ public class Board {
 		}
 		
 		Tile desert = getDesert();
-		Tile tileAt7  = getTilesWithValue(7).get(0); // only 1
+		Tile tileWith7  = boardTiles[10]; // Tile at 10 is the desert tile (pre-generation) //getTilesWithValue(7).get(0); // only 1
 		
 		int desertPos = getTileArrayPos(desert);
-		int tileAt7Pos = getTileArrayPos(tileAt7);
+		int tileAt7Pos = 10;//getTileArrayPos(tileAt7);
 		
-		Tile temp = tileAt7;
+		Tile temp = tileWith7;
 		boardTiles[tileAt7Pos] = desert;
 		boardTiles[desertPos] = temp;
 	}
@@ -317,14 +317,14 @@ public class Board {
 			}
 		}
 		
+		shuffle(); // shuffle tiles to randomize board
+		
 		for (int v = 0; v < VALUES.length; v++) {
 			boardTiles[v].setRollValue(VALUES[v]); // tile value is set by VALUES
 		}
 
-		shuffle(); // shuffle tiles to randomize board
-
 	}
-	
+
 	/**
 	 * Puts all tile shapes in a list
 	 * @return List<Node>

@@ -31,11 +31,6 @@ public class Player {
 		items.addAll(items);
 	}
 
-	public void addBuildingAtTile(Tile tileToBuildAt, Building newBuilding) {
-		tileToBuildAt.getBuildings().add(newBuilding);
-		this.buildings.add(newBuilding);
-	}
-
 	public void checkVP() {
 		for (Building b : this.buildings) {
 			vp += b.getValue();
@@ -87,5 +82,11 @@ public class Player {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public Building build(BuildingType type, Place place) {
+		Building building = new Building(type, this, place);
+		
+		return building;
 	}
 }
