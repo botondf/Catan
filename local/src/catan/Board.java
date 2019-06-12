@@ -1,6 +1,7 @@
 package catan;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.ArrayList;
 
 import javafx.scene.Node;
@@ -47,8 +48,9 @@ public class Board {
 	/**
 	 * Find the tiles
 	 * @param value
+	 * @return List of tiles
 	 */
-	public void getTilesWithValue(int value) { // find tile(s) based on the roll
+	public List<Tile> getTilesWithValue(int value) { // find tile(s) based on the roll
 		List<Tile> tileList = new ArrayList<Tile>();
 
 		for (int x = 0; x < boardTiles.length; x++) {
@@ -56,7 +58,38 @@ public class Board {
 				tileList.add(boardTiles[x]);
 			}
 		}
-		rollSelectedTiles = tileList;
+		return tileList;
+	}
+	
+	/**
+	 * gets the desert tile
+	 * @return desert Tile
+	 */
+	public Tile getDesert() {
+		Tile desert = null;
+		for (int x = 0; x < boardTiles.length; x++) {
+			if (boardTiles[x].getType() == TileType.DESERT) {
+				desert = boardTiles[x];
+				Objects.requireNonNull(desert, "robber");
+			}
+		}
+		return desert;
+	}
+	
+	/**
+	 * @param tile The tile which boardTiles array position is to be determined
+	 * @return int boardTiles array position
+	 */
+	public int getTileArrayPos(Tile tile) {
+		int pos = 0;
+		
+		for (int t = 0; t < boardTiles.length; t++) {
+			if (tile.equals(boardTiles[t])) {
+				pos = t;
+			}
+		}
+		
+		return pos;
 	}
 
 	/**
@@ -242,28 +275,26 @@ public class Board {
 	}
 
 	/**
-	 * shuffles the board tiles: randomizes the order
+	 * shuffles the board tiles: randomizes the order, but 7 is always desert, just different position
 	 */
 	public void shuffle() {
-		Tile[] boardTilesClone = boardTiles;
 
-		// to ensure desert/robber is index 10 (and thus value 7), exclude it from shuffle
-		// boardTiles indices 0 - 10
-		for (int i = 0; i < 10; i++) {
-			int randomPosition = Logic.randomNumber(0, 9);
-			Tile temp = boardTilesClone[i];
-			boardTilesClone[i] = boardTilesClone[randomPosition];
-			boardTilesClone[randomPosition] = temp;
+		for (int i = 0; i < 18; i++) {
+			int randomPosition = Logic.randomNumber(0, 18);
+			Tile temp = boardTiles[i];
+			boardTiles[i] = boardTiles[randomPosition];
+			boardTiles[randomPosition] = temp;
 		}
-
-		// indices 11 - 18
-		for (int i = 11; i < 18; i++) {
-			int randomPosition = Logic.randomNumber(11, 18);
-			Tile temp = boardTilesClone[i];
-			boardTilesClone[i] = boardTilesClone[randomPosition];
-			boardTilesClone[randomPosition] = temp;
-		}
-		boardTiles = boardTilesClone;
+		
+		Tile desert = getDesert();
+		Tile tileAt7  = getTilesWithValue(7).get(0); // only 1
+		
+		int desertPos = getTileArrayPos(desert);
+		int tileAt7Pos = getTileArrayPos(tileAt7);
+		
+		Tile temp = tileAt7;
+		boardTiles[tileAt7Pos] = desert;
+		boardTiles[desertPos] = temp;
 	}
 	
 	/**
@@ -285,13 +316,13 @@ public class Board {
 				boardTiles[i] = new Tile(TileType.FIELD, 0, new ArrayList<Building>()); // 4 fields
 			}
 		}
-
-		shuffle(); // shuffle tiles to randomize board
-
+		
 		for (int v = 0; v < VALUES.length; v++) {
 			boardTiles[v].setRollValue(VALUES[v]); // tile value is set by VALUES
 		}
-		
+
+		shuffle(); // shuffle tiles to randomize board
+
 	}
 	
 	/**
