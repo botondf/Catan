@@ -31,4 +31,9 @@ enum BuildingType {
 	public List<Item> getCost() {
 		return this.cost;
 	}
+
+	public String getLabel() {
+		return label;
+	}
+
 }

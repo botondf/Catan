@@ -1,5 +1,9 @@
 package catan;
-
+/**
+ * 
+ * not used
+ *
+ */
 public class Debug {
 	public static void main(String[] args) {
 		Player[] players = new Player[4];

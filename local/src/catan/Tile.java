@@ -13,11 +13,10 @@ import javafx.scene.paint.Color;
 public class Tile {
 	int rollValue;
 	List<Building> buildings;
-	private TileType type; // each Tile.Type affects related Item.Type
+	private TileType type;
 	private TileGraphics tileGfx;
 	private boolean selected;
 	private List<Place> places;
-//	private List<Tile> neighbours;
 
 	Tile(TileType type, int rollValue, List<Building> buildings) {
 		this.setType(type);
@@ -25,7 +24,6 @@ public class Tile {
 		this.setBuildings(buildings);
 		tileGfx = new TileGraphics(this);
 		places = new ArrayList<>();
-		//places = hexagon.getPlaces()
 	}
 
 	@Override

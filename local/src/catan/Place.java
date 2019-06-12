@@ -4,21 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.shape.Shape;
 
 public class Place {
 
 	private PlaceType placeType;
-	private Button placeBuildingButton;
-	private double x;
-	private double y;
+
 	private Node shape;
-	private List<Tile> connectedTiles;
 	private List<Tile> tiles = new ArrayList<>();
 
-	Place(PlaceType placeType) { //Place neighbours
-		//this.neighbours = neighbours;
+	Place(PlaceType placeType) {
 		this.placeType = placeType;
 	}
 	

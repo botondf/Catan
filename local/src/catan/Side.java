@@ -1,7 +1,5 @@
 package catan;
 
-import java.lang.Math.*;
-
 public class Side {
 	private Point a;
 	private Point b;

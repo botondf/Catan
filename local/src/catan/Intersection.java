@@ -5,7 +5,6 @@ import java.util.List;
 
 public class Intersection extends Place {
 	private List<Path> paths;
-	private List<Tile> tiles;
 	private Point point;
 
 	Intersection(Point point) {
@@ -15,7 +14,7 @@ public class Intersection extends Place {
 
 	@Override
 	public String toString() {
-		return "Intersection [point=" + point + "]"; //paths=" + paths + ", 
+		return "Intersection [point=" + point + "]";
 	}
 
 	public List<Path> getPaths() {

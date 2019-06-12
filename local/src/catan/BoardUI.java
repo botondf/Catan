@@ -7,6 +7,11 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
 
+/**
+ * 
+ * not used
+ *
+ */
 public class BoardUI {
 	// public List<Shape> shapes = new ArrayList<Shape>();
 

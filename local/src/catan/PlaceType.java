@@ -7,7 +7,6 @@ import javafx.scene.paint.Color;
 enum PlaceType {
 	INTERSECTION(Arrays.asList(BuildingType.SETTLEMENT, BuildingType.CITY), Color.RED),
 	PATH(Arrays.asList(BuildingType.ROAD), Color.BLUE);
-	//PORT(Arrays.asList(BuildingType.PORT));
 
 	private List<BuildingType> possibleBuildings;
 	private Color color;

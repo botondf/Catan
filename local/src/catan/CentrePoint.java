@@ -49,13 +49,6 @@ public class CentrePoint {
 		return new Point(x, y).transform(centre, TileGraphics.TRANSFORMATION);
 	}
 	
-//	public Point getEdgePointAt(int arrayPos) {
-//		double x = EDGES[arrayPos][0]; //x
-//		double y = EDGES[arrayPos][1]; //y
-//		
-//		return transformPoint(x, y);
-//	}
-	
 	public Side getSideAt(int arrayPos) {
 		double ax = VERTICES[arrayPos][0];
 		double ay = VERTICES[arrayPos][1];

@@ -45,10 +45,6 @@ public class Player {
 		}
 	}
 
-//	public void incrementItems(Item item, int increment) {
-//		this.items.getAmount() += increment;
-//	}
-
 	public int getId() {
 		return id;
 	}

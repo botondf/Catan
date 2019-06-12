@@ -14,12 +14,4 @@ public class Item {
 		return "Item [type=" + type + "]";
 	}
 
-//	public void addAmount(int amount) {
-//		this.amount += amount;
-//	}
-//	
-//	public int getAmount() {
-//		return amount;
-//	}
-
 }
