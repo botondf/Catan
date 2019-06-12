@@ -9,20 +9,22 @@ import javafx.scene.shape.Circle;
 
 /**
  * Handles, holds, finds, Tiles and their positions (x,y) & board-wise. Does
- * initial board generation. Also creates the harbours
+ * initial board generation. Also creates the places for tiles
  * @
  */
 public class Board {
 	private static final int[] VALUES = { 5, 2, 6, 3, 8, 10, 9, 12, 11, 4, 7, 8, 10, 9, 4, 5, 6, 3, 11 };
 	public static final double EDGE = 105.0	;
 	public Tile[] boardTiles = new Tile[19]; // total 19 tiles
-	public List<Tile> selectedTiles;
-	public static List<Intersection> intersections = new ArrayList<>();
-	public static List<Path> paths = new ArrayList<>();
-	public static List<Place> places = new ArrayList<>();
+	public List<Tile> rollSelectedTiles;
+	public List<Intersection> intersections = new ArrayList<>();
+	public List<Path> paths = new ArrayList<>();
+	public List<Place> places = new ArrayList<>();
 	public CentrePoint[] centrePoints = new CentrePoint[19];
 	
-	public Board() { }
+	public Board() {
+		tessellation();
+	}
 	
 	@Override
 	public String toString() {
@@ -32,13 +34,34 @@ public class Board {
 		}
 		return "Tiles of board: " + s;
 	}
-
+	
+	/**
+	 * Initialize a new board with newly generated randomized tiles
+	 */
 	public static Board newBoardWithTiles() {
 		Board board = new Board();
 		board.generateNewTileSet();
 		return board;
 	}
 
+	/**
+	 * Find the tiles
+	 * @param value
+	 */
+	public void getTilesWithValue(int value) { // find tile(s) based on the roll
+		List<Tile> tileList = new ArrayList<Tile>();
+
+		for (int x = 0; x < boardTiles.length; x++) {
+			if (boardTiles[x].rollValue == value) {
+				tileList.add(boardTiles[x]);
+			}
+		}
+		rollSelectedTiles = tileList;
+	}
+
+	/**
+	 * Sets the tessellated CentrePoints of the board based on screen size and tile edge.
+	 */
 	private void tessellation() {
 		double x = Main.SCREEN_WIDTH / 2;
 		double y = Main.SCREEN_HEIGHT / 2;
@@ -69,20 +92,32 @@ public class Board {
 		centrePoints[16] = new CentrePoint(x, y + 2 * length);
 		centrePoints[17] = new CentrePoint(x - 1.5 * EDGE, y + c2);
 		centrePoints[18] = new CentrePoint(x - 3 * EDGE, y + c1);
-		
-		List<TilePoint> tileVertexPoints = new ArrayList<>();
-		List<TileSide> tileEdgePoints = new ArrayList<>();
+	}
+	/**
+	 * Set the TileGraphics at each CentrePoint for each Tile of the board's CentrePoints
+	 */
+	private void makeTileGraphics() {
 		
 		for (int i = 0; i < centrePoints.length; i++) {
 			
 			Tile tile = boardTiles[i];
 			CentrePoint centrePoint = centrePoints[i];
 			
+			// Make a new tile graphic obj with the tile
 			TileGraphics tgfx = new TileGraphics(tile);
-			tgfx.setTile(tile);
 			tgfx.setCentre(centrePoint);
 			tile.setTileGraphics(tgfx);
-
+		}
+	}
+	
+	private void makePlaceGraphics() {
+		List<TilePoint> tileVertexPoints = new ArrayList<>();
+		List<TileSide> tileEdgePoints = new ArrayList<>();
+			
+		for (Tile tile : boardTiles) {
+			
+			CentrePoint centrePoint = tile.getTileGraphics().getCentre();
+			
 			for (int j = 0; j < 6; j++) {
 				Point point = centrePoint.getVerticePointAt(j);
 				tileVertexPoints.add(new TilePoint(point, tile));
@@ -139,9 +174,9 @@ public class Board {
 			circle.setCenterX(pathPoint.getX());
 			circle.setCenterY(pathPoint.getY());
 			circle.setFill(Color.WHITE);
-			circle.setVisible(false);
+//			circle.setVisible(false);
 			circle.setStroke(Color.BLACK);
-//			circle.setOnMouseClicked((event) -> );
+			circle.setOnMouseClicked((event) -> System.out.println(path));
 
 			path.setShape(circle);
 
@@ -193,41 +228,22 @@ public class Board {
 			circle.setCenterX(intersectionPoint.getX());
 			circle.setCenterY(intersectionPoint.getY());
 			circle.setFill(Color.RED);
-			circle.setVisible(false);
+//			circle.setVisible(false);
 			circle.setStroke(Color.BLACK);
-//			circle.setOnMouseClicked((event) -> );
+			circle.setOnMouseClicked((event) -> System.out.println(inters));
 
 			inters.setShape(circle);
 
 			intersections.add(inters);
 		}
-		
-//		System.out.println(intersections.toString());
-		
+				
 		places.addAll(intersections);
 		places.addAll(paths);
 	}
-	
-	public Tile getTileWithId(int id) { // find tile(s) based on the place in board array
-		return boardTiles[id];
-	}
 
-	public void getTilesWithValue(int value) { // find tile(s) based on the roll
-		List<Tile> tileList = new ArrayList<Tile>();
-
-		for (int x = 0; x < boardTiles.length; x++) {
-			if (boardTiles[x].rollValue == value) {
-				tileList.add(boardTiles[x]);
-			}
-		}
-
-		selectedTiles = tileList;
-	}
-
-	public Tile[] getNeighbourTilesWithPosition(Place pos) { // array or list // position/junction
-		return null;
-	}
-
+	/**
+	 * shuffles the board tiles: randomizes the order
+	 */
 	public void shuffle() {
 		Tile[] boardTilesClone = boardTiles;
 
@@ -249,7 +265,10 @@ public class Board {
 		}
 		boardTiles = boardTilesClone;
 	}
-
+	
+	/**
+	 * Generate the board's tile set: initialize tiles, randomize order, set values
+	 */
 	public void generateNewTileSet() {
 		for (int i = 0; i < boardTiles.length; i++) {
 			if (i >= 0 && i <= 3) {
@@ -273,26 +292,39 @@ public class Board {
 			boardTiles[v].setRollValue(VALUES[v]); // tile value is set by VALUES
 		}
 		
-		//tessellation();
 	}
-
+	
+	/**
+	 * Puts all tile shapes in a list
+	 * @return List<Node>
+	 */
 	public List<Node> buildTileShapes() {
-
-		tessellation();
+		makeTileGraphics();
 
 		List<Node> nodes = new ArrayList<>();
-		//List<Place> places = new ArrayList<>();
 
 		for (Tile tile : this.boardTiles) {
 			TileGraphics gfx = tile.getTileGraphics();
 
 			nodes.addAll(gfx.makeShapes());
 		}
+
+		return nodes;
+	}
+
+	/**
+	 * Puts all place shapes in a list
+	 * @return List<Node>
+	 */
+	public List<Node> buildPlaceShapes() {
+		makePlaceGraphics();
 		
+		List<Node> nodes = new ArrayList<>();
+
 		for (Place p : places) {
 			nodes.add(p.getShape());
 		}
-
+		
 		return nodes;
 	}
 	

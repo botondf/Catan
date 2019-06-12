@@ -36,7 +36,7 @@ public class Logic {
 	 * Interprets the roll.
 	 */
 	public void handleRoll(Board board) {
-		List<Tile> tiles = board.selectedTiles;
+		List<Tile> tiles = board.rollSelectedTiles;
 		// Robber
 		if (roll == 7) {
 			tiles.get(1);

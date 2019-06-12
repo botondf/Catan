@@ -22,7 +22,7 @@ public class TileGraphics {
 	private static final Color HEX_STROKE_COLOR_SELECTED = Color.BLUE;
 	private static final Color HEX_STROKE_COLOR_DEFAULT = Color.BLACK;
 	private static final double FONT_SIZE = 15;
-	public static final double PLACE_CIRCLE_RADIUS = 11;
+	public static final double PLACE_CIRCLE_RADIUS = 13;
 	private CentrePoint centre;
 	private Polygon hex;
 	private Circle circle;
@@ -188,9 +188,9 @@ public class TileGraphics {
 		boolean isSelected = getTile().isSelected();
 		hex.setStroke(isSelected ? HEX_STROKE_COLOR_SELECTED : HEX_STROKE_COLOR_DEFAULT);
 		hex.setStrokeWidth(isSelected ? HEX_STROKE_WIDTH_SELECTED : HEX_STROKE_WIDTH_DEFAULT);
-		for (Place p : getTile().getPlaces()) { //int x = 0; x < getTile().getPlaces().size(); x++
-			p.getShape().setVisible((isSelected) ? true : false);
-		}
+//		for (Place p : getTile().getPlaces()) {
+//			p.getShape().setVisible((isSelected) ? true : false);
+//		}
 	}
 
 	public List<Node> getShapes() {

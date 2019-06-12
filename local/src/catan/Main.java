@@ -16,23 +16,6 @@ import java.util.List;
 import java.util.ArrayList;
 import javafx.stage.Screen;
 
-/**
- * import javafx.scene.input.*;
- * 
-import catan.BoardUI.*;
-import javafx.stage.Popup;
-import javax.lang.model.element.Modifier;
-import javafx.scene.image.ImageView;
-import javafx.scene.effect.*;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
-import javafx.scene.media.AudioClip;
-import java.lang.Math;
-import javafx.geometry.Bounds;
-import javafx.animation.AnimationTimer;
-**/
-
-
 public class Main extends Application {
 	private static Screen screen = Screen.getPrimary();
 	private static Rectangle2D bounds = screen.getVisualBounds();
@@ -44,23 +27,14 @@ public class Main extends Application {
 	final Color backgroundColor = Color.web("2f2f2f"); // 23272A // 2C2F33 //2f2f2f //313238
 	final Color contrastColor = Color.WHITE;
 	
-	Scene scene;
 	private Group group;
 	private boolean fullscreen = true;
 
-	boolean reset;
-	boolean pressed;
 	public Board board;
-	private Button resetButton;
-	private Button exitButton;
-	private Button rollButton;
-	private Text turnText;
 	private Logic logic;
-	boolean rollClicked;
-	boolean rollSetColor;
-	boolean tileClicked;
-	boolean exit;
-	List<Node> playersScreenData;
+	private Text turnText;
+	private Player[] players = new Player[NUM_PLAYERS];
+	public static int NUM_PLAYERS = 2;
 
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -69,14 +43,14 @@ public class Main extends Application {
 
 		logic = new Logic();
 
+		for (int x = 0; x < NUM_PLAYERS; x++) {
+			players[x] = new Player(x + 1);
+			//players[x].getBuildings().add(new Building(BuildingType.CITY, players[x], new Place(PlaceType.INTERSECTION)));
+			//players[x].addItem(new Item(ItemType.BRICK));
+			players[x].checkVP();
+		}
 
 		group = new Group();
-
-		ui();
-		playerUi();
-		
-		// turn = new Turn();
-		// handle();
 
 		Board board = Board.newBoardWithTiles();
 
@@ -86,53 +60,49 @@ public class Main extends Application {
 		scene.setFill(backgroundColor);
 
 		stage.getIcons().add(new Image(getClass().getResourceAsStream("icon.png")));
-//		Image test = new Image(getClass().getResourceAsStream("icon.png"), 1000,0, false, false);
-//		ImageView imageView = new ImageView(test); 
-//		group.getChildren().add(imageView);
 		
 		// Set up the stage
-		stage.setFullScreen(fullscreen);
+		//stage.setFullScreen(fullscreen);
 		stage.setTitle("Settlers of Catan");
 		stage.setScene(scene);
 		stage.show();
 	}
 
 	/**
-	 * List<Shape> shapes = new ArrayList<Shape>();
-	 * 
+	 *  'Draws' (re-adds to group) the entire game board on updates
 	 * @param board
 	 */
 	private void drawBoard(Board board) {
 		List<Node> children = group.getChildren();
 		children.clear();
-
+		
 		List<Node> tileShapes = board.buildTileShapes();
-
-		children.addAll(playersScreenData);
+		List<Node> placeShapes = board.buildPlaceShapes();
+		
+		children.addAll(background());
+		children.addAll(ui());
+		children.addAll(playerUi());
 		children.addAll(tileShapes);
-		children.add(resetButton);
-		children.add(exitButton);
-		children.add(rollButton);
-		children.add(turnText);
+		children.addAll(placeShapes);
 	}
 	
 	private List<Node> ui() {
 		List<Node> ui = new ArrayList<Node>();
 		
-		resetButton = new Button();
+		Button resetButton = new Button();
 		resetButton.setText("Reset");
 		resetButton.setLayoutX(5);
 		resetButton.setLayoutY(5);
 		resetButton.setOnAction(this::handleResetButtonClicked);
 		ui.add(resetButton);
 
-		exitButton = new Button("Exit");
+		Button exitButton = new Button("Exit");
 		exitButton.setLayoutX(60);
 		exitButton.setLayoutY(5);
 		exitButton.setOnAction(this::handleExitButtonClicked);
 		ui.add(exitButton);
 
-		rollButton = new Button("Roll");
+		Button rollButton = new Button("Roll");
 		rollButton.setLayoutX(110);
 		rollButton.setLayoutY(5);
 		rollButton.setOnAction(this::handleRollButtonClicked);
@@ -144,36 +114,32 @@ public class Main extends Application {
 		turnText.setY(20);
 		turnText.setFill(contrastColor);
 		ui.add(turnText);
-		
+
 		return ui;
 	}
 	
-	private List<Node> playerUi() {
-		final int NUM_PLAYERS = 2;
-		Player[] players = new Player[NUM_PLAYERS];
-
-		for (int x = 0; x < NUM_PLAYERS; x++) {
-			players[x] = new Player(x + 1);
-			//players[x].getBuildings().add(new Building(BuildingType.CITY, players[x], new Place(PlaceType.INTERSECTION)));
-			//players[x].addItem(new Item(ItemType.BRICK));
-			players[x].checkVP();
-		}
-		
-		playersScreenData = new ArrayList<Node>();
+	private List<Node> background() {
+		List<Node> background = new ArrayList<Node>();
 		
 		Circle boardCircle = new Circle();
 		boardCircle.setFill(Color.SKYBLUE);
 		boardCircle.setRadius(SCREEN_WIDTH / 3.75);
 		boardCircle.setCenterX(SCREEN_WIDTH / 2);
 		boardCircle.setCenterY(SCREEN_HEIGHT / 2);
-		playersScreenData.add(boardCircle);
+		background.add(boardCircle);
 		
 		Circle boardCircleBlank = new Circle();
 		boardCircleBlank.setFill(contrastColor);
 		boardCircleBlank.setRadius(SCREEN_WIDTH / 5.1); //4.9 (1080p)  5.1 //5.45 * .2
 		boardCircleBlank.setCenterX(SCREEN_WIDTH / 2);
 		boardCircleBlank.setCenterY(SCREEN_HEIGHT / 2);
-		playersScreenData.add(boardCircleBlank);
+		background.add(boardCircleBlank);
+		
+		return background;
+	}
+	
+	private List<Node> playerUi() {
+		List<Node> playersUi = new ArrayList<Node>();
 		
 		for (int x = 0; x < NUM_PLAYERS; x++) {
 			Text id = new Text();
@@ -192,13 +158,13 @@ public class Main extends Application {
 			Text cards = new Text( (x == 1) ? 50 : SCREEN_WIDTH/1.25, 700, "CARDS: " + players[x].getCards().toString());
 			cards.setFill(contrastColor);
 
-			playersScreenData.add(id);
-			playersScreenData.add(vp);
-			playersScreenData.add(items);
-			playersScreenData.add(cards);
+			playersUi.add(id);
+			playersUi.add(vp);
+			playersUi.add(items);
+			playersUi.add(cards);
 			
 		}
-		return playersScreenData;
+		return playersUi;
 	}
 
 	public static void main(String[] args) {
@@ -221,51 +187,4 @@ public class Main extends Application {
 		logic.rollDice();
 		turnText.setText("Roll: " + logic.roll);
 	}
-
-	/*
-	 * Method that handles key input from the user
-	 */
-//	private void handleKeyPressed(KeyEvent event) {
-//		KeyCode code = event.getCode();
-//
-//		if (code == KeyCode.SPACE || code == KeyCode.ENTER) {
-//			// board = new Board();
-//		}
-//
-//		if (code == KeyCode.F11) {
-//			fullscreen = true;
-//		}
-//	}
-
-	/*
-	 * Makes the paddle stop moving when the user release the directional key
-	 */
-//	private void handleKeyReleased(KeyEvent event) {
-//		KeyCode code = event.getCode();
-//
-//		if (code == KeyCode.SPACE || code == KeyCode.ENTER) {
-//			// board = new Board();
-//		}
-//
-////		if (code == KeyCode.F11) {
-////			fullscreen = false;
-////		}
-//	}
-//
-//	private void handleMousePressed(MouseEvent event) {
-//		MouseButton code = event.getButton();
-//
-//		if (code == MouseButton.PRIMARY) {
-//
-//		}
-//	}
-//
-//	private void handleMouseReleased(MouseEvent event) {
-//		MouseButton code = event.getButton();
-//
-//		if (code == MouseButton.PRIMARY) {
-//
-//		}
-//	}
-
 }
