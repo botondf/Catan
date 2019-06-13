@@ -38,6 +38,7 @@ public class Main extends Application {
 	private boolean fullscreen = true;
 	
 	public Board board;
+	private List<Node> totalBoardNodes = new ArrayList<>();
 	private Logic logic;
 	private Text turnText;
 	private Player[] players = new Player[NUM_PLAYERS];
@@ -50,8 +51,6 @@ public class Main extends Application {
 		
 		//window.getChildren().addAll(mainMenu(stage));
 
-		logic = new Logic();
-
 		for (int x = 0; x < NUM_PLAYERS; x++) {
 			players[x] = new Player(x + 1);
 			//players[x].getBuildings().add(new Building(BuildingType.CITY, players[x], new Place(PlaceType.INTERSECTION)));
@@ -59,8 +58,14 @@ public class Main extends Application {
 			players[x].checkVP();
 		}
 		
+		board = Board.newBoardWithTiles();
+		totalBoardNodes.addAll(drawBoard());
+		
+		logic = new Logic();
+
+		
 //		board = Board.newBoardWithTiles();
-//		drawBoard();
+//		window.getChildren().addAll(drawBoard());
 		window.getChildren().addAll(mainMenu());
 		scene = new Scene(window, SCREEN_WIDTH, SCREEN_HEIGHT);
 		scene.setFill(backgroundColor);
@@ -74,35 +79,30 @@ public class Main extends Application {
 		stage.show();
 		
 	}
-	private void redrawBoard() {
-//		List<Node> children = window.getChildren();
-//		children.clear();
-		drawBoard();
-	}
-
 	/**
-	 *  'Draws' (re-adds to group) the entire game board on updates
+	 *  'Draws' the entire game board on updates
 	 * @param board
 	 */
-	private void drawBoard() {
-		List<Node> children = window.getChildren();
-		children.clear();
+	private List<Node> drawBoard() {
+		List<Node> nodes = new ArrayList<>();
 		
 		List<Node> tileShapes = board.buildTileShapes();
 		List<Node> placeShapes = board.buildPlaceShapes();
 		
-		children.addAll(background());
-		children.addAll(ui());
-		children.addAll(playerUi());
-		children.addAll(tileShapes);
-		children.addAll(placeShapes);
+		nodes.addAll(background());
+		nodes.addAll(ui());
+		nodes.addAll(playerUi());
+		nodes.addAll(tileShapes);
+		nodes.addAll(placeShapes);
 		
-//		Image pic = new Image(getClass().getResourceAsStream("icon.png"));
-//		ImageView picView = new ImageView(pic);
-//		picView.setX(1050);
-//		picView.setY(350);
+		return nodes;
+	}
+	
+	private void resetBoard() {
+		board = Board.newBoardWithTiles();
+		totalBoardNodes.clear();
+		totalBoardNodes = drawBoard();
 		
-//		children.add(picView);
 	}
 	
 	private List<Node> mainMenu() {
@@ -202,6 +202,7 @@ public class Main extends Application {
 				+ "Once a settlement is built on a tile, the player who owns the building will earn that resource\n"
 				+ "when the tile's value, displayed on beige markers, is rolled.\n"
 				+ "");
+		
 		tutorialText.setX(50);
 		tutorialText.setY(50);
 		tutorialText.setTextOrigin(VPos.TOP);
@@ -210,12 +211,12 @@ public class Main extends Application {
 		tutorialText.setFill(contrastColor);
 		tutorial.add(tutorialText);
 		
-		Button playButton = new Button();
-		playButton.setText("Play");
-		playButton.setLayoutX(SCREEN_WIDTH/2);
-		playButton.setLayoutY(SCREEN_HEIGHT/2);
-		playButton.setOnAction(this::handlePlayButtonClickedUI);
-		tutorial.add(playButton);
+		Button resumeButton = new Button();
+		resumeButton.setText("Resume");
+		resumeButton.setLayoutX(SCREEN_WIDTH/2);
+		resumeButton.setLayoutY(SCREEN_HEIGHT/2);
+		resumeButton.setOnAction(this::handleResumeButtonClicked);
+		tutorial.add(resumeButton);
 		
 		Button exitButton = new Button("Exit");
 		exitButton.setLayoutX(SCREEN_WIDTH/2);
@@ -324,22 +325,22 @@ public class Main extends Application {
 		launch(args);
 	}
 	
-	private void handlePlayButtonClickedUI(ActionEvent event) {
-		System.out.println("Play Uievent = " + event);
-		drawBoard();
+	private void handleResumeButtonClicked(ActionEvent event) {
+		System.out.println("Resume event = " + event);
+		window.getChildren().clear();
+		window.getChildren().addAll(totalBoardNodes);
 	}
 	
 	private void handlePlayButtonClicked(ActionEvent event) {
 		System.out.println("Play event = " + event);
 		window.getChildren().clear();
-		board = Board.newBoardWithTiles();
-		drawBoard();
+		window.getChildren().addAll(totalBoardNodes);
 	}
 
 	private void handleResetButtonClicked(ActionEvent event) {
 		System.out.println("Reset event = " + event);
-		board = Board.newBoardWithTiles();
-		drawBoard();
+		resetBoard();
+		window.getChildren().addAll(totalBoardNodes);
 	}
 
 	private void handleExitButtonClicked(ActionEvent event) {
