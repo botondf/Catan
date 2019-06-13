@@ -11,7 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.SplitMenuButton;
 import javafx.scene.shape.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
@@ -139,7 +138,7 @@ public class Main extends Application {
 		exitButton.setOnAction(this::handleExitButtonClicked);
 		mainMenu.add(exitButton);
 		
-		SplitMenuButton playerColorPicker = new SplitMenuButton();
+		MenuButton playerColorPicker = new MenuButton();
 		playerColorPicker.setText("Player Colour Picker");
 		playerColorPicker.setLayoutX(SCREEN_WIDTH/2);
 		playerColorPicker.setLayoutY(SCREEN_HEIGHT/2 + 165);
