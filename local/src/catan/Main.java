@@ -2,6 +2,7 @@ package catan;
 
 import javafx.application.Application;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.MenuBar;
 import javafx.geometry.VPos;
 import javafx.event.ActionEvent;
 import javafx.geometry.Rectangle2D;
@@ -234,10 +235,9 @@ public class Main extends Application {
 	}
 	
 	private List<Node> ui() {
-		List<Node> ui = new ArrayList<Node>();
+		List<Node> ui = new ArrayList<Node>();		
 		
-		Button resetButton = new Button();
-		resetButton.setText("Reset");
+		Button resetButton = new Button("Reset");
 		resetButton.setLayoutX(5);
 		resetButton.setLayoutY(5);
 		resetButton.setOnAction(this::handleResetButtonClicked);
@@ -264,7 +264,7 @@ public class Main extends Application {
 		
 		Button tutorialButton = new Button();
 		tutorialButton.setText("Tutorial");
-		tutorialButton.setLayoutX(175);
+		tutorialButton.setLayoutX(170);
 		tutorialButton.setLayoutY(5);
 		tutorialButton.setOnAction((event) -> changeGroup());
 		ui.add(tutorialButton);
