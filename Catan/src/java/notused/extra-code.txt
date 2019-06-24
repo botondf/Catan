@@ -1,0 +1,8 @@
+getTransforms().add(new Rotate(90, title.getX(), title.getY()))
+
+//		imgvCity.setEffect(new ColorAdjust(250, 1, -0.15, -0.3)); // move this color adj to player
+
+//		imgvVillage.setEffect(new ColorAdjust(0, 1, 0.1, 0.1)); // move this color adj to player
+
+//hue,sat,bri,con
+
