@@ -1,0 +1,20 @@
+//Extra Code
+
+public static Tile debugCreateRandom() {
+		int id = Logic.randomNumber(1,10);
+		TileType type = TileType.values()[Logic.randomNumber(0, 5)];
+		int value = Logic.randomNumber(1, 12);
+		List<Building> buildings = new ArrayList<Building>();
+		buildings.add(Building.debugCreateRandom());
+		return new Tile(id, type, value, buildings);
+	}
+	
+	public static Building debugCreateRandom() {
+		BuildingType type = BuildingType.values()[Logic.randomNumber(0, 2)];
+		
+		Player owner = new Player(1);
+		
+		Tile[] pos = {Tile.debugCreateRandom(), Tile.debugCreateRandom()};
+		
+		return new Building(type, owner, pos);
+	}
